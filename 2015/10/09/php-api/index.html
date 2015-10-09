@@ -1,0 +1,670 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="api,app,php," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="第一部分，通信接口的实现PHP开发API时，一般返回XML或JSON数据类型的数据，除了要返回从源数据（程序本身需要的数据）外还应附上状态码，以下是一段封装后的数据，它使用JSON格式展现：
+1234567891011121314151617181920212223242526&amp;#123;    code: 200,    message: &quot;Success&quot;,    data: [">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用PHP编写一个APP的API">
+<meta property="og:url" content="http://yoursite.com/2015/10/09/php-api/index.html">
+<meta property="og:site_name" content="Johnson Zhang">
+<meta property="og:description" content="第一部分，通信接口的实现PHP开发API时，一般返回XML或JSON数据类型的数据，除了要返回从源数据（程序本身需要的数据）外还应附上状态码，以下是一段封装后的数据，它使用JSON格式展现：
+1234567891011121314151617181920212223242526&amp;#123;    code: 200,    message: &quot;Success&quot;,    data: [">
+<meta property="og:updated_time" content="2015-10-09T01:51:30.456Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用PHP编写一个APP的API">
+<meta name="twitter:description" content="第一部分，通信接口的实现PHP开发API时，一般返回XML或JSON数据类型的数据，除了要返回从源数据（程序本身需要的数据）外还应附上状态码，以下是一段封装后的数据，它使用JSON格式展现：
+1234567891011121314151617181920212223242526&amp;#123;    code: 200,    message: &quot;Success&quot;,    data: [">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 用PHP编写一个APP的API | Johnson Zhang </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?886f45b065a917294e24691553891b06";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Johnson Zhang</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              用PHP编写一个APP的API
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-10-09T09:41:32+08:00" content="2015-10-09">
+            2015-10-09
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/10/09/php-api/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/09/php-api/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="第一部分，通信接口的实现">第一部分，通信接口的实现</h1><p>PHP开发API时，一般返回XML或JSON数据类型的数据，除了要返回从源数据（程序本身需要的数据）外还应附上状态码，以下是一段封装后的数据，它使用JSON格式展现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    code: <span class="number">200</span>,</span><br><span class="line">    message: <span class="string">"Success"</span>,</span><br><span class="line">    data: [</span><br><span class="line">        &#123;</span><br><span class="line">            username: <span class="string">"李四"</span>,</span><br><span class="line">            password: <span class="string">"123456"</span>,</span><br><span class="line">            level: <span class="string">"1"</span>,</span><br><span class="line">            gold: <span class="string">"0"</span>,</span><br><span class="line">            id: <span class="string">"6"</span>,</span><br><span class="line">            create_time: <span class="string">"2015-09-26 08:25:31"</span>,</span><br><span class="line">            is_active: <span class="string">"1"</span>,</span><br><span class="line">            is_admin: <span class="string">"0"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            username: <span class="string">"张三"</span>,</span><br><span class="line">            password: <span class="string">"12345"</span>,</span><br><span class="line">            level: <span class="string">"1"</span>,</span><br><span class="line">            gold: <span class="string">"0"</span>,</span><br><span class="line">            id: <span class="string">"8"</span>,</span><br><span class="line">            create_time: <span class="string">"0000-00-00 00:00:00"</span>,</span><br><span class="line">            is_active: <span class="string">"1"</span>,</span><br><span class="line">            is_admin: <span class="string">"0"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以下是XML格式数据的实例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">root</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">code</span>&gt;</span>200<span class="tag">&lt;/<span class="title">code</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">message</span>&gt;</span>Success<span class="tag">&lt;/<span class="title">message</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">data</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">item</span> <span class="attribute">id</span>=<span class="value">"0"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">username</span>&gt;</span>李四<span class="tag">&lt;/<span class="title">username</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">password</span>&gt;</span>123456<span class="tag">&lt;/<span class="title">password</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">level</span>&gt;</span>1<span class="tag">&lt;/<span class="title">level</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">gold</span>&gt;</span>0<span class="tag">&lt;/<span class="title">gold</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">id</span>&gt;</span>6<span class="tag">&lt;/<span class="title">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">create_time</span>&gt;</span>2015-09-26 08:25:31<span class="tag">&lt;/<span class="title">create_time</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">is_active</span>&gt;</span>1<span class="tag">&lt;/<span class="title">is_active</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">is_admin</span>&gt;</span>0<span class="tag">&lt;/<span class="title">is_admin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">item</span> <span class="attribute">id</span>=<span class="value">"1"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">username</span>&gt;</span>张三<span class="tag">&lt;/<span class="title">username</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">password</span>&gt;</span>12345<span class="tag">&lt;/<span class="title">password</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">level</span>&gt;</span>1<span class="tag">&lt;/<span class="title">level</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">gold</span>&gt;</span>0<span class="tag">&lt;/<span class="title">gold</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">id</span>&gt;</span>8<span class="tag">&lt;/<span class="title">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">create_time</span>&gt;</span>0000-00-00 00:00:00<span class="tag">&lt;/<span class="title">create_time</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">is_active</span>&gt;</span>1<span class="tag">&lt;/<span class="title">is_active</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">is_admin</span>&gt;</span>0<span class="tag">&lt;/<span class="title">is_admin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">data</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">root</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>此外，为了方便手机端开发人员的调试，还可直接返回带数据类型的数据：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">array</span>(<span class="number">3</span>) &#123;</span><br><span class="line">  [<span class="string">"code"</span>]=&gt;</span><br><span class="line">  int(<span class="number">200</span>)</span><br><span class="line">  [<span class="string">"message"</span>]=&gt;</span><br><span class="line">  string(<span class="number">7</span>) <span class="string">"Success"</span></span><br><span class="line">  [<span class="string">"data"</span>]=&gt;</span><br><span class="line">  <span class="keyword">array</span>(<span class="number">2</span>) &#123;</span><br><span class="line">    [<span class="number">0</span>]=&gt;</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">8</span>) &#123;</span><br><span class="line">      [<span class="string">"username"</span>]=&gt;</span><br><span class="line">      string(<span class="number">9</span>) <span class="string">"李四"</span></span><br><span class="line">      [<span class="string">"password"</span>]=&gt;</span><br><span class="line">      string(<span class="number">6</span>) <span class="string">"123456"</span></span><br><span class="line">      [<span class="string">"level"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"1"</span></span><br><span class="line">      [<span class="string">"gold"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"0"</span></span><br><span class="line">      [<span class="string">"id"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"6"</span></span><br><span class="line">      [<span class="string">"create_time"</span>]=&gt;</span><br><span class="line">      string(<span class="number">19</span>) <span class="string">"2015-09-26 08:25:31"</span></span><br><span class="line">      [<span class="string">"is_active"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"1"</span></span><br><span class="line">      [<span class="string">"is_admin"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"0"</span></span><br><span class="line">    &#125;</span><br><span class="line">    [<span class="number">1</span>]=&gt;</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">8</span>) &#123;</span><br><span class="line">      [<span class="string">"username"</span>]=&gt;</span><br><span class="line">      string(<span class="number">6</span>) <span class="string">"张三"</span></span><br><span class="line">      [<span class="string">"password"</span>]=&gt;</span><br><span class="line">      string(<span class="number">5</span>) <span class="string">"12345"</span></span><br><span class="line">      [<span class="string">"level"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"1"</span></span><br><span class="line">      [<span class="string">"gold"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"0"</span></span><br><span class="line">      [<span class="string">"id"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"8"</span></span><br><span class="line">      [<span class="string">"create_time"</span>]=&gt;</span><br><span class="line">      string(<span class="number">19</span>) <span class="string">"0000-00-00 00:00:00"</span></span><br><span class="line">      [<span class="string">"is_active"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"1"</span></span><br><span class="line">      [<span class="string">"is_admin"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"0"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h1 id="如何实现">如何实现</h1><p>当手机客户端通过API获取数据时，PHP脚本会<code>Response</code>一个数组，并对这个数组进行<code>encode</code>,他们分别是<code>json,xml和array</code>；该数组，定义如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$result</span> = [</span><br><span class="line">    <span class="string">"code"</span> =&gt; <span class="number">200</span>,</span><br><span class="line">    <span class="string">"message"</span> =&gt; <span class="string">"数据返回成功"</span>,</span><br><span class="line">    <span class="string">"data"</span> =&gt; [<span class="string">"key"</span>=&gt;<span class="string">"value"</span>, <span class="string">"key"</span>=&gt;<span class="string">"value"</span>]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h1 id="如何去设计">如何去设计</h1><p>当手机端调用API，程序业务逻辑处理完成之后，需要返回数据，此时需要对通信数据进行封装，封装的三种类型由可由REQUEST里的format参数指定，当formart=json时执行response_json方法，同理，还有response_xml和response_array方法；</p>
+<p>为了方便调用，编写一个Response类来封装数据并完成response工作：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*本段代码没有经过实际环境测试，也没有严谨的参数检查*/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Response</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">response_api</span><span class="params">(<span class="variable">$code</span>, <span class="variable">$message</span>=<span class="string">''</span>, <span class="variable">$data</span>=array<span class="params">()</span>)</span></span>&#123;</span><br><span class="line">        <span class="comment">//根据formart返回适当的数据</span></span><br><span class="line">        <span class="variable">$type</span> = <span class="keyword">isset</span>(<span class="variable">$_REQUEST</span>[<span class="string">'format'</span>])?<span class="variable">$_REQUEST</span>[<span class="string">'format'</span>]:<span class="string">''</span>;</span><br><span class="line">        <span class="keyword">switch</span> (<span class="variable">$type</span>) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'json'</span>:</span><br><span class="line">                <span class="keyword">self</span>::response_json(<span class="variable">$code</span>, <span class="variable">$message</span>, <span class="variable">$data</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'xml'</span>:</span><br><span class="line">                <span class="keyword">self</span>::response_xml(<span class="variable">$code</span>, <span class="variable">$message</span>, <span class="variable">$data</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'array'</span>:</span><br><span class="line">                <span class="keyword">echo</span> var_dump(<span class="keyword">self</span>::grant_array(<span class="variable">$code</span>, <span class="variable">$message</span>, <span class="variable">$data</span>));</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">self</span>::response_json(<span class="variable">$code</span>, <span class="variable">$message</span>, <span class="variable">$data</span>);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">response_json</span><span class="params">(<span class="variable">$code</span>, <span class="variable">$message</span>=<span class="string">''</span>, <span class="variable">$data</span>=array<span class="params">()</span>)</span></span>&#123;</span><br><span class="line">        <span class="comment">//返回JSON数据</span></span><br><span class="line">        <span class="variable">$result</span> = <span class="keyword">self</span>::gramt_array(<span class="variable">$code</span>,<span class="variable">$message</span>,<span class="variable">$data</span>);</span><br><span class="line">        <span class="keyword">echo</span> json_encode(<span class="variable">$result</span>);</span><br><span class="line">        <span class="keyword">exit</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">response_xml</span><span class="params">(<span class="variable">$code</span>, <span class="variable">$message</span>=<span class="string">''</span>, <span class="variable">$data</span>=array<span class="params">()</span>)</span></span>&#123;</span><br><span class="line">        <span class="comment">//返回XML数据</span></span><br><span class="line">        <span class="variable">$result</span> = <span class="keyword">self</span>::gramt_array(<span class="variable">$code</span>,<span class="variable">$message</span>,<span class="variable">$data</span>);</span><br><span class="line">        <span class="variable">$xml</span> = <span class="string">"&lt;?xml version='1.0' encoding='UTF-8'?&gt;"</span>;</span><br><span class="line">        <span class="variable">$xml</span> .= <span class="string">"&lt;root&gt;"</span>;</span><br><span class="line">        <span class="variable">$xml</span> .= <span class="keyword">self</span>::xml_encode(<span class="variable">$result</span>);</span><br><span class="line">        <span class="variable">$xml</span> .= <span class="string">"&lt;/root&gt;"</span></span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$xml</span>;</span><br><span class="line">        <span class="keyword">exit</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">xml_encode</span><span class="params">(<span class="variable">$arr</span>=array<span class="params">()</span>)</span></span>&#123;</span><br><span class="line">        <span class="comment">//对于XML，需要自己实现一个XML的encode方法</span></span><br><span class="line">        <span class="variable">$xml</span> = <span class="variable">$attr</span> = <span class="string">''</span>;</span><br><span class="line">        <span class="keyword">foreach</span>(<span class="variable">$arr</span> <span class="keyword">as</span> <span class="variable">$key</span>=&gt;<span class="variable">$value</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(is_numberic(<span class="variable">$key</span>))&#123;</span><br><span class="line">                <span class="variable">$key</span> = <span class="string">'item'</span>;</span><br><span class="line">                <span class="variable">$attr</span> = <span class="string">" id='&#123;$key&#125;'"</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="variable">$xml</span> .= <span class="string">"&lt;&#123;$key&#125;&#123;$attr&#125;&gt;"</span>;</span><br><span class="line">            <span class="variable">$xml</span> .= (is_array(<span class="variable">$value</span>))?<span class="keyword">self</span>::xml_encode(<span class="variable">$value</span>):<span class="variable">$value</span>;</span><br><span class="line">            <span class="variable">$xml</span> .= <span class="string">"&lt;/&#123;$key&#125;&gt;"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$xml</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">grant_array</span><span class="params">(<span class="variable">$code</span>, <span class="variable">$message</span>=<span class="string">''</span>, <span class="variable">$data</span>=array<span class="params">()</span>)</span></span>&#123;</span><br><span class="line">        <span class="comment">//在所有操作之前，需要生成符合API规范的数组</span></span><br><span class="line">        <span class="variable">$result</span> = &#123;</span><br><span class="line">            <span class="string">"code"</span> =&gt; <span class="variable">$code</span>,</span><br><span class="line">            <span class="string">"message"</span> =&gt; <span class="variable">$message</span>,</span><br><span class="line">            <span class="string">"data"</span> =&gt; <span class="variable">$data</span></span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$result</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Response类实现了通信接口的数据封装，可根据response内指定的format灵活的写入不同格式的数据到Response。</p>
+<p>付：完整代码及调用实例：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">&lt;?php</span> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Response</span></span>&#123;    </span><br><span class="line">    <span class="comment">/*</span><br><span class="line">    * 封通信接口数据</span><br><span class="line">    * <span class="doctag">@param</span> integer $code 状态码</span><br><span class="line">    * <span class="doctag">@param</span> string $message 状态信息</span><br><span class="line">    * <span class="doctag">@param</span> array $data 数据</span><br><span class="line">    * return string </span><br><span class="line">    */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">api_response</span><span class="params">(<span class="variable">$code</span>, <span class="variable">$message</span>=<span class="string">''</span>,</span><br><span class="line">            <span class="variable">$data</span>=array<span class="params">()</span>)</span></span>&#123;</span><br><span class="line">        <span class="variable">$type</span> = <span class="keyword">isset</span>(<span class="variable">$_REQUEST</span>[<span class="string">'format'</span>])?<span class="variable">$_REQUEST</span>[<span class="string">'format'</span>]:<span class="string">''</span>;</span><br><span class="line">        <span class="keyword">switch</span> (<span class="variable">$type</span>) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'json'</span>:</span><br><span class="line">                <span class="keyword">self</span>::response_json(<span class="variable">$code</span>, <span class="variable">$message</span>, <span class="variable">$data</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'xml'</span>:</span><br><span class="line">                <span class="keyword">self</span>::response_xml(<span class="variable">$code</span>, <span class="variable">$message</span>, <span class="variable">$data</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'array'</span>:</span><br><span class="line">                <span class="keyword">echo</span> var_dump(<span class="keyword">self</span>::grant_array(<span class="variable">$code</span>, <span class="variable">$message</span>, <span class="variable">$data</span>));</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">self</span>::response_json(<span class="variable">$code</span>, <span class="variable">$message</span>, <span class="variable">$data</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span><br><span class="line">    * 封装数为为json数据类型</span><br><span class="line">    * <span class="doctag">@param</span> integer $code 状态码</span><br><span class="line">    * <span class="doctag">@param</span> string $message 状态信息</span><br><span class="line">    * <span class="doctag">@param</span> array $data 数据</span><br><span class="line">    * return string </span><br><span class="line">    */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">json_response</span><span class="params">(<span class="variable">$code</span>, </span><br><span class="line">        <span class="variable">$message</span>=<span class="string">''</span>, <span class="variable">$data</span>=array<span class="params">()</span>)</span></span>&#123;</span><br><span class="line">        <span class="variable">$result</span> = <span class="keyword">self</span>::grant_array(<span class="variable">$code</span>, <span class="variable">$message</span>, <span class="variable">$data</span>);</span><br><span class="line">        <span class="keyword">echo</span> json_encode(<span class="variable">$result</span>);</span><br><span class="line">        <span class="keyword">exit</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span><br><span class="line">    * 封装数为为xml数据类型</span><br><span class="line">    * <span class="doctag">@param</span> integer $code 状态码</span><br><span class="line">    * <span class="doctag">@param</span> string $message 状态信息</span><br><span class="line">    * <span class="doctag">@param</span> array $data 数据</span><br><span class="line">    * return string </span><br><span class="line">    */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">xml_response</span><span class="params">(<span class="variable">$code</span>, </span><br><span class="line">        <span class="variable">$message</span>=<span class="string">''</span>, <span class="variable">$data</span>=array<span class="params">()</span>)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="variable">$result</span> = <span class="keyword">self</span>::grant_array(<span class="variable">$code</span>, <span class="variable">$message</span>, <span class="variable">$data</span>);</span><br><span class="line"></span><br><span class="line">        header(<span class="string">"Content-Type:text/xml"</span>);</span><br><span class="line">        <span class="variable">$xml</span> = <span class="string">"&lt;?xml version='1.0' encoding='UTF-8'?&gt;\n"</span>;</span><br><span class="line">        <span class="variable">$xml</span> .= <span class="string">"&lt;root&gt;\n"</span>;</span><br><span class="line">        <span class="variable">$xml</span> .= <span class="keyword">self</span>::xml_encode(<span class="variable">$result</span>);</span><br><span class="line">        <span class="variable">$xml</span> .= <span class="string">"&lt;/root&gt;"</span>;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$xml</span>;</span><br><span class="line">        <span class="keyword">exit</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span><br><span class="line">    * 将数组转换为XML格式</span><br><span class="line">    * <span class="doctag">@param</span> array $array 数组</span><br><span class="line">    * return string </span><br><span class="line">    */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">xml_encode</span><span class="params">(<span class="variable">$array</span>=array<span class="params">()</span>)</span></span>&#123;</span><br><span class="line">        <span class="variable">$xml</span> = <span class="variable">$attr</span> = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(!<span class="keyword">empty</span>(<span class="variable">$array</span>))&#123;</span><br><span class="line">            <span class="keyword">foreach</span> (<span class="variable">$array</span> <span class="keyword">as</span> <span class="variable">$key</span> =&gt; <span class="variable">$value</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span>(is_numeric(<span class="variable">$key</span>))&#123;</span><br><span class="line">                    <span class="variable">$attr</span> = <span class="string">" id='&#123;$key&#125;'"</span>;</span><br><span class="line">                    <span class="variable">$key</span> = <span class="string">"item"</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="variable">$xml</span> .= <span class="string">"&lt;&#123;$key&#125;&#123;$attr&#125;&gt;"</span> ;</span><br><span class="line">                <span class="variable">$xml</span> .= is_array(<span class="variable">$value</span>) ? <span class="keyword">self</span>::xml_encode(<span class="variable">$value</span>) : <span class="variable">$value</span>;</span><br><span class="line">                <span class="variable">$xml</span> .=<span class="string">"&lt;/&#123;$key&#125;&gt;\n"</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$xml</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span><br><span class="line">    * 按照接口格式生成原数据数组</span><br><span class="line">    * <span class="doctag">@param</span> integer $code 状态码</span><br><span class="line">    * <span class="doctag">@param</span> string $message 状态信息</span><br><span class="line">    * <span class="doctag">@param</span> array $data 数据</span><br><span class="line">    * return array </span><br><span class="line">    */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">grant_array</span><span class="params">(<span class="variable">$code</span>, <span class="variable">$message</span>=<span class="string">''</span>, <span class="variable">$data</span>=array<span class="params">()</span>)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!is_numeric(<span class="variable">$code</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">''</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="variable">$result</span> = <span class="keyword">array</span>(</span><br><span class="line">            <span class="string">'code'</span> =&gt; <span class="variable">$code</span>,</span><br><span class="line">            <span class="string">'message'</span> =&gt; <span class="variable">$message</span>,</span><br><span class="line">            <span class="string">'data'</span> =&gt; <span class="variable">$data</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$result</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用实例：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">&lt;?php</span> </span><br><span class="line"></span><br><span class="line"><span class="keyword">require_once</span> <span class="string">"./DataBaseUtil.class.php"</span>;</span><br><span class="line"><span class="keyword">require_once</span> <span class="string">"./Response.class.php"</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$connect</span> = DataBaseUtil::getInstance()-&gt;connect();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span><br><span class="line">* 首页接口 </span><br><span class="line">* http://domain/hotgirl/callback.php?format=xml/json</span><br><span class="line">*/</span></span><br><span class="line"><span class="variable">$page</span> = <span class="keyword">isset</span>(<span class="variable">$_REQUEST</span>[<span class="string">'page'</span>])?<span class="variable">$_REQUEST</span>[<span class="string">'page'</span>]:<span class="number">1</span>;</span><br><span class="line"><span class="variable">$page_number</span> = <span class="keyword">isset</span>(<span class="variable">$_REQUEST</span>[<span class="string">'page_number'</span>])?<span class="variable">$_REQUEST</span>[<span class="string">'page_number'</span>]:<span class="number">2</span>;</span><br><span class="line"><span class="variable">$lim_start</span> = (<span class="variable">$page</span>-<span class="number">1</span>) * <span class="variable">$page_number</span>;</span><br><span class="line"><span class="variable">$sql</span> = <span class="string">"SELECT * FROM user WHERE is_active=1 LIMIT "</span>.<span class="variable">$lim_start</span>.<span class="string">","</span>.<span class="variable">$page_number</span>;</span><br><span class="line"><span class="variable">$result</span> = mysql_query(<span class="variable">$sql</span>, <span class="variable">$connect</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$result</span> &amp;&amp; mysql_num_rows(<span class="variable">$result</span>)&gt;<span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="variable">$row</span> = mysql_fetch_assoc(<span class="variable">$result</span>)) &#123;</span><br><span class="line">        <span class="variable">$rows</span>[] = <span class="variable">$row</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">empty</span>(<span class="variable">$rows</span>))&#123;</span><br><span class="line">    <span class="keyword">return</span> Response::api_response(<span class="number">200</span>, <span class="string">'Success'</span>, <span class="variable">$rows</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Response::api_response(<span class="number">403</span>, <span class="string">'No result from database'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/api/" rel="tag">#api</a>
+          
+            <a href="/tags/app/" rel="tag">#app</a>
+          
+            <a href="/tags/php/" rel="tag">#php</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/09/php-awesome/" rel="next">收集整理一些常用的PHP类库, 资源以及技巧</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/10/09/php-api/"
+                   data-title="用PHP编写一个APP的API" data-url="http://yoursite.com/2015/10/09/php-api/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar.jpg" alt="Johnson Zhang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Johnson Zhang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/hpze2000" target="_blank">github</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一部分，通信接口的实现"><span class="nav-number">1.</span> <span class="nav-text">第一部分，通信接口的实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何实现"><span class="nav-number">2.</span> <span class="nav-text">如何实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何去设计"><span class="nav-number">3.</span> <span class="nav-text">如何去设计</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Johnson Zhang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hpze2000"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
