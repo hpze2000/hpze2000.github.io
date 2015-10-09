@@ -64,9 +64,9 @@
 <meta property="og:image" content="http://yoursite.com/uploads/Navigation_Tabs2.png">
 <meta property="og:image" content="http://yoursite.com/uploads/Navigation_Tabs.png">
 <meta property="og:image" content="http://yoursite.com/uploads/Drop_down_Navigation.png">
-<meta property="og:image" content="http://yoursite.com/uploads/listview-adapter.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/listview_adapter.jpg">
 <meta property="og:image" content="http://yoursite.com/uploads/listview_recycler.jpg">
-<meta property="og:updated_time" content="2015-10-08T06:19:37.883Z">
+<meta property="og:updated_time" content="2015-10-09T01:20:34.622Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="动手开发一个安卓APP - 常用组件/控件使用介绍">
 <meta name="twitter:description" content="课程源码
@@ -451,7 +451,7 @@
 <h4 id="ListView和Adapter">ListView和Adapter</h4><blockquote>
 <p>ListView和数据是分开的，不直接接触。而是通过Adapter(适配器)加载到屏幕。也就是说Adapter相当于是数据和View之间的桥梁。Adapter负责为每一个数据项制作View。</p>
 </blockquote>
-<p><img src="/uploads/listview-adapter.jpg" alt="ListView和Adapter" title="ListView和Adapter"></p>
+<p><img src="/uploads/listview_adapter.jpg" alt="ListView和Adapter" title="ListView和Adapter"></p>
 <h4 id="ListView工作原理">ListView工作原理</h4><blockquote>
 <p>在运行时ListView会针对数据项向Adapter要View，从而来加载到界面上。那么，难道每一个item，Adapter都会重新创建一个视图吗？答案很明显是不可能的。<br>为了能够更快更省空间的显示，Android准备了一个叫做Recycler(循环)的组件。假如你的屏幕只能显示七个item。那么ListView只会创建八个item的视图。当第一个item出去，离开屏幕的时候，这个item的view就会被拿来重用，显示下一个item的内容。</p>
 </blockquote>
@@ -521,6 +521,29 @@
 
 
     <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
       
     </div>
   </div>
