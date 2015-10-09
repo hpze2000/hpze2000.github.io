@@ -1,0 +1,863 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="php," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="awesome-php收集整理一些常用的PHP类库, 资源以及技巧. 以便在工作中迅速的查找所需…">
+<meta property="og:type" content="article">
+<meta property="og:title" content="收集整理一些常用的PHP类库, 资源以及技巧">
+<meta property="og:url" content="http://yoursite.com/2015/10/09/php-awesome/index.html">
+<meta property="og:site_name" content="Johnson Zhang">
+<meta property="og:description" content="awesome-php收集整理一些常用的PHP类库, 资源以及技巧. 以便在工作中迅速的查找所需…">
+<meta property="og:updated_time" content="2015-10-09T00:13:48.329Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="收集整理一些常用的PHP类库, 资源以及技巧">
+<meta name="twitter:description" content="awesome-php收集整理一些常用的PHP类库, 资源以及技巧. 以便在工作中迅速的查找所需…">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 收集整理一些常用的PHP类库, 资源以及技巧 | Johnson Zhang </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Johnson Zhang</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              收集整理一些常用的PHP类库, 资源以及技巧
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-10-09T08:11:20+08:00" content="2015-10-09">
+            2015-10-09
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="awesome-php">awesome-php</h1><p>收集整理一些常用的PHP类库, 资源以及技巧. 以便在工作中迅速的查找所需…</p>
+<a id="more"></a>
+<hr>
+<ul>
+<li>这个列表中的内容有来自 <a href="https://github.com/ziadoz/awesome-php" target="_blank" rel="external">awesome-php</a> 的翻译, 有来自开发者周刊以及个人的积累等.</li>
+<li>一个前端组件的列表 <a href="https://github.com/JingwenTian/awesome-frontend" target="_blank" rel="external">awesome-frontend</a> 推荐</li>
+</ul>
+<hr>
+<h2 id="学习资源">学习资源</h2><blockquote>
+<p>PHP相关的有参考价值的社区,博客,网站,文章,书籍,视频等资源</p>
+</blockquote>
+<ul>
+<li><p><strong>PHP网站(PHP Websites)</strong></p>
+<ul>
+<li><a href="http://www.phptherightway.com/" target="_blank" rel="external">PHP The Right Way</a> 一个PHP实践的快速参考指导</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="依赖管理(_Dependency_Management_)">依赖管理( Dependency Management )</h2><blockquote>
+<p>用于依赖管理的包和框架</p>
+</blockquote>
+<ul>
+<li><a href="https://getcomposer.org/" target="_blank" rel="external">Composer</a> / <a href="https://packagist.org/" target="_blank" rel="external">Packagist</a> - 一个包和依赖管理器.</li>
+<li><a href="https://github.com/composer/installers" target="_blank" rel="external">Composer Installers</a> - 一个多框架Composer库安装器</li>
+<li><a href="https://github.com/FriendsOfPHP/pickle" target="_blank" rel="external">pickle</a> - PHP扩展安装器</li>
+<li><a href="http://melody.sensiolabs.org/" target="_blank" rel="external">Melody</a> - A tool to build one file Composer scripts.</li>
+</ul>
+<h2 id="框架(_Frameworks_)">框架( Frameworks )</h2><blockquote>
+<p>Web开发框架</p>
+</blockquote>
+<ul>
+<li><a href="http://symfony.com/" target="_blank" rel="external">Symfony2</a> - 由独立组件构成的框架(SP2)</li>
+<li><a href="http://framework.zend.com/" target="_blank" rel="external">Zend Framework 2</a> - 同样是由独立组件构成的框架(ZF2)</li>
+<li><a href="http://laravel.com/" target="_blank" rel="external">Laravel 5</a> - 简洁优雅的PHP Web开发框架(L5)</li>
+<li><a href="http://auraphp.com/" target="_blank" rel="external">Aura PHP</a> - 独立组件的框架</li>
+<li><a href="https://github.com/yiisoft/yii2/" target="_blank" rel="external">Yii2</a> - 用于开发大型Web应用的高性能PHP框架</li>
+<li><a href="http://nette.org/" target="_blank" rel="external">Nette</a> - 同样是由独立组件构成的框架</li>
+<li><a href="http://www.ppi.io/" target="_blank" rel="external">PPI Framework 2</a> - 一个交互性的框架</li>
+<li><a href="http://cakephp.org/" target="_blank" rel="external">CakePHP</a> - 一个高效的应用开发框架(CP)</li>
+<li><a href="http://phalconphp.com/en/" target="_blank" rel="external">Phalcon</a> - 一个作为C扩展的框架</li>
+<li><a href="http://php.net/manual/zh/book.yaf.php" target="_blank" rel="external">Yaf</a> - 鸟哥的C扩展的框架</li>
+</ul>
+<h2 id="组件(_Components_)">组件( Components )</h2><ul>
+<li><a href="http://auraphp.com/" target="_blank" rel="external">Aura Components</a> - 一个PHP5.4的组件包</li>
+<li><a href="http://hoa-project.net/En/" target="_blank" rel="external">Hoa Project</a> - 一个PHP组件集合</li>
+</ul>
+<h2 id="微框架(_Micro_Frameworks_)">微框架( Micro Frameworks )</h2><blockquote>
+<p>微型框架和路由</p>
+</blockquote>
+<ul>
+<li><a href="http://silex.sensiolabs.org/" target="_blank" rel="external">Silex</a> - 基于Symphony2组件的微型框架<ul>
+<li><a href="https://github.com/fabpot/Silex-Skeleton" target="_blank" rel="external">Silex Skeleton</a> - 用于Silex的项目框架</li>
+<li><a href="https://github.com/silexphp/Silex-WebProfiler" target="_blank" rel="external">Silex Web Profiler</a> - 用于Silex的Web调试工具条</li>
+</ul>
+</li>
+<li><a href="http://www.slimframework.com/" target="_blank" rel="external">Slim</a> - 另一个简单的微型框架<ul>
+<li><a href="https://github.com/codeguy/Slim-Skeleton" target="_blank" rel="external">Slim Skeleton</a> - 用于Slim的框架</li>
+<li><a href="https://github.com/codeguy/Slim-Views" target="_blank" rel="external">Slim View</a> - Slim的自定义视图集</li>
+<li><a href="https://github.com/codeguy/Slim-Middleware" target="_blank" rel="external">Slim Middleware</a> - Slim的自定义中间件集合</li>
+<li><a href="https://github.com/JingwenTian/SlimMVC-Skeleton" target="_blank" rel="external">SlimMVC-Skeleton</a> - Slim基础上实现了MVC及一些组件</li>
+</ul>
+</li>
+<li><a href="http://bulletphp.com/" target="_blank" rel="external">Bullet PHP</a> - 用于构建REST APIs的微型框架</li>
+<li><a href="http://lumen.laravel.com/" target="_blank" rel="external">Lumen</a> - 基于Laravel的微型框架</li>
+<li><a href="https://github.com/alexbilbie/Proton" target="_blank" rel="external">Proton</a> - 一个微型PHP框架</li>
+</ul>
+<h2 id="路由(_Routers_)">路由( Routers )</h2><ul>
+<li><a href="https://github.com/nikic/FastRoute" target="_blank" rel="external">Fast Route</a> - 一个高效路由库</li>
+<li><a href="https://github.com/thephpleague/route" target="_blank" rel="external">Route</a> - 基于Fast Route的路由库</li>
+<li><a href="https://github.com/c9s/Pux" target="_blank" rel="external">Pux</a> - 另一个高效的路由库</li>
+<li><a href="https://github.com/chriso/klein.php" target="_blank" rel="external">Klein</a> - 一个灵活的路由库</li>
+</ul>
+<h2 id="模板引擎(_Templating_)">模板引擎( Templating )</h2><blockquote>
+<p>模板和词法分析的库与工具</p>
+</blockquote>
+<ul>
+<li><a href="http://twig.sensiolabs.org/" target="_blank" rel="external">Twig</a> - 一种综合的模板语言</li>
+<li><a href="https://github.com/asm89/twig-cache-extension" target="_blank" rel="external">Twig Cache Extension</a> - 用于Twig的模板片段缓存库</li>
+<li><a href="https://github.com/bobthecow/mustache.php" target="_blank" rel="external">Mustache</a> - PHP实现的Mustache模板语言</li>
+<li><a href="https://github.com/weierophinney/phly_mustache" target="_blank" rel="external">Phly Mustache</a> - 另一个PHP实现的Mustache模板语言</li>
+<li><a href="https://github.com/arnaud-lb/MtHaml" target="_blank" rel="external">MtHaml</a> - PHP实现的HAML模板语言</li>
+<li><a href="http://phptal.org/" target="_blank" rel="external">PHPTAL</a> - PHP实现的TAL模板语言</li>
+<li><a href="http://platesphp.com/" target="_blank" rel="external">Plates</a> - 一个原始的PHP模板库</li>
+<li><a href="https://github.com/pyrocms/lex" target="_blank" rel="external">Lex</a> - 一个轻量级模板解析器</li>
+</ul>
+<h2 id="静态站生成器(_Static_Site_Generators_)">静态站生成器( Static Site Generators )</h2><blockquote>
+<p>生成Web页面内容的预处理工具</p>
+</blockquote>
+<ul>
+<li><a href="http://sculpin.io/" target="_blank" rel="external">Sculpin</a> - 将Markdown和Twig转换为静态HTML的工具</li>
+<li><a href="http://phrozn.info/" target="_blank" rel="external">Phrozn</a> - 另一款将Textile、Markdown和Twig转为HTML的工具</li>
+</ul>
+<h2 id="HTTP">HTTP</h2><blockquote>
+<p>用于HTTP和抓取网站的库</p>
+</blockquote>
+<ul>
+<li><a href="https://github.com/guzzle/guzzle" target="_blank" rel="external">Guzzle</a> - 一个完整的HTTP客户端</li>
+<li><a href="https://github.com/kriswallsmith/Buzz" target="_blank" rel="external">Buzz</a> - 另一个HTTP客户端</li>
+<li><a href="https://github.com/rmccue/Requests" target="_blank" rel="external">Requests</a> - 一个简单的HTTP库</li>
+<li><a href="https://github.com/nategood/httpful" target="_blank" rel="external">HTTPFul</a> - 一个链式HTTP客户端</li>
+<li><a href="https://github.com/fabpot/Goutte" target="_blank" rel="external">Goutte</a> - 一个简单的Web抓取器</li>
+<li><a href="http://php-vcr.github.io/" target="_blank" rel="external">PHP VCR</a> - 一个录制和回放HTTP请求的库</li>
+</ul>
+<h2 id="中间件(_Middlewares_)">中间件( Middlewares )</h2><blockquote>
+<p>用于构建应用的类库的中间件</p>
+</blockquote>
+<h2 id="URL">URL</h2><blockquote>
+<p>解析URL的库</p>
+</blockquote>
+<ul>
+<li><a href="https://github.com/jwage/purl" target="_blank" rel="external">Purl</a> - 一个URL操作库</li>
+<li><a href="https://github.com/jeremykendall/php-domain-parser" target="_blank" rel="external">PHP Domain Parser</a> - 一个本地的后缀解析器</li>
+<li><a href="https://github.com/thephpleague/url" target="_blank" rel="external">Url</a> - 一个简单的URL操作库</li>
+</ul>
+<h2 id="邮件(_Email_)">邮件( Email )</h2><blockquote>
+<p>用于发送和解析Email的库</p>
+</blockquote>
+<ul>
+<li><a href="http://swiftmailer.org/" target="_blank" rel="external">SwiftMailer</a> - 一个邮件程序的解决方案</li>
+<li><a href="https://github.com/PHPMailer/PHPMailer" target="_blank" rel="external">PHPMailer</a> - 另一个邮件程序的解决方案</li>
+<li><a href="https://github.com/tedivm/Fetch" target="_blank" rel="external">Fetch</a> - 一个IMAP库</li>
+<li><a href="https://github.com/willdurand/EmailReplyParser" target="_blank" rel="external">Email Reply Parser</a> - 一个邮件回复解析器库</li>
+<li><a href="https://github.com/henrikbjorn/Stampie" target="_blank" rel="external">Stampie</a> - 关于邮件服务的库，比如SendGrid、PostMark、MailGun和Mandrill</li>
+<li><a href="https://github.com/tijsverkoyen/CssToInlineStyles" target="_blank" rel="external">CssToInlineStyles</a> - 邮件模板中一个内联的CSS库</li>
+<li><a href="https://github.com/nojacko/email-validator" target="_blank" rel="external">Email Validator</a> - 一个小巧的邮箱验证库</li>
+</ul>
+<h2 id="文件操作(_Files_)">文件操作( Files )</h2><blockquote>
+<p>关于文件处理和MIME类型检查</p>
+</blockquote>
+<ul>
+<li><a href="https://github.com/KnpLabs/Gaufrette" target="_blank" rel="external">Gaufrette</a> - 一个文件流的抽象层</li>
+<li><a href="https://github.com/FrenkyNet/Flysystem" target="_blank" rel="external">Flysystem</a> - 另一个文件流的抽象层</li>
+<li><a href="https://github.com/dflydev/dflydev-canal" target="_blank" rel="external">Canal</a> - 一个检查互联网媒体类型的库</li>
+<li><a href="https://github.com/dflydev/dflydev-apache-mime-types" target="_blank" rel="external">Apache MIME Types</a> - 一个解析Apache MIME类型的库</li>
+<li><a href="https://github.com/versionable/Ferret" target="_blank" rel="external">Ferret</a> - 一个MIME检测库</li>
+<li><a href="https://github.com/hoaproject/Mime" target="_blank" rel="external">Hoa Mime</a> - 另一个MIME检测库</li>
+<li><a href="https://github.com/henrikbjorn/Lurker" target="_blank" rel="external">Lurker</a> - 一个资源跟踪库</li>
+<li><a href="https://github.com/herrera-io/php-file-locator" target="_blank" rel="external">PHP File Locator</a> - 一个在大型项目中定位文件的库</li>
+<li><a href="https://github.com/alchemy-fr/PHP-FFmpeg/" target="_blank" rel="external">PHP FFmpeg</a> - 一个用于FFmpeg视频包装的库</li>
+<li><a href="https://github.com/thephpleague/csv" target="_blank" rel="external">CSV</a> - 一个CSV数据操作库</li>
+</ul>
+<h2 id="流(_Stream_)">流( Stream )</h2><blockquote>
+<p>处理流的库</p>
+</blockquote>
+<ul>
+<li><a href="https://github.com/fzaninotto/Streamer" target="_blank" rel="external">Streamer</a> - 一个简单的面向对象流包装库</li>
+</ul>
+<h2 id="依赖注入(_Dependency_Injection_)">依赖注入( Dependency Injection )</h2><blockquote>
+<p>实现依赖注入设计模式的库</p>
+</blockquote>
+<ul>
+<li><a href="http://pimple.sensiolabs.org/" target="_blank" rel="external">Pimple</a> - 一个小的依赖注入容器</li>
+<li><a href="https://github.com/rdlowrey/Auryn" target="_blank" rel="external">Auryn</a> - 另一个小的依赖注入容器</li>
+<li><a href="https://github.com/thephpleague/container" target="_blank" rel="external">Container</a> - 另一个灵活的依赖注入容器</li>
+<li><a href="http://php-di.org/" target="_blank" rel="external">PHP DI</a> - 一个使用标注实现的依赖注入</li>
+<li><a href="https://github.com/symfony/DependencyInjection" target="_blank" rel="external">Acclimate</a> - 依赖注入容器和服务定位器的通用接口</li>
+<li><a href="https://github.com/symfony/DependencyInjection" target="_blank" rel="external">Symfony DI</a> - 一个的依赖注入组件(SF2)</li>
+</ul>
+<h2 id="图像(_Imagery_)">图像( Imagery )</h2><blockquote>
+<p>处理图像的库</p>
+</blockquote>
+<ul>
+<li><a href="http://imagine.readthedocs.org/en/latest/index.html" target="_blank" rel="external">Imagine</a> - 一个图像处理库</li>
+<li><a href="https://github.com/Sybio/ImageWorkshop" target="_blank" rel="external">PHP Image Workshop</a> - 另一个图像处理库</li>
+<li><a href="https://github.com/Intervention/image" target="_blank" rel="external">Intervention Image</a> - 同样还是一个图像处理库</li>
+<li><a href="https://github.com/Sybio/GifFrameExtractor" target="_blank" rel="external">GIF Frame Extractor</a> - 一个提取GIF动画帧信息的库</li>
+<li><a href="https://github.com/Sybio/GifCreator" target="_blank" rel="external">GIF Creator</a> - 从多幅图片中创建GIF动画的库</li>
+<li><a href="https://github.com/nmcteam/image-with-text" target="_blank" rel="external">Image With Text</a> - 在图像中嵌入文本的库</li>
+<li><a href="https://github.com/php-loep/color-extractor" target="_blank" rel="external">Color Extractor</a> - 从图像中提取颜色的库</li>
+<li><a href="https://github.com/thephpleague/glide" target="_blank" rel="external">Glide</a> - 一个按需的图片处理库</li>
+<li><a href="https://github.com/psliwa/image-optimizer" target="_blank" rel="external">Image Optimizer</a> - 一个优化图片的库</li>
+</ul>
+<h2 id="测试(_Testing_)">测试( Testing )</h2><blockquote>
+<p>测试代码库和生成测试数据的库</p>
+</blockquote>
+<ul>
+<li><a href="https://github.com/sebastianbergmann/phpunit" target="_blank" rel="external">PHPUnit</a> - 一个单元测试框架</li>
+<li><a href="https://github.com/sebastianbergmann/dbunit" target="_blank" rel="external">DBUnit</a> - PHPUnit的代码测试库</li>
+<li><a href="https://github.com/brianium/paratest" target="_blank" rel="external">ParaTest</a> - PHPUnit的并行测试库</li>
+<li><a href="https://github.com/phpspec/phpspec" target="_blank" rel="external">PHPSpec</a> - 根据规范的单元测试库</li>
+<li><a href="https://github.com/Codeception/Codeception" target="_blank" rel="external">Codeception</a> - 一个全栈测试框架</li>
+<li><a href="https://github.com/Codeception/AspectMock" target="_blank" rel="external">AspectMock</a> - PHPUnit/Codeception的模拟框架</li>
+<li><a href="https://github.com/atoum/atoum" target="_blank" rel="external">Atoum</a> - 一个简单的测试库</li>
+<li><a href="https://github.com/padraic/mockery" target="_blank" rel="external">Mockery</a> - 一个用于测试的模拟对象库</li>
+<li><a href="https://github.com/mlively/Phake" target="_blank" rel="external">Phake</a> - 另一个用于测试的模拟对象库</li>
+<li><a href="https://github.com/phpspec/prophecy" target="_blank" rel="external">Prophecy</a> - 一个强大的模拟框架</li>
+<li><a href="https://github.com/fzaninotto/Faker" target="_blank" rel="external">Faker</a> - 一个伪数据生成库</li>
+<li><a href="https://github.com/mauris/samsui" target="_blank" rel="external">Samsui</a> - 另一个伪数据生成库</li>
+<li><a href="https://github.com/nelmio/alice" target="_blank" rel="external">Alice</a> - 用于生成复杂数据的库</li>
+<li><a href="http://behat.org/" target="_blank" rel="external">Behat</a> - 一个行为驱动开发（BDD）的测试框架</li>
+<li><a href="https://github.com/danielstjules/pho" target="_blank" rel="external">Pho</a> - 另一个行为驱动开发的测试框架</li>
+<li><a href="http://mink.behat.org/" target="_blank" rel="external">Mink</a> - Web验收测试</li>
+<li><a href="https://github.com/InterNations/http-mock" target="_blank" rel="external">HTTP Mock</a> - 一个在单元测试中模拟HTTP请求的库</li>
+<li><a href="https://github.com/mikey179/vfsStream" target="_blank" rel="external">VFS Stream</a> - 一个用于测试的虚拟文件系统流包装</li>
+<li><a href="https://github.com/adlawson/vfs.php" target="_blank" rel="external">VFS</a> - 另一个用于测试的虚拟文件系统</li>
+<li><a href="http://locust.io/" target="_blank" rel="external">Locust</a> - 一个Python开发的现代负载测试库</li>
+<li><a href="https://github.com/peridot-php/peridot" target="_blank" rel="external">Peridot</a> - 一个事件驱动的测试框架</li>
+</ul>
+<h2 id="持续集成(_Continuous_Integration_)">持续集成( Continuous Integration )</h2><blockquote>
+<p>持续集成的库和应用</p>
+</blockquote>
+<ul>
+<li><a href="https://travis-ci.org/" target="_blank" rel="external">Travis CI</a> - 一个持续集成的平台</li>
+<li><a href="https://semaphoreapp.com/" target="_blank" rel="external">SemaphoreCI</a> - 一个给开源程序和私有项目的持续集成平台</li>
+<li><a href="http://www.phptesting.org/" target="_blank" rel="external">PHPCI</a> - 一个PHP的开源持续集成平台</li>
+<li><a href="http://sismo.sensiolabs.org/" target="_blank" rel="external">Sismo</a> - 一个持续的测试服务器库</li>
+<li><a href="http://jenkins-ci.org/" target="_blank" rel="external">Jenkins</a> - PHP支持的持续集成平台</li>
+<li><a href="https://github.com/jolicode/JoliCi" target="_blank" rel="external">JoliCi</a> - PHP开发的由Docker支持的持续集成客户端</li>
+</ul>
+<h2 id="文档(_Documentation_)">文档( Documentation )</h2><blockquote>
+<p>生成项目文档的库</p>
+</blockquote>
+<ul>
+<li><a href="https://github.com/fabpot/Sami" target="_blank" rel="external">Sami</a> - 一个API文档生成器</li>
+<li><a href="https://github.com/apigen/apigen" target="_blank" rel="external">APIGen</a> - 另一个API文档生成器</li>
+<li><a href="https://github.com/phpDocumentor/phpDocumentor2" target="_blank" rel="external">PHP Documentor 2</a> - 文档生成器</li>
+<li><a href="http://phpdox.de/" target="_blank" rel="external">phpDox</a> - 一个PHP项目的文档生成器（不仅仅是API文档）</li>
+</ul>
+<h2 id="安全(_Security_)">安全( Security )</h2><blockquote>
+<p>用于生成安全的随机数、加密数据、扫描漏洞的库</p>
+</blockquote>
+<ul>
+<li><a href="https://github.com/ezyang/htmlpurifier" target="_blank" rel="external">HTML Purifier</a> - 一个标准的HTML过滤器</li>
+<li><a href="https://github.com/ircmaxell/RandomLib" target="_blank" rel="external">RandomLib</a> - 生成随机数和随机字符串的库</li>
+<li><a href="https://github.com/pixeloution/true-random" target="_blank" rel="external">True Random</a> - 使用www.random.org生成随机数的库</li>
+<li><a href="https://github.com/padraic/SecurityMultiTool" target="_blank" rel="external">SecurityMultiTool</a> - 一个PHP安全库</li>
+<li><a href="http://phpseclib.sourceforge.net/" target="_blank" rel="external">PHPSecLib</a> - 一个纯的PHP安全通信库</li>
+<li><a href="https://github.com/timoh6/TCrypto" target="_blank" rel="external">TCrypto</a> - 一个简单的键值加密存储库</li>
+<li><a href="https://github.com/PHPIDS/PHPIDS" target="_blank" rel="external">PHP IDS</a> - 一个结构化的PHP安全层</li>
+<li><a href="https://github.com/Herzult/php-ssh" target="_blank" rel="external">PHP SSH</a> - 面向对象的SSH包装库</li>
+<li><a href="https://github.com/psecio/iniscan" target="_blank" rel="external">IniScan</a> - 一个扫描PHP INI文件安全的工具</li>
+<li><a href="https://security.sensiolabs.org/" target="_blank" rel="external">SensioLabs Security Check</a> -  一个根据安全建议检查Composer依赖的Web工具</li>
+<li><a href="https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project" target="_blank" rel="external">Zed</a> - 用于Web应用的集成渗透测试工具</li>
+</ul>
+<h2 id="密码(_Passwords_)">密码( Passwords )</h2><blockquote>
+<p>处理和存储密码的库和工具</p>
+</blockquote>
+<ul>
+<li><a href="https://github.com/ircmaxell/password_compat" target="_blank" rel="external">Password Compat</a> - 一个用于新的PHP5.5密码功能的兼容库</li>
+<li><a href="http://www.openwall.com/phpass/" target="_blank" rel="external">phpass</a> - 一个便携式密码哈希框架</li>
+<li><a href="https://github.com/ircmaxell/PHP-PasswordLib" target="_blank" rel="external">PHP Password Lib</a> - 一个用于生成和验证密码的库</li>
+<li><a href="https://github.com/ircmaxell/password-policy" target="_blank" rel="external">Password Policy</a> - 一个PHP和JavaScript的密码规则库</li>
+<li><a href="https://github.com/jeremykendall/password-validator" target="_blank" rel="external">Password Validator</a> - 验证和升级密码哈希的库</li>
+<li><a href="https://github.com/bjeavons/zxcvbn-php" target="_blank" rel="external">Zxcvbn PHP</a> - 一个基于Zxcvbn JS的PHP显示密码强度估计库</li>
+<li><a href="https://github.com/timoh6/GenPhrase" target="_blank" rel="external">GenPhrase</a> - 一个生成安全随机口令的库</li>
+</ul>
+<h2 id="代码分析(_Code_Analysis_)">代码分析( Code Analysis )</h2><blockquote>
+<p>用于分析、解析和操作代码库的工具</p>
+</blockquote>
+<ul>
+<li><a href="https://github.com/nikic/PHP-Parser" target="_blank" rel="external">PHP Parser</a> - 一个PHP编写的PHP解析器</li>
+<li><a href="https://github.com/ircmaxell/PHPPHP" target="_blank" rel="external">PHPPHP</a> - 一个PHP实现的PHP虚拟机</li>
+<li><a href="https://github.com/fieryprophet/php-sandbox" target="_blank" rel="external">PHPSandbox</a> - PHP的沙盒环境</li>
+<li><a href="https://github.com/jakubledl/dissect" target="_blank" rel="external">Dissect</a> - 词法和语法分析的工具集合</li>
+<li><a href="http://phpmd.org/" target="_blank" rel="external">PHP Mess Detector</a> - 一个扫描代码bug、次佳代码和未使用参数的库</li>
+<li><a href="https://github.com/squizlabs/PHP_CodeSniffer" target="_blank" rel="external">PHP Code Sniffer</a> - 一个检测PHP、CSS和JS代码标准冲突的库</li>
+<li><a href="https://github.com/sebastianbergmann/phpcpd" target="_blank" rel="external">PHPCPD</a> - 一个检测复制和粘贴代码的库</li>
+<li><a href="https://github.com/scrutinizer-ci/php-analyzer" target="_blank" rel="external">PHP Analyser</a> - 一个分析PHP代码中错误的库</li>
+<li><a href="https://github.com/FriendsOfPHP/PHP-CS-Fixer" target="_blank" rel="external">PHP CS Fixer</a> - 一个代码标准库</li>
+<li><a href="https://github.com/schmittjoh/php-manipulator" target="_blank" rel="external">PHP Manipulator</a> - 用于分析和修改PHP源代码的库</li>
+<li><a href="https://github.com/Halleck45/PhpMetrics" target="_blank" rel="external">PHP Metrics</a> - 一个静态测量库</li>
+<li><a href="https://github.com/QafooLabs/php-refactoring-browser" target="_blank" rel="external">PHP Refactoring Browser</a> - 一个用于重构PHP代码的命令行工具</li>
+<li><a href="https://github.com/devster/ubench" target="_blank" rel="external">UBench</a> - 一个简单的小型基准测试库</li>
+<li><a href="https://github.com/polyfractal/athletic" target="_blank" rel="external">Athletic</a> - 一个基于标注的基准测试库</li>
+<li><a href="https://github.com/Trismegiste/Mondrian" target="_blank" rel="external">Mondrian</a> - 使用图论的代码分析工具</li>
+<li><a href="https://scrutinizer-ci.com/" target="_blank" rel="external">Scrutinizer</a> - 检查PHP代码的Web工具</li>
+<li><a href="https://github.com/sebastianbergmann/phploc" target="_blank" rel="external">PHPLOC</a> - 一个快速评估PHP项目大小的工具</li>
+<li><a href="https://github.com/jbrooksuk/phpcheckstyle" target="_blank" rel="external">PHPCheckstyle</a> - 一个帮助遵守特定代码规则的工具</li>
+<li><a href="https://github.com/mamuz/PhpDependencyAnalysis" target="_blank" rel="external">PhpDependencyAnalysis</a> - 一个创建可定制型依赖关系图表的工具</li>
+<li><a href="http://codeclimate.com/" target="_blank" rel="external">Code Climate</a> - 自动化的code review</li>
+</ul>
+<h2 id="调试和性能(_Debugging_and_Profiling_)">调试和性能( Debugging and Profiling )</h2><ul>
+<li><a href="https://github.com/phacility/xhprof" target="_blank" rel="external">xHprof</a> - 另一个PHP性能评测工具</li>
+</ul>
+<h2 id="日期与时间(_Date_and_Time_)">日期与时间( Date and Time )</h2><h2 id="日志(_Logging_)">日志( Logging )</h2><h2 id="PDF">PDF</h2><h2 id="Office">Office</h2><h2 id="数据库(_Database_)">数据库( Database )</h2><h2 id="非关系型数据库(_NoSQL_)">非关系型数据库( NoSQL )</h2><h2 id="队列(_Queue_)">队列( Queue )</h2><h2 id="搜索(_Search_)">搜索( Search )</h2><h2 id="命令行(_Command_Line_)">命令行( Command Line )</h2><h2 id="鉴权(_Authentication_and_Authorization_)">鉴权( Authentication and Authorization )</h2><h2 id="标记(_Markup_)">标记( Markup )</h2><h2 id="字符串(_Strings_)">字符串( Strings )</h2><h2 id="数字(_Numbers_)">数字( Numbers )</h2><h2 id="过滤和验证(_Filtering_ang_Validation_)">过滤和验证( Filtering ang Validation )</h2><h2 id="API">API</h2><h2 id="缓存(_Caching_)">缓存( Caching )</h2><h2 id="数据结构和存储(_Data_Structure_and_Storage_)">数据结构和存储( Data Structure and Storage )</h2><h2 id="通知(_Notifications_)">通知( Notifications )</h2><h2 id="部署(_Deployment_)">部署( Deployment )</h2></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/php/" rel="tag">#php</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/29/android-component/" rel="next">动手开发一个安卓APP - 常用组件/控件使用介绍</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar.jpg" alt="Johnson Zhang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Johnson Zhang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/hpze2000" target="_blank">github</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#awesome-php"><span class="nav-number">1.</span> <span class="nav-text">awesome-php</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#学习资源"><span class="nav-number">1.1.</span> <span class="nav-text">学习资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖管理(_Dependency_Management_)"><span class="nav-number">1.2.</span> <span class="nav-text">依赖管理( Dependency Management )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#框架(_Frameworks_)"><span class="nav-number">1.3.</span> <span class="nav-text">框架( Frameworks )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件(_Components_)"><span class="nav-number">1.4.</span> <span class="nav-text">组件( Components )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微框架(_Micro_Frameworks_)"><span class="nav-number">1.5.</span> <span class="nav-text">微框架( Micro Frameworks )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#路由(_Routers_)"><span class="nav-number">1.6.</span> <span class="nav-text">路由( Routers )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模板引擎(_Templating_)"><span class="nav-number">1.7.</span> <span class="nav-text">模板引擎( Templating )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态站生成器(_Static_Site_Generators_)"><span class="nav-number">1.8.</span> <span class="nav-text">静态站生成器( Static Site Generators )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP"><span class="nav-number">1.9.</span> <span class="nav-text">HTTP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中间件(_Middlewares_)"><span class="nav-number">1.10.</span> <span class="nav-text">中间件( Middlewares )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#URL"><span class="nav-number">1.11.</span> <span class="nav-text">URL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#邮件(_Email_)"><span class="nav-number">1.12.</span> <span class="nav-text">邮件( Email )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件操作(_Files_)"><span class="nav-number">1.13.</span> <span class="nav-text">文件操作( Files )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流(_Stream_)"><span class="nav-number">1.14.</span> <span class="nav-text">流( Stream )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖注入(_Dependency_Injection_)"><span class="nav-number">1.15.</span> <span class="nav-text">依赖注入( Dependency Injection )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像(_Imagery_)"><span class="nav-number">1.16.</span> <span class="nav-text">图像( Imagery )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试(_Testing_)"><span class="nav-number">1.17.</span> <span class="nav-text">测试( Testing )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#持续集成(_Continuous_Integration_)"><span class="nav-number">1.18.</span> <span class="nav-text">持续集成( Continuous Integration )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文档(_Documentation_)"><span class="nav-number">1.19.</span> <span class="nav-text">文档( Documentation )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全(_Security_)"><span class="nav-number">1.20.</span> <span class="nav-text">安全( Security )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#密码(_Passwords_)"><span class="nav-number">1.21.</span> <span class="nav-text">密码( Passwords )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码分析(_Code_Analysis_)"><span class="nav-number">1.22.</span> <span class="nav-text">代码分析( Code Analysis )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调试和性能(_Debugging_and_Profiling_)"><span class="nav-number">1.23.</span> <span class="nav-text">调试和性能( Debugging and Profiling )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日期与时间(_Date_and_Time_)"><span class="nav-number">1.24.</span> <span class="nav-text">日期与时间( Date and Time )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日志(_Logging_)"><span class="nav-number">1.25.</span> <span class="nav-text">日志( Logging )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PDF"><span class="nav-number">1.26.</span> <span class="nav-text">PDF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Office"><span class="nav-number">1.27.</span> <span class="nav-text">Office</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库(_Database_)"><span class="nav-number">1.28.</span> <span class="nav-text">数据库( Database )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非关系型数据库(_NoSQL_)"><span class="nav-number">1.29.</span> <span class="nav-text">非关系型数据库( NoSQL )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#队列(_Queue_)"><span class="nav-number">1.30.</span> <span class="nav-text">队列( Queue )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搜索(_Search_)"><span class="nav-number">1.31.</span> <span class="nav-text">搜索( Search )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令行(_Command_Line_)"><span class="nav-number">1.32.</span> <span class="nav-text">命令行( Command Line )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#鉴权(_Authentication_and_Authorization_)"><span class="nav-number">1.33.</span> <span class="nav-text">鉴权( Authentication and Authorization )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标记(_Markup_)"><span class="nav-number">1.34.</span> <span class="nav-text">标记( Markup )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串(_Strings_)"><span class="nav-number">1.35.</span> <span class="nav-text">字符串( Strings )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数字(_Numbers_)"><span class="nav-number">1.36.</span> <span class="nav-text">数字( Numbers )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过滤和验证(_Filtering_ang_Validation_)"><span class="nav-number">1.37.</span> <span class="nav-text">过滤和验证( Filtering ang Validation )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API"><span class="nav-number">1.38.</span> <span class="nav-text">API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存(_Caching_)"><span class="nav-number">1.39.</span> <span class="nav-text">缓存( Caching )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据结构和存储(_Data_Structure_and_Storage_)"><span class="nav-number">1.40.</span> <span class="nav-text">数据结构和存储( Data Structure and Storage )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通知(_Notifications_)"><span class="nav-number">1.41.</span> <span class="nav-text">通知( Notifications )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署(_Deployment_)"><span class="nav-number">1.42.</span> <span class="nav-text">部署( Deployment )</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Johnson Zhang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
