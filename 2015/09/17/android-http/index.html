@@ -1,0 +1,710 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="android,http," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="总共4个课程 包含以下内容
+
+第一节 ：android开发环境设置，android HTTP 请求，与服务端交互（图片请求，JSON 解析 缓存处理等）
+第二节 ：android 常用组件/控件使用介绍（activity，fragment，actionBar，dialog，tabhost，listview，RecyclerView，WebView, view切换，侧滑菜单，下拉刷新组件 等（这里可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动手开发一个安卓APP - HTTP 网络请求">
+<meta property="og:url" content="http://yoursite.com/2015/09/17/android-http/index.html">
+<meta property="og:site_name" content="Johnson Zhang">
+<meta property="og:description" content="总共4个课程 包含以下内容
+
+第一节 ：android开发环境设置，android HTTP 请求，与服务端交互（图片请求，JSON 解析 缓存处理等）
+第二节 ：android 常用组件/控件使用介绍（activity，fragment，actionBar，dialog，tabhost，listview，RecyclerView，WebView, view切换，侧滑菜单，下拉刷新组件 等（这里可">
+<meta property="og:updated_time" content="2015-10-08T06:08:55.556Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="动手开发一个安卓APP - HTTP 网络请求">
+<meta name="twitter:description" content="总共4个课程 包含以下内容
+
+第一节 ：android开发环境设置，android HTTP 请求，与服务端交互（图片请求，JSON 解析 缓存处理等）
+第二节 ：android 常用组件/控件使用介绍（activity，fragment，actionBar，dialog，tabhost，listview，RecyclerView，WebView, view切换，侧滑菜单，下拉刷新组件 等（这里可">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 动手开发一个安卓APP - HTTP 网络请求 | Johnson Zhang </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Johnson Zhang</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              动手开发一个安卓APP - HTTP 网络请求
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-09-17T14:27:46+08:00" content="2015-09-17">
+            2015-09-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="总共4个课程_包含以下内容">总共4个课程 包含以下内容</h2><blockquote>
+<ul>
+<li>第一节 ：android开发环境设置，android HTTP 请求，与服务端交互（图片请求，JSON 解析 缓存处理等）</li>
+<li>第二节 ：android 常用组件/控件使用介绍（activity，fragment，actionBar，dialog，tabhost，listview，RecyclerView，WebView, view切换，侧滑菜单，下拉刷新组件 等（这里可能需要两节时间，视具体情况而定）</li>
+<li>第三节 ：结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端 (一)</li>
+<li>第四节 ：结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端 (二)</li>
+<li>第五节 ：结合实际（考虑做一个对测试有用的项目实战），针对开发完成的新闻类APP，做测试相关的一些工作</li>
+<li>第六节 ：Service，Broadcast，存储及数据操作，多线程及异步任务，动画等</li>
+<li>第七节 ：项目打包，签名，混淆，第三方组件的使用（广告平台，IM SDK，消息推送，自动更新，统计分析，渠道发布，日志监控，用户反馈，社会化分享，定位LBS，支付等）</li>
+</ul>
+</blockquote>
+<h2 id="课程源码">课程源码</h2><ul>
+<li><a href="https://github.com/hpze2000/andoridBestDemo" target="_blank" rel="external">源码 github 项目地址（有github账号的记得帮忙加星哦）</a></li>
+<li><a href="http://git.oschina.net/hpze2000/andoridBestDemo" target="_blank" rel="external">源码 Git.oschina.net 项目地址</a></li>
+</ul>
+<a id="more"></a>
+<h2 id="编写目的">编写目的</h2><blockquote>
+<p>主要是为了分享 如何快速的进行一门语言或者一门技术的学习，采用非循序渐进的方法，让被分享者中那些对这么技术或语言感兴趣的同学，能够迅速的进入开发状态或者迅速的开发出成品。<br>针对的人群，及技术要求，没有限制，主要是 有兴趣和愿意动手<br>主要是开发学习过程中学习经验和方法的分享，授人以渔。</p>
+</blockquote>
+<hr>
+<h3 id="2-_HTTP_协议概要">2. HTTP 协议概要</h3><h4 id="什么是HTTP协议">什么是HTTP协议</h4><blockquote>
+<p>协议是指计算机通信网络中两台计算机之间进行通信所必须共同遵守的规定或规则，超文本传输协议(HTTP)是一种通信协议，它允许将超文本标记语言(HTML)文档从Web服务器传送到客户端的浏览器，目前我们使用的是HTTP/1.1 版本</p>
+</blockquote>
+<h4 id="URL详解">URL详解</h4><blockquote>
+<ul>
+<li><p>URL(Uniform Resource Locator) 地址用于描述一个网络上的资源,  基本格式如下</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">schema://host[<span class="link_label">:port#</span>]/path/.../[<span class="link_label">?query-string</span>][<span class="link_reference">#anchor</span>]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>scheme 指定低层使用的协议(例如：http, https, ftp)</p>
+</li>
+<li>host  HTTP服务器的IP地址或者域名</li>
+<li>port# HTTP服务器的默认端口是80，这种情况下端口号可以省略。如果使用了别的端口，必须指明，例如 <a href="http://www.cnblogs.com:8080/" target="_blank" rel="external">http://www.cnblogs.com:8080/</a></li>
+<li>path  访问资源的路径 例如 <a href="http://www.cnblogs.com/TankXiao" target="_blank" rel="external">http://www.cnblogs.com/TankXiao</a></li>
+<li>query-string 发送给http服务器的数据 例如 <a href="http://zzk.cnblogs.com/s?t=b&amp;w=http" target="_blank" rel="external">http://zzk.cnblogs.com/s?t=b&amp;w=http</a></li>
+<li>anchor- 锚</li>
+</ul>
+</blockquote>
+<h4 id="Get和Post方法的区别">Get和Post方法的区别</h4><blockquote>
+<ul>
+<li>Http协议定义了很多与服务器交互的方法，最基本的有4种，分别是GET,POST,PUT,DELETE. 一个URL地址用于描述一个网络上的资源，而HTTP中的GET, POST,PUT,DELETE就对应着对这个资源的查，改，增，删4个操作。我们最常见的就是GET和POST了。GET一般用于获取/查询资源信息，而POST一般用于更新资源信息.</li>
+<li>GET提交的数据会放在URL之后，以?分割URL和传输数据，参数之间以&amp;相连，如EditPosts.aspx?name=test1&amp;id=123456.  POST方法是把提交的数据放在HTTP包的Body中.</li>
+<li>GET提交的数据大小有限制（因为浏览器对URL的长度有限制），而POST方法提交的数据没有限制.</li>
+</ul>
+</blockquote>
+<h4 id="状态码">状态码</h4><blockquote>
+<ul>
+<li>1XX  提示信息 - 表示请求已被成功接收，继续处理</li>
+<li>2XX  成功 - 表示请求已被成功接收，理解，接受<ul>
+<li>200 服务器成功处理了请求</li>
+</ul>
+</li>
+<li>3XX  重定向 - 要完成请求必须进行更进一步的处理<ul>
+<li>301 请求的网页已永久移动到新的位置，当服务器返回此响应(作为一个GET或HEAD请求的响应)，它会自动转发请求到新的位置</li>
+<li>304 Not Modified 代表上次的文档已经被缓存了， 还可以继续使用</li>
+</ul>
+</li>
+<li>4XX  客户端错误 -  请求有语法错误或请求无法实现<ul>
+<li>400 Bad Request  客户端请求与语法错误，不能被服务器所理解</li>
+<li>403 Forbidden 服务器收到请求，但是拒绝提供服务</li>
+<li>404 Not Found 请求资源不存在（输错了URL）</li>
+</ul>
+</li>
+<li>5XX  服务器端错误 -   服务器未能实现合法的请求<ul>
+<li>500 服务器遇到了一个未曾预料的状况，导致了它无法完成对请求的处理。一般来说，这个问题都会在服务器的程序码出错时出现。</li>
+<li>502 504 作为网关或者代理工作的服务器尝试执行请求时，从上游服务器接收到无效的响应。</li>
+<li>503 Server Unavailable 服务器当前不能处理客户端的请求，一段时间后可能恢复正常</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h4 id="COOKIE_&amp;_SESSION">COOKIE &amp; SESSION</h4><blockquote>
+<ul>
+<li>Cookie是什么？<ul>
+<li>Cookie 是一小段文本信息，伴随着用户请求和页面在 Web 服务器和浏览器之间传递。Cookie 包含每次用户访问站点时 Web 应用程序都可以读取的信息。</li>
+</ul>
+</li>
+<li>为什么需要Cookie？<ul>
+<li>因为HTTP协议是无状态的，对于一个浏览器发出的多次请求，WEB服务器无法区分 是不是来源于同一个浏览器。所以，需要额外的数据用于维护会话。 Cookie 正是这样的一段随HTTP请求一起被传递的额外数据。</li>
+</ul>
+</li>
+<li>Cookie能做什么？<ul>
+<li>Cookie只是一段文本，所以它只能保存字符串。而且浏览器对它有大小限制以及 它会随着每次请求被发送到服务器，所以应该保证它不要太大。 Cookie的内容也是明文保存的，有些浏览器提供界面修改，所以， 不适合保存重要的或者涉及隐私的内容。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h3 id="3-_使用_Android_APP_作为客户端_发送一个_http_get_请求">3. 使用 Android APP 作为客户端 发送一个 http get 请求</h3><h4 id="1-_看看如果使用安卓原生代码发送一个_http_get_请求">1. 看看如果使用安卓原生代码发送一个 http get 请求</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> function <span class="title">httpGet</span><span class="params">(String url)</span> </span>&#123;</span><br><span class="line">	HttpURLConnection urlConnection = <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		URL url = <span class="keyword">new</span> URL(url);</span><br><span class="line">		urlConnection = (HttpURLConnection) url.openConnection();</span><br><span class="line">		InputStream in = <span class="keyword">new</span> BufferedInputStream(</span><br><span class="line">				urlConnection.getInputStream());</span><br><span class="line">		String result = readInStream(in);</span><br><span class="line">		handleResult(result);</span><br><span class="line">	&#125; <span class="keyword">catch</span> (MalformedURLException e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">		urlConnection.disconnect();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">handleResult</span><span class="params">(String result)</span> </span>&#123;</span><br><span class="line">	System.out.println(result);</span><br><span class="line">	<span class="comment">// TODO 这里完成 对JSON,XML 等数据的 处理 界面的交互等操作</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//在按钮点击事件中 这样调用</span></span><br><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">	setContentView(R.layout.activity_main);</span><br><span class="line">	</span><br><span class="line">	Button btnRequest = (Button) findViewById(R.id.btn_request);</span><br><span class="line">	btnRequest.setOnClickListener(<span class="keyword">new</span> OnClickListener() &#123;</span><br><span class="line">		<span class="annotation">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">				<span class="annotation">@Override</span></span><br><span class="line">				<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">					httpGet(<span class="string">"http://www.baidu.com"</span>);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;).start();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * 以上代码存在的诸多问题</span><br><span class="line"> * 1： 需要优化异步操作</span><br><span class="line"> * 2： 网络请求的排序（scheduling）</span><br><span class="line"> * 3： 网络请求的优先级处理</span><br><span class="line"> * 4： 缓存</span><br><span class="line"> * 5： 多级别取消请求</span><br><span class="line"> * 6： 和Activity和生命周期的联动（Activity结束时同时取消所有网络请求） 等</span><br><span class="line"> */</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-_站在巨人的肩膀_使用_推荐的库完成_高效/合理的_HTTP_请求_此处只列出这两个，类似库上还有很多">2. 站在巨人的肩膀 使用 推荐的库完成 高效/合理的 HTTP 请求 此处只列出这两个，类似库上还有很多</h4><ul>
+<li><a href="https://android.googlesource.com/platform/frameworks/volley" target="_blank" rel="external">volley (Android 官方)</a> </li>
+<li><a href="http://square.github.io/okhttp/" target="_blank" rel="external">OKHTTP (很棒HTTP客户端 与Retrofit配合使用)</a></li>
+<li><a href="http://square.github.io/retrofit/" target="_blank" rel="external">retrofit (Retrofit把RESTAPI返回的数据转化为Java对象方便操作。同时还封装了网络代码的调用)</a><blockquote>
+<p> 因为本人主要是使用过okhttp，所以此处直接介绍这个库的使用为例，主要还是直接查看库的文档 （设置 3 个类文件）</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * OkHttpUtils.java</span><br><span class="line"> * 单例一个 OkHttpClient  </span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OkHttpUtils</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> OkHttpClient singleton;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> OkHttpClient <span class="title">getInstance</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (singleton == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (OkHttpUtils.class) &#123;</span><br><span class="line">                <span class="keyword">if</span> (singleton == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="comment">//缓存保存的目录信息</span></span><br><span class="line">                    File cacheDir = <span class="keyword">new</span> File(context.getCacheDir(), Config.RESPONSE_CACHE);</span><br><span class="line">                    singleton = <span class="keyword">new</span> OkHttpClient();</span><br><span class="line">                    <span class="comment">//设置缓存</span></span><br><span class="line">                    singleton.setCache(<span class="keyword">new</span> Cache(cacheDir, Config.RESPONSE_CACHE_SIZE));</span><br><span class="line">                    <span class="comment">//设置连接超时</span></span><br><span class="line">                    singleton.setConnectTimeout(Config.HTTP_CONNECT_TIMEOUT, TimeUnit.MILLISECONDS);</span><br><span class="line">                    <span class="comment">//设置读取超时</span></span><br><span class="line">                    singleton.setReadTimeout(Config.HTTP_READ_TIMEOUT, TimeUnit.MILLISECONDS);</span><br><span class="line">                    <span class="comment">//设置 cookie </span></span><br><span class="line">                    CookieManager cookieManager = <span class="keyword">new</span> CookieManager();</span><br><span class="line">                    cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);</span><br><span class="line">                    singleton.setCookieHandler(cookieManager);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> singleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * GsonUtils.java</span><br><span class="line"> * 单例一个 Gson 这里我们使用 GSON 库 左右JSON的解析库</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GsonUtils</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Gson <span class="title">newInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        GsonBuilder builder = <span class="keyword">new</span> GsonBuilder();</span><br><span class="line">        <span class="keyword">return</span> builder.create();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * RetrofitUtils.java</span><br><span class="line"> * 单例一个 Retrofit</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RetrofitUtils</span> </span>&#123;</span><br><span class="line">    <span class="comment">//因为这里考虑到 项目需要访问多个 不同 endPoint 也就是域名的需求，所有启用hashmap左右存储单例对象</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> HashMap&lt;String, RestAdapter&gt; singletons = <span class="keyword">new</span> HashMap();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">createApi</span><span class="params">(Context context, Class&lt;T&gt; clazz, String endPoint)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (singletons.get(endPoint) == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (RetrofitUtils.class) &#123;</span><br><span class="line">                <span class="keyword">if</span> (singletons.get(endPoint) == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    RestAdapter.Builder builder = <span class="keyword">new</span> RestAdapter.Builder();</span><br><span class="line">                    <span class="comment">//设置 调用API 的基础域名 比如：http://api.meitu.tv</span></span><br><span class="line">                    builder.setEndpoint(endPoint);</span><br><span class="line">                    <span class="comment">//设置 返回数据的转换对象 也就是上面的 GsonUtils</span></span><br><span class="line">                    builder.setConverter(<span class="keyword">new</span> GsonConverter(GsonUtils.newInstance()));</span><br><span class="line">                    <span class="comment">//设置 http 请求的客户端 也就是 上面的 OkHttpUtils</span></span><br><span class="line">                    builder.setClient(<span class="keyword">new</span> OkClient(OkHttpUtils.getInstance(context)));</span><br><span class="line">                    <span class="comment">//设置要显示的日志等级</span></span><br><span class="line">                    builder.setLogLevel(</span><br><span class="line">                            Config.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE);</span><br><span class="line">                    <span class="comment">//这里可以设置 每个请求时要注入的的信息，比如此处设置了 加入头信息的 缓存参数</span></span><br><span class="line">                    builder.setRequestInterceptor(<span class="keyword">new</span> RequestInterceptor() &#123;</span><br><span class="line">                        <span class="annotation">@Override</span></span><br><span class="line">                        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">intercept</span><span class="params">(RequestFacade request)</span> </span>&#123;</span><br><span class="line">                            <span class="keyword">if</span> (DeviceUtils.hasInternet()) &#123;</span><br><span class="line">                                <span class="keyword">int</span> maxAge = <span class="number">60</span>; <span class="comment">// read from cache for 1 minute</span></span><br><span class="line">                                request.addHeader(<span class="string">"Cache-Control"</span>, <span class="string">"public, max-age="</span> + maxAge);</span><br><span class="line">                            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                                <span class="keyword">int</span> maxStale = <span class="number">60</span> * <span class="number">60</span> * <span class="number">24</span> * <span class="number">28</span>; <span class="comment">// tolerate 4-weeks stale</span></span><br><span class="line">                                request.addHeader(<span class="string">"Cache-Control"</span>,</span><br><span class="line">                                        <span class="string">"public, only-if-cached, max-stale="</span> + maxStale);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">                    singletons.put(endPoint, builder.build());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> singletons.get(endPoint).create(clazz);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="一些比较好的资源：">一些比较好的资源：</h2><blockquote>
+<p>可用的 API 接口 解决你找不到API接口的问题</p>
+<ol>
+<li><a href="http://developers.douban.com/wiki/?title=api_v2" target="_blank" rel="external">豆瓣API 接口很多大部分可以直接调用，做开发测试足以，而且接口种类繁多</a></li>
+<li><a href="http://developer.dianping.com/app/tech/api" target="_blank" rel="external">大众点评API 需要注册为开发者</a><br>较好的一些安卓开发资源网站 （github 就不用说了）</li>
+<li><a href="http://www.android-arsenal.com/" target="_blank" rel="external">android 阿森纳 安卓的兵工厂 各种开源项目搜索</a></li>
+<li><a href="http://stackoverflow.com" target="_blank" rel="external">http://stackoverflow.com 知名的IT问答社区，有时找不到答案的时候这里可能有你想要的</a></li>
+<li><a href="http://iconfont.cn/" target="_blank" rel="external">http://iconfont.cn/ 图标库，安卓开发时需要的一些图表可以很容易在这里找到</a></li>
+<li><a href="http://www.bootcss.com/p/font-awesome/" target="_blank" rel="external">Font Awesome WEB 图表字体库，在安卓中可以结合 http://joanzapata.com/android-iconify 进行使用字体图标</a></li>
+<li><a href="http://www.appbrain.com/stats/libraries" target="_blank" rel="external">集合了当下最流行的一些android开发使用的一些库</a></li>
+</ol>
+</blockquote>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag">#android</a>
+          
+            <a href="/tags/http/" rel="tag">#http</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/29/android-component/" rel="prev">动手开发一个安卓APP - 常用组件/控件使用介绍</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/17/https-protocol/" rel="next">https协议了解，以及相关协议的解析</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar.jpg" alt="Johnson Zhang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Johnson Zhang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/hpze2000" target="_blank">github</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#总共4个课程_包含以下内容"><span class="nav-number">1.</span> <span class="nav-text">总共4个课程 包含以下内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#课程源码"><span class="nav-number">2.</span> <span class="nav-text">课程源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写目的"><span class="nav-number">3.</span> <span class="nav-text">编写目的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-_HTTP_协议概要"><span class="nav-number">3.1.</span> <span class="nav-text">2. HTTP 协议概要</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是HTTP协议"><span class="nav-number">3.1.1.</span> <span class="nav-text">什么是HTTP协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#URL详解"><span class="nav-number">3.1.2.</span> <span class="nav-text">URL详解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Get和Post方法的区别"><span class="nav-number">3.1.3.</span> <span class="nav-text">Get和Post方法的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#状态码"><span class="nav-number">3.1.4.</span> <span class="nav-text">状态码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#COOKIE_&_SESSION"><span class="nav-number">3.1.5.</span> <span class="nav-text">COOKIE & SESSION</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-_使用_Android_APP_作为客户端_发送一个_http_get_请求"><span class="nav-number">3.2.</span> <span class="nav-text">3. 使用 Android APP 作为客户端 发送一个 http get 请求</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-_看看如果使用安卓原生代码发送一个_http_get_请求"><span class="nav-number">3.2.1.</span> <span class="nav-text">1. 看看如果使用安卓原生代码发送一个 http get 请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-_站在巨人的肩膀_使用_推荐的库完成_高效/合理的_HTTP_请求_此处只列出这两个，类似库上还有很多"><span class="nav-number">3.2.2.</span> <span class="nav-text">2. 站在巨人的肩膀 使用 推荐的库完成 高效/合理的 HTTP 请求 此处只列出这两个，类似库上还有很多</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些比较好的资源："><span class="nav-number">4.</span> <span class="nav-text">一些比较好的资源：</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Johnson Zhang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

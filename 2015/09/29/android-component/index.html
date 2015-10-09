@@ -1,0 +1,862 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="activity,android,fragment," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="课程源码
+源码 github 项目地址（有github账号的记得帮忙加星哦）
+源码 Git.oschina.net 项目地址">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动手开发一个安卓APP - 常用组件/控件使用介绍">
+<meta property="og:url" content="http://yoursite.com/2015/09/29/android-component/index.html">
+<meta property="og:site_name" content="Johnson Zhang">
+<meta property="og:description" content="课程源码
+源码 github 项目地址（有github账号的记得帮忙加星哦）
+源码 Git.oschina.net 项目地址">
+<meta property="og:image" content="http://yoursite.com/uploads/activity_lifecycle.png">
+<meta property="og:image" content="http://yoursite.com/uploads/fragment_lifecycle.png">
+<meta property="og:image" content="http://yoursite.com/uploads/linearlayout.png">
+<meta property="og:image" content="http://yoursite.com/uploads/sample-linearlayout.png">
+<meta property="og:image" content="http://yoursite.com/uploads/relativelayout.png">
+<meta property="og:image" content="http://yoursite.com/uploads/sample-relativelayout.png">
+<meta property="og:image" content="http://yoursite.com/uploads/actionbar.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/actionbaritem.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Split_Action_Bar.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Navigating_Up.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Action_View.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Action_Provider.png">
+<meta property="og:image" content="http://yoursite.com/uploads/Navigation_Tabs2.png">
+<meta property="og:image" content="http://yoursite.com/uploads/Navigation_Tabs.png">
+<meta property="og:image" content="http://yoursite.com/uploads/Drop_down_Navigation.png">
+<meta property="og:image" content="http://yoursite.com/uploads/listview-adapter.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/listview_recycler.jpg">
+<meta property="og:updated_time" content="2015-10-08T06:19:37.883Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="动手开发一个安卓APP - 常用组件/控件使用介绍">
+<meta name="twitter:description" content="课程源码
+源码 github 项目地址（有github账号的记得帮忙加星哦）
+源码 Git.oschina.net 项目地址">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 动手开发一个安卓APP - 常用组件/控件使用介绍 | Johnson Zhang </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Johnson Zhang</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              动手开发一个安卓APP - 常用组件/控件使用介绍
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-09-29T10:23:26+08:00" content="2015-09-29">
+            2015-09-29
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="课程源码">课程源码</h2><ul>
+<li><a href="https://github.com/hpze2000/andoridBestDemo" target="_blank" rel="external">源码 github 项目地址（有github账号的记得帮忙加星哦）</a></li>
+<li><a href="http://git.oschina.net/hpze2000/andoridBestDemo" target="_blank" rel="external">源码 Git.oschina.net 项目地址</a></li>
+</ul>
+<a id="more"></a>
+<h2 id="参考资源">参考资源</h2><p><strong><a href="http://developer.android.com/guide/components/index.html" target="_blank" rel="external">android 官方文档</a></strong></p>
+<h3 id="activity">activity</h3><blockquote>
+<p><a href="http://developer.android.com/intl/zh-cn/guide/components/activities.html" target="_blank" rel="external">android activities 官方文档</a></p>
+</blockquote>
+<p><img src="/uploads/activity_lifecycle.png" alt="android activity 生命周期" title="activity lifecycle"></p>
+<h3 id="fragments">fragments</h3><blockquote>
+<p><a href="http://developer.android.com/intl/zh-cn/guide/components/fragments.html" target="_blank" rel="external">android fragments 官方文档</a></p>
+</blockquote>
+<p><img src="/uploads/fragment_lifecycle.png" alt="android fragments 生命周期" title="fragment lifecycle"></p>
+<h4 id="fragments_加载方式">fragments 加载方式</h4><ul>
+<li>(直接在布局文件中定义) Declare the fragment inside the activity’s layout file.</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">LinearLayout</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attribute">android:orientation</span>=<span class="value">"horizontal"</span></span><br><span class="line">    <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">    <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">fragment</span> <span class="attribute">android:name</span>=<span class="value">"com.example.news.ArticleListFragment"</span></span><br><span class="line">            <span class="attribute">android:id</span>=<span class="value">"@+id/list"</span></span><br><span class="line">            <span class="attribute">android:layout_weight</span>=<span class="value">"1"</span></span><br><span class="line">            <span class="attribute">android:layout_width</span>=<span class="value">"0dp"</span></span><br><span class="line">            <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">fragment</span> <span class="attribute">android:name</span>=<span class="value">"com.example.news.ArticleReaderFragment"</span></span><br><span class="line">            <span class="attribute">android:id</span>=<span class="value">"@+id/viewer"</span></span><br><span class="line">            <span class="attribute">android:layout_weight</span>=<span class="value">"2"</span></span><br><span class="line">            <span class="attribute">android:layout_width</span>=<span class="value">"0dp"</span></span><br><span class="line">            <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>(或者,以编程方式添加现已存在的fragment。) Or, programmatically add the fragment to an existing ViewGroup.</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FragmentManager fragmentManager = getFragmentManager();</span><br><span class="line">FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();</span><br><span class="line">ExampleFragment fragment = <span class="keyword">new</span> ExampleFragment();</span><br><span class="line">fragmentTransaction.add(R.id.fragment_container, fragment);</span><br><span class="line">fragmentTransaction.commit();</span><br></pre></td></tr></table></figure>
+<h3 id="Linear_Layout">Linear Layout</h3><blockquote>
+<p><a href="http://developer.android.com/intl/zh-cn/guide/topics/ui/layout/linear.html" target="_blank" rel="external">android Linear Layout 官方文档</a><br>LinearLayout is a view group that aligns all children in a single direction, vertically or horizontally. You can specify the layout direction with the android:orientation attribute.</p>
+</blockquote>
+<p><img src="/uploads/linearlayout.png" alt="android Linear Layout" title="Linear Layout"></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">LinearLayout</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">    <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span></span><br><span class="line">    <span class="attribute">android:paddingLeft</span>=<span class="value">"16dp"</span></span><br><span class="line">    <span class="attribute">android:paddingRight</span>=<span class="value">"16dp"</span></span><br><span class="line">    <span class="attribute">android:orientation</span>=<span class="value">"vertical"</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">EditText</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:hint</span>=<span class="value">"@string/to"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">EditText</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:hint</span>=<span class="value">"@string/subject"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">EditText</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"0dp"</span></span><br><span class="line">        <span class="attribute">android:layout_weight</span>=<span class="value">"1"</span></span><br><span class="line">        <span class="attribute">android:gravity</span>=<span class="value">"top"</span></span><br><span class="line">        <span class="attribute">android:hint</span>=<span class="value">"@string/message"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">Button</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"100dp"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:layout_gravity</span>=<span class="value">"right"</span></span><br><span class="line">        <span class="attribute">android:text</span>=<span class="value">"@string/send"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="/uploads/sample-linearlayout.png" alt="android Linear Layout" title="简单的 Linear Layout 布局示例"></p>
+<h3 id="Relative_Layout">Relative Layout</h3><blockquote>
+<p><a href="http://developer.android.com/intl/zh-cn/guide/topics/ui/layout/relative.html" target="_blank" rel="external">android Relative Layout 官方文档</a><br>RelativeLayout is a view group that displays child views in relative positions. The position of each view can be specified as relative to sibling elements (such as to the left-of or below another view) or in positions relative to the parent RelativeLayout area (such as aligned to the bottom, left or center).</p>
+</blockquote>
+<p><img src="/uploads/relativelayout.png" alt="android Relative Layout" title="Relative Layout"></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">RelativeLayout</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">    <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span></span><br><span class="line">    <span class="attribute">android:paddingLeft</span>=<span class="value">"16dp"</span></span><br><span class="line">    <span class="attribute">android:paddingRight</span>=<span class="value">"16dp"</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">EditText</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/name"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:hint</span>=<span class="value">"@string/reminder"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">Spinner</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/dates"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"0dp"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:layout_below</span>=<span class="value">"@id/name"</span></span><br><span class="line">        <span class="attribute">android:layout_alignParentLeft</span>=<span class="value">"true"</span></span><br><span class="line">        <span class="attribute">android:layout_toLeftOf</span>=<span class="value">"@+id/times"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">Spinner</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@id/times"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"96dp"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:layout_below</span>=<span class="value">"@id/name"</span></span><br><span class="line">        <span class="attribute">android:layout_alignParentRight</span>=<span class="value">"true"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">Button</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"96dp"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:layout_below</span>=<span class="value">"@id/times"</span></span><br><span class="line">        <span class="attribute">android:layout_alignParentRight</span>=<span class="value">"true"</span></span><br><span class="line">        <span class="attribute">android:text</span>=<span class="value">"@string/done"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">RelativeLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="/uploads/sample-relativelayout.png" alt="android Relative Layout" title="简单的 Relative Layout 布局示例"></p>
+<h3 id="style_和_theme">style 和 theme</h3><h4 id="style和theme的区别">style和theme的区别</h4><blockquote>
+<p>简而言之，style指的就是安卓中一个UI控件的样式，而themes指的是安卓中一个activity界面或者整个安卓应用整体的样式。theme的范围比style的范围大。</p>
+</blockquote>
+<h4 id="style的继承用法">style的继承用法</h4><ul>
+<li><p>对于继承安卓原装style，用法如下代码块，代码的意思是将安卓系统自带的TextAppearance样式中的textColor属性改成绿色，其他的属性不变：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">style</span> <span class="attribute">name</span>=<span class="value">"GreenText"</span> <span class="attribute">parent</span>=<span class="value">"@android:style/TextAppearance"</span>&gt;</span><span class="css"></span><br><span class="line">    &lt;<span class="tag">item</span> <span class="tag">name</span>="<span class="rule"><span class="attribute">android</span>:<span class="value">textColor<span class="string">"&gt;#00FF00&lt;/item&gt;</span><br><span class="line"></span></span></span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然后在UI控件中通过&lt;style&gt;标签的name属性的值引用该样式，例如，在&lt;TextView&gt;中引用上面定义的样式代码块如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">TextView</span></span><br><span class="line">        <span class="attribute">android:text</span>=<span class="value">"hello style"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">style</span>=<span class="value">"@style/GreenText"</span></span><br><span class="line">        /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对于继承自定义的样式，有两种方式，例如如果我们已经有自定义好的父样式，代码如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">style</span> <span class="attribute">name</span>=<span class="value">"CodeFont"</span> <span class="attribute">parent</span>=<span class="value">"@android:style/TextAppearance.Medium"</span>&gt;</span><span class="css"></span><br><span class="line">        &lt;<span class="tag">item</span> <span class="tag">name</span>="<span class="rule"><span class="attribute">android</span>:<span class="value">layout_width<span class="string">"&gt;fill_parent&lt;/item&gt;</span><br><span class="line">        &lt;item name="</span>android:layout_height<span class="string">"&gt;wrap_content&lt;/item&gt;</span><br><span class="line">        &lt;item name="</span>android:textColor<span class="string">"&gt;#00FF00&lt;/item&gt;</span><br><span class="line">        &lt;item name="</span>android:typeface<span class="string">"&gt;monospace&lt;/item&gt;</span><br><span class="line"></span></span></span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol>
+<li><p>第一种是跟上面方法一样的，用parent属性，后面指定父样式，例如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">style</span> <span class="attribute">name</span>=<span class="value">"Red"</span> <span class="attribute">parent</span>=<span class="value">"@style/CodeFont"</span>&gt;</span><span class="css"></span><br><span class="line">    &lt;<span class="tag">item</span> <span class="tag">name</span>="<span class="rule"><span class="attribute">android</span>:<span class="value">textColor<span class="string">"&gt;#FF0000&lt;/item&gt;</span><br><span class="line"></span></span></span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>第二种是继承自定义父样式特有的方式，使用符号.表示继承关系。例如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">style</span> <span class="attribute">name</span>=<span class="value">"CodeFont.Red"</span>&gt;</span><span class="css"></span><br><span class="line">    &lt;<span class="tag">item</span> <span class="tag">name</span>="<span class="rule"><span class="attribute">android</span>:<span class="value">textColor<span class="string">"&gt;#FF0000&lt;/item&gt;</span><br><span class="line"></span></span></span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>样式的使用方法依然是在UI控件中通过&lt;style&gt;标签的name属性的值引用该样式，注意，名字是&lt;style&gt;标签中name属性的值</p>
+<h4 id="什么时候用@android:style什么时候用@style？">什么时候用@android:style什么时候用@style？</h4><blockquote>
+<p>@android:style是引用安卓系统自带的样式的，而@style是引用我们自己在/res/values/styles.xml文件中的样式，实际原理是这样的，资源引用的格式是这样的：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@[package:]style/style_name</span><br></pre></td></tr></table></figure></p>
+<p>UI控件中引用样式时是根据name引用的，而不是xml的文件名，xml的文件名可以任意，但是为了看名知意约定为styles.xml里面定义样式。安卓原生的样式在名为android的包里，所以引用时写成了@android:style。</p>
+</blockquote>
+<h3 id="Action_Bar_/_toolbar">Action Bar / toolbar</h3><h4 id="关于ActionBar">关于ActionBar</h4><blockquote>
+<p>ActionBar是个窗体功能来鉴别用户当前在app中的位置，提供给用户一些功能和导航。通过ActionBar可以方便的让系统自动的适配不同尺寸的屏幕。</p>
+<p>ActionBar包含如下内容。</p>
+</blockquote>
+<p><img src="/uploads/actionbar.jpg" alt="关于ActionBar" title="关于ActionBar"></p>
+<ol>
+<li>App icon</li>
+<li>Action item(项目)</li>
+<li>Action overflow(放不下的item,放在overflow里)</li>
+</ol>
+<blockquote>
+<p>添加依赖</p>
+</blockquote>
+<ul>
+<li>如果API等级比11低<br>import android.support.v7.app.ActionBar</li>
+<li>如果API等级比11高或者相等<br>import android.app.ActionBar</li>
+</ul>
+<h4 id="加入一个ActionBar">加入一个ActionBar</h4><blockquote>
+<p>在你的布局里引入一个ActionBar，只需要2步</p>
+</blockquote>
+<ol>
+<li>创建一个活动继承自ActionBarActivity（但是现在被AppCompatActivity替代，所以继承AppCompatActivity即可）</li>
+<li>在你的activity声明中加入 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">activity</span> <span class="attribute">android:theme</span>=<span class="value">"@style/Theme.AppCompat.Light"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="删除ActionBar">删除ActionBar</h4><blockquote>
+<p>你可以在程序运行时隐藏ActionBar，像这样。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ActionBar actionBar = getSupportActionBar();</span><br><span class="line">actionBar.hide();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>android系统会自动调整布局来填充，隐藏的ActionBar。如果你希望它显示回来，可以使用 show()方法。</p>
+</blockquote>
+<h4 id="调整图标和标题">调整图标和标题</h4><blockquote>
+<p>可以通过改变activity中的 logo和lable属性来替换图标和标题。</p>
+</blockquote>
+<h5 id="添加Action_Items">添加Action Items</h5><p><img src="/uploads/actionbaritem.jpg" alt="添加Action Items" title="添加Action Items"></p>
+<blockquote>
+<p>一般ActionBar有三个Action按钮和一个overflow按钮。首先你要res/menu/目录下创建一个布局，来设置Action。</p>
+<p>比如像这样，创建res/menu/main_activity_actions.xml</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">menu</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">item</span> <span class="attribute">android:id</span>=<span class="value">"@+id/action_search"</span></span><br><span class="line">          <span class="attribute">android:icon</span>=<span class="value">"@drawable/ic_action_search"</span></span><br><span class="line">          <span class="attribute">android:title</span>=<span class="value">"@string/action_search"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">item</span> <span class="attribute">android:id</span>=<span class="value">"@+id/action_compose"</span></span><br><span class="line">          <span class="attribute">android:icon</span>=<span class="value">"@drawable/ic_action_compose"</span></span><br><span class="line">          <span class="attribute">android:title</span>=<span class="value">"@string/action_compose"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">menu</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>然后当Activity启动，系统填充ActionItem时，会调用 onCreateOptionsMenu()方法。通过这个方法来加载一个菜单资源(menu resource)，按照你刚才设置的布局来加载Item。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onCreateOptionsMenu</span><span class="params">(Menu menu)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Inflate the menu items for use in the action bar</span></span><br><span class="line">    MenuInflater inflater = getMenuInflater();</span><br><span class="line">    inflater.inflate(R.menu.main_activity_actions, menu);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.onCreateOptionsMenu(menu);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>布局文件中的showAsAction 属性可以确定item是在overflow里还是在外面。</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">menu</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">      <span class="attribute">xmlns:yourapp</span>=<span class="value">"http://schemas.android.com/apk/res-auto"</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">item</span> <span class="attribute">android:id</span>=<span class="value">"@+id/action_search"</span></span><br><span class="line">          <span class="attribute">android:icon</span>=<span class="value">"@drawable/ic_action_search"</span></span><br><span class="line">          <span class="attribute">android:title</span>=<span class="value">"@string/action_search"</span></span><br><span class="line">          <span class="attribute">yourapp:showAsAction</span>=<span class="value">"ifRoom"</span>  /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">menu</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>注意 showAsAction这个属性 必须要自定义一个名字空间来使用<br>xmlns:yourapp=”<a href="http://schemas.android.com/apk/res-auto" target="_blank" rel="external">http://schemas.android.com/apk/res-auto</a>“ &gt;<br>yourapp:showAsAction=”ifRoom” /&gt;</p>
+<ul>
+<li>ifRoom 会显示在ActionBar 如果屏幕空间不足，则藏到Overflow里</li>
+<li>never 永远只在Overflow里显示，而且只显示标题</li>
+<li>always 总是显示</li>
+<li>withText 尽可能的显示标题。空间不足则不显示</li>
+<li>collapseActionView 声明这个View被折叠到按钮。选择了按钮才会打开。配合ifRoom使用</li>
+</ul>
+<h5 id="监听Action_Button的点击事件">监听Action Button的点击事件</h5><blockquote>
+<p>一旦用户按下ActionButton，则会回调onOptionsItemSelected()方法。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onOptionsItemSelected</span><span class="params">(MenuItem item)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Handle presses on the action bar items</span></span><br><span class="line">    <span class="keyword">switch</span> (item.getItemId()) &#123;</span><br><span class="line">        <span class="keyword">case</span> R.id.action_search:</span><br><span class="line">            openSearch();</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">case</span> R.id.action_compose:</span><br><span class="line">            composeMessage();</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">super</span>.onOptionsItemSelected(item);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="使用Split_Action_Bar">使用Split Action Bar</h4><blockquote>
+<p>当你的activity运行到一个狭窄的屏幕上时，这是系统会自动适配你的ActionItem.通过Split Action Bar显示在屏幕底部。如下图。</p>
+</blockquote>
+<p><img src="/uploads/Split_Action_Bar.jpg" alt="Split Action Bar" title="Split Action Bar"></p>
+<blockquote>
+<p>只要两步你就能启用Split Action Bar</p>
+<ol>
+<li>如果你的环境是API14及以上，只要加uiOptions=”splitActionBarWhenNarrow”属性到每一个activity元素中，或者&lt;application&gt;</li>
+<li>为了支持老的版本，你还需要加一个 &lt;meta-data&gt;元素到activity中，如下定义。</li>
+</ol>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">manifest</span> <span class="attribute">...</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">activity</span> <span class="attribute">uiOptions</span>=<span class="value">"splitActionBarWhenNarrow"</span> <span class="attribute">...</span> &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">meta-data</span> <span class="attribute">android:name</span>=<span class="value">"android.support.UI_OPTIONS"</span></span><br><span class="line">                   <span class="attribute">android:value</span>=<span class="value">"splitActionBarWhenNarrow"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">activity</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">manifest</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="使用向上导航菜单(Navigating_Up)">使用向上导航菜单(Navigating Up)</h4><p><img src="/uploads/Navigating_Up.jpg" alt="使用向上导航菜单" title="使用向上导航菜单"></p>
+<blockquote>
+<p>如果窗体A中有系列的item，选择了一个item以后，跳转到窗体B，此时可通过Navigating Up来返回到窗体A.<br>注意Navigating Up和back键不同。back键的返回顺序是按窗体创建的时间顺序倒序返回。而不是app之间的层次结构。比如说即使你跳转到了窗体C，按了Navigating Up之后还是会跳转到窗体A。</p>
+<p>你可以像这样启用up button</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.activity_details);</span><br><span class="line"></span><br><span class="line">    ActionBar actionBar = getSupportActionBar();</span><br><span class="line">    actionBar.setDisplayHomeAsUpEnabled(<span class="keyword">true</span>);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>然而此时并没有什么用，还需要在activity中注册父活动。也就是说返回的时候会返回到父活动。</p>
+<p>API16以上只要直接设置parentActivityName属性即可</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">application</span> <span class="attribute">...</span> &gt;</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">&lt;!-- The main/home activity (has no parent activity) --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">activity</span></span><br><span class="line">        <span class="attribute">android:name</span>=<span class="value">"com.example.myfirstapp.MainActivity"</span> <span class="attribute">...</span>&gt;</span></span><br><span class="line">        ...</span><br><span class="line">    <span class="tag">&lt;/<span class="title">activity</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- A child of the main activity --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">activity</span></span><br><span class="line">        <span class="attribute">android:name</span>=<span class="value">"com.example.myfirstapp.DisplayMessageActivity"</span></span><br><span class="line">        <span class="attribute">android:label</span>=<span class="value">"@string/title_activity_display_message"</span></span><br><span class="line">        <span class="attribute">android:parentActivityName</span>=<span class="value">"com.example.myfirstapp.MainActivity"</span> &gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- Parent activity meta-data to support API level 7+ --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">meta-data</span></span><br><span class="line">            <span class="attribute">android:name</span>=<span class="value">"android.support.PARENT_ACTIVITY"</span></span><br><span class="line">            <span class="attribute">android:value</span>=<span class="value">"com.example.myfirstapp.MainActivity"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">activity</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">application</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这两步完成 upbutton就会正常工作了。</p>
+<p>如果你允许其他App来启动这个activity则要覆写onOptionsItemSelected()这个方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onOptionsItemSelected</span><span class="params">(MenuItem item)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (item.getItemId()) &#123;</span><br><span class="line">    <span class="comment">// Respond to the action bar's Up/Home button</span></span><br><span class="line">    <span class="keyword">case</span> android.R.id.home:</span><br><span class="line">        Intent upIntent = NavUtils.getParentActivityIntent(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">if</span> (NavUtils.shouldUpRecreateTask(<span class="keyword">this</span>, upIntent)) &#123;</span><br><span class="line">            <span class="comment">// This activity is NOT part of this app's task, so create a new task</span></span><br><span class="line">            <span class="comment">// when navigating up, with a synthesized back stack.</span></span><br><span class="line">            TaskStackBuilder.create(<span class="keyword">this</span>)</span><br><span class="line">                    <span class="comment">// Add all of this activity's parents to the back stack</span></span><br><span class="line">                    .addNextIntentWithParentStack(upIntent)</span><br><span class="line">                    <span class="comment">// Navigate up to the closest parent</span></span><br><span class="line">                    .startActivities();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// This activity is part of this app's task, so simply</span></span><br><span class="line">            <span class="comment">// navigate up to the logical parent activity.</span></span><br><span class="line">            NavUtils.navigateUpTo(<span class="keyword">this</span>, upIntent);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.onOptionsItemSelected(item);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="添加Action_View">添加Action View</h4><p>Action View对复杂的动作可提供快速的访问，而不需要改变activity或者fragment，而且不用改变ActionBar。</p>
+<p><img src="/uploads/Action_View.jpg" alt="添加Action View" title="添加Action View"></p>
+<p>要定义一个Action View，必须在actionLayout或者actionViewClass属性中指定布局资源或者widge类。比如，添加SearchView</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">menu</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">      <span class="attribute">xmlns:yourapp</span>=<span class="value">"http://schemas.android.com/apk/res-auto"</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">item</span> <span class="attribute">android:id</span>=<span class="value">"@+id/action_search"</span></span><br><span class="line">          <span class="attribute">android:title</span>=<span class="value">"@string/action_search"</span></span><br><span class="line">          <span class="attribute">android:icon</span>=<span class="value">"@drawable/ic_action_search"</span></span><br><span class="line">          <span class="attribute">yourapp:showAsAction</span>=<span class="value">"ifRoom|collapseActionView"</span></span><br><span class="line">          <span class="attribute">yourapp:actionViewClass</span>=<span class="value">"android.support.v7.widget.SearchView"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">menu</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>注意howAsAction包含了一个”collapseActionView”值，这个选项表示Action View可折叠。<br>如果你希望配置添加的ActionView，像这样获取</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onCreateOptionsMenu</span><span class="params">(Menu menu)</span> </span>&#123;</span><br><span class="line">    getMenuInflater().inflate(R.menu.main_activity_actions, menu);</span><br><span class="line">    MenuItem searchItem = menu.findItem(R.id.action_search);</span><br><span class="line">    SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);</span><br><span class="line">    <span class="comment">// Configure the search info and add any event listeners</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.onCreateOptionsMenu(menu);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>API11及以上,可这样获取<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">menu.findItem(R.id.action_search).getActionView()</span><br></pre></td></tr></table></figure></p>
+<h5 id="处理可折叠的Action_View">处理可折叠的Action View</h5><p>Action View展开后，按back键或者upbutton可折叠。覆写OnActionExpandListener中的onMenuItemActionCollapse和onMenuItemActionExpand可分别监听展开和折叠。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onCreateOptionsMenu</span><span class="params">(Menu menu)</span> </span>&#123;</span><br><span class="line">    getMenuInflater().inflate(R.menu.options, menu);</span><br><span class="line">    MenuItem menuItem = menu.findItem(R.id.actionItem);</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">// When using the support library, the setOnActionExpandListener() method is</span></span><br><span class="line">    <span class="comment">// static and accepts the MenuItem object as an argument</span></span><br><span class="line">    MenuItemCompat.setOnActionExpandListener(menuItem, <span class="keyword">new</span> OnActionExpandListener() &#123;</span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onMenuItemActionCollapse</span><span class="params">(MenuItem item)</span> </span>&#123;</span><br><span class="line">            <span class="comment">// Do something when collapsed</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;  <span class="comment">// Return true to collapse action view</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onMenuItemActionExpand</span><span class="params">(MenuItem item)</span> </span>&#123;</span><br><span class="line">            <span class="comment">// Do something when expanded</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;  <span class="comment">// Return true to expand action view</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Action_Provider">Action Provider</h4><blockquote>
+<p>和ActionView差不多，Action Provider同样可以把一个action按钮替换成自定义的布局。然而不同的是，Action Provider能完全控制动作的行为和展示一个子菜单。<br>要定义一个Action Provider，需在menu的item标签中指定actionViewClass属性为ActionProvider<br>你可以建立自定义的Action Provider通过继承ActionProvider类，一般来说，android会提供一些预建的Action Provider，比如ShareActionProvider，如下图。</p>
+</blockquote>
+<p><img src="/uploads/Action_Provider.png" alt="Action Provider" title="Action Provider"></p>
+<p>因为每一个ActionProvider有自己明确的动作，所以不必监听onOptionsItemSelected()，如果你非要监听也是可以的,但注意要return false,以便ActionProvider，回调onPerformDefaultAction方法来执行动作。</p>
+<p>然而，如果你的ActionProvider会启用子菜单，则不必监听onOptionsItemSelected()。</p>
+<h5 id="使用ShareActionProvider">使用ShareActionProvider</h5><p>第一步，上文中已经说了，在menu的item标签中指定actionViewClass属性为ActionProvider。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">menu</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">      <span class="attribute">xmlns:yourapp</span>=<span class="value">"http://schemas.android.com/apk/res-auto"</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">item</span> <span class="attribute">android:id</span>=<span class="value">"@+id/action_share"</span></span><br><span class="line">          <span class="attribute">android:title</span>=<span class="value">"@string/share"</span></span><br><span class="line">          <span class="attribute">yourapp:showAsAction</span>=<span class="value">"ifRoom"</span></span><br><span class="line">          <span class="attribute">yourapp:actionProviderClass</span>=<span class="value">"android.support.v7.widget.ShareActionProvider"</span></span><br><span class="line">          /&gt;</span></span><br><span class="line">    ...</span><br><span class="line"><span class="tag">&lt;/<span class="title">menu</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>第二步 定义你希望用来分享的Intent</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> Intent <span class="title">getDefaultIntent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_SEND);</span><br><span class="line">    intent.setType(<span class="string">"image/*"</span>);</span><br><span class="line">    <span class="keyword">return</span> intent;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第三步 覆写onCreateOptionsMenu方法,注意，当Intent发生改变时一定要重新执行一次setShareIntent().</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> ShareActionProvider mShareActionProvider;</span><br><span class="line"></span><br><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onCreateOptionsMenu</span><span class="params">(Menu menu)</span> </span>&#123;</span><br><span class="line">    getMenuInflater().inflate(R.menu.main_activity_actions, menu);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Set up ShareActionProvider's default share intent</span></span><br><span class="line">    MenuItem shareItem = menu.findItem(R.id.action_share);</span><br><span class="line">    mShareActionProvider = (ShareActionProvider)</span><br><span class="line">            MenuItemCompat.getActionProvider(shareItem);</span><br><span class="line">    mShareActionProvider.setShareIntent(getDefaultIntent());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.onCreateOptionsMenu(menu);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ShareActionProvider会按照使用的频繁程度来排序菜单。</p>
+<h5 id="创建自定义Acion_Provider">创建自定义Acion Provider</h5><p>你也可以自定义Acion Provider通过继承自ActionProvider类且实现一些适当的回调方法。如下是一些比较重要的方法。</p>
+<ol>
+<li>ActionProvider(Context context) 构造函数不多说。</li>
+<li><p>public View onCreateActionView (MenuItem forItem)<br>通过这个方法来定义ActionView，像这样。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> View <span class="title">onCreateActionView</span><span class="params">(MenuItem forItem)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Inflate the action view to be shown on the action bar.</span></span><br><span class="line">    LayoutInflater layoutInflater = LayoutInflater.from(mContext);</span><br><span class="line">    View view = layoutInflater.inflate(R.layout.action_provider, <span class="keyword">null</span>);</span><br><span class="line">    ImageButton button = (ImageButton) view.findViewById(R.id.button);</span><br><span class="line">    button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">            <span class="comment">// Do something...</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> view;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>public boolean onPerformDefaultAction ()<br>当Action overflow中的菜单项被选中时会调用，或者action provider希望执行默认动作通过菜单项。</p>
+</li>
+</ol>
+<h4 id="添加Navigation_Tabs">添加Navigation Tabs</h4><p>用户可以方便地使用Navigation Tabs来浏览不同的View。更重要的是，Tabs能完美适配不同尺寸的屏幕，像这样。</p>
+<p><img src="/uploads/Navigation_Tabs2.png" alt="Navigation Tabs" title="Navigation Tabs"><br><img src="/uploads/Navigation_Tabs.png" alt="Navigation Tabs" title="Navigation Tabs"></p>
+<p>实现Navigation Tabs需要三步。</p>
+<ol>
+<li>实现ActionBar.TabListener接口，这个接口为Tabs事件提供一些回调方法，比如说滑动标签的时候。</li>
+<li>如果你要添加一个标签，必须实例化标签，并且调用setTabListener(),和tab的标题setText()</li>
+<li>把Tab加到ActionBar中，通过addTab()</li>
+</ol>
+<p>下面是一个关于实现ActionBar.TabListener接口的Demo</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">TabListener</span>&lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">Fragment</span>&gt; <span class="keyword">implements</span> <span class="title">ActionBar</span>.<span class="title">TabListener</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Fragment mFragment;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Activity mActivity;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String mTag;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Class&lt;T&gt; mClass;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Constructor used each time a new tab is created.</span><br><span class="line">      * <span class="doctag">@param</span> activity  The host Activity, used to instantiate the fragment</span><br><span class="line">      * <span class="doctag">@param</span> tag  The identifier tag for the fragment</span><br><span class="line">      * <span class="doctag">@param</span> clz  The fragment's Class, used to instantiate the fragment</span><br><span class="line">      */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TabListener</span><span class="params">(Activity activity, String tag, Class&lt;T&gt; clz)</span> </span>&#123;</span><br><span class="line">        mActivity = activity;</span><br><span class="line">        mTag = tag;</span><br><span class="line">        mClass = clz;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* The following are each of the ActionBar.TabListener callbacks */</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onTabSelected</span><span class="params">(Tab tab, FragmentTransaction ft)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// Check if the fragment is already initialized</span></span><br><span class="line">        <span class="keyword">if</span> (mFragment == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">// If not, instantiate and add it to the activity</span></span><br><span class="line">            mFragment = Fragment.instantiate(mActivity, mClass.getName());</span><br><span class="line">            ft.add(android.R.id.content, mFragment, mTag);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// If it exists, simply attach it in order to show it</span></span><br><span class="line">            ft.attach(mFragment);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onTabUnselected</span><span class="params">(Tab tab, FragmentTransaction ft)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (mFragment != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">// Detach the fragment, because another one is being attached</span></span><br><span class="line">            ft.detach(mFragment);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onTabReselected</span><span class="params">(Tab tab, FragmentTransaction ft)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// User selected the already selected tab. Usually do nothing.</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>需要弄明白的是android.R.id.content的是意思。</p>
+<blockquote>
+<p>‘android.R.id.content’ gives you the root element of a view,without having to<br>know its actual name/type/ID. Check out Get root view from current activity</p>
+</blockquote>
+<p>可以说android.R.id.content是一个Viewgroup包含View的容器，可表示所有View</p>
+<p>下面是添加Tabs的Demo</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    <span class="comment">// Notice that setContentView() is not used, because we use the root</span></span><br><span class="line">    <span class="comment">// android.R.id.content as the container for each fragment</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// setup action bar for tabs</span></span><br><span class="line">    ActionBar actionBar = getSupportActionBar();</span><br><span class="line">    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);</span><br><span class="line">    actionBar.setDisplayShowTitleEnabled(<span class="keyword">false</span>);</span><br><span class="line"></span><br><span class="line">    Tab tab = actionBar.newTab()</span><br><span class="line">                       .setText(R.string.artist)</span><br><span class="line">                       .setTabListener(<span class="keyword">new</span> TabListener&lt;ArtistFragment&gt;(</span><br><span class="line">                               <span class="keyword">this</span>, <span class="string">"artist"</span>, ArtistFragment.class));</span><br><span class="line">    actionBar.addTab(tab);</span><br><span class="line"></span><br><span class="line">    tab = actionBar.newTab()</span><br><span class="line">                   .setText(R.string.album)</span><br><span class="line">                   .setTabListener(<span class="keyword">new</span> TabListener&lt;AlbumFragment&gt;(</span><br><span class="line">                           <span class="keyword">this</span>, <span class="string">"album"</span>, AlbumFragment.class));</span><br><span class="line">    actionBar.addTab(tab);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="添加_Drop-down_Navigation">添加 Drop-down Navigation</h4><p>ActionBar提供的另外一种导航模式Drop-down Navigation，也被称作Spinner。</p>
+<p><img src="/uploads/Drop_down_Navigation.png" alt="Drop-down Navigation" title="Drop-down Navigation"></p>
+<p>使用Drop-down Navigation的步骤和Tabs大同小异</p>
+<ol>
+<li><p>创建SpinnerAdapter</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SpinnerAdapter mSpinnerAdapter = ArrayAdapter.createFromResource(<span class="keyword">this</span>, </span><br><span class="line">    R.array.action_list, android.R.layout.simple_spinner_dropdown_item);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>实现ActionBar.OnNavigationListener接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">mOnNavigationListener = <span class="keyword">new</span> OnNavigationListener() &#123;</span><br><span class="line">  <span class="comment">// Get the same strings provided for the drop-down's ArrayAdapter</span></span><br><span class="line">  String[] strings = getResources().getStringArray(R.array.action_list);</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onNavigationItemSelected</span><span class="params">(<span class="keyword">int</span> position, <span class="keyword">long</span> itemId)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Create new fragment from our own Fragment class</span></span><br><span class="line">    ListContentFragment newFragment = <span class="keyword">new</span> ListContentFragment();</span><br><span class="line">    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Replace whatever is in the fragment container with this fragment</span></span><br><span class="line">    <span class="comment">// and give the fragment a tag name equal to the string at the position</span></span><br><span class="line">    <span class="comment">// selected</span></span><br><span class="line">    ft.replace(R.id.fragment_container, newFragment, strings[position]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Apply changes</span></span><br><span class="line">    ft.commit();</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>调用setNavigationMode(NAVIGATION_MODE_LIST)方法。</p>
+</li>
+<li>调用setListNavigationCallbacks()方法<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">actionBar.setListNavigationCallbacks(mSpinnerAdapter, mNavigationCallback);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="ListView_和_Adapter">ListView 和 Adapter</h3><h4 id="什么是ListView">什么是ListView</h4><blockquote>
+<p>ListView is a view group that displays a list of scrollable items. The list items are automatically inserted to the list using an Adapter that pulls content from a source such as an array or database query and converts each item result into a view that’s placed into the list.</p>
+<p>其实很容易理解，ListView就是一个能数据集合以动态滚动的方式展示到用户界面上的View。</p>
+</blockquote>
+<h4 id="ListView和Adapter">ListView和Adapter</h4><blockquote>
+<p>ListView和数据是分开的，不直接接触。而是通过Adapter(适配器)加载到屏幕。也就是说Adapter相当于是数据和View之间的桥梁。Adapter负责为每一个数据项制作View。</p>
+</blockquote>
+<p><img src="/uploads/listview-adapter.jpg" alt="ListView和Adapter" title="ListView和Adapter"></p>
+<h4 id="ListView工作原理">ListView工作原理</h4><blockquote>
+<p>在运行时ListView会针对数据项向Adapter要View，从而来加载到界面上。那么，难道每一个item，Adapter都会重新创建一个视图吗？答案很明显是不可能的。<br>为了能够更快更省空间的显示，Android准备了一个叫做Recycler(循环)的组件。假如你的屏幕只能显示七个item。那么ListView只会创建八个item的视图。当第一个item出去，离开屏幕的时候，这个item的view就会被拿来重用，显示下一个item的内容。</p>
+</blockquote>
+<p><img src="/uploads/listview_recycler.jpg" alt="ListView工作原理" title="ListView工作原理"></p>
+<h4 id="继承BaseAdapter来使用ListView">继承BaseAdapter来使用ListView</h4><blockquote>
+<p>BaseAdapter是个抽象类，继承它能很方便的来使用ListView。要覆写四个方法。前三个都很简单。重点是getView方法，这直接决定你的屏幕加载是否顺滑。</p>
+</blockquote>
+<ul>
+<li>如果convertView为空，加载布局创建View</li>
+<li>若不空，则直接通过position，获取list中的item，直接替换view中的内容。</li>
+</ul>
+<blockquote>
+<p>很清楚了吧？convertView就是一个View缓冲器。这里的getview的demo不是很好。因为findViewById()这个函数执行代价很大。所以不建议用这种方式，每次都加载控件。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyDataAdapter</span> <span class="keyword">extends</span> <span class="title">BaseAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"MyDataAdapter"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> counter = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//数据源</span></span><br><span class="line">    List&lt;MyDataClass&gt; mData = <span class="keyword">null</span>;</span><br><span class="line">    Context mContext = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyDataAdapter</span><span class="params">(Context context, List&lt;MyDataClass&gt; data)</span> </span>&#123;</span><br><span class="line">        mContext = context;</span><br><span class="line">        mData = data;</span><br><span class="line">        counter = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//数据源中的数据对象个数</span></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mData.size();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//指定位置处的数据源对象</span></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">getItem</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mData.get(position);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//数据源对象的Id,如果有的话</span></span><br><span class="line">    <span class="comment">//如果数据源对象自己没有定义Id，则可以简单地返回其在数据源中的位置</span></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getItemId</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> position;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//每当Android ListView需要显示一行时，它会调用此方法</span></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> View <span class="title">getView</span><span class="params">(<span class="keyword">int</span> position, View convertView, ViewGroup parent)</span> </span>&#123;</span><br><span class="line">        Log.d(TAG, <span class="string">"显示："</span> + position + <span class="string">"行，调用getView()"</span> + <span class="string">"参数convertView==null?"</span> + (convertView == <span class="keyword">null</span>));</span><br><span class="line"></span><br><span class="line">        View rootView = <span class="keyword">null</span>;</span><br><span class="line">        <span class="comment">//如果没有可以重用的控件</span></span><br><span class="line">        <span class="keyword">if</span> (convertView == <span class="keyword">null</span>) &#123;</span><br><span class="line">            LayoutInflater inflater = LayoutInflater.from(mContext);</span><br><span class="line">            rootView = inflater.inflate(R.layout.my_list_item, parent, <span class="keyword">false</span>); <span class="comment">//加载布局，创建View</span></span><br><span class="line">            rootView.setTag(position);</span><br><span class="line">            Log.d(TAG, <span class="string">"实例化rootView，保存到Tag中的值为:"</span> + position);</span><br><span class="line">            counter++;</span><br><span class="line">            Log.d(TAG, <span class="string">"控件实例化个数："</span> + counter);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//控件己经被创建过，直接重用</span></span><br><span class="line">            rootView = convertView;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//依据位置提取相应的数据源对象</span></span><br><span class="line">        MyDataClass item = mData.get(position);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取用于显示内容的控件的引用</span></span><br><span class="line">        TextView titleTextView = (TextView) rootView.findViewById(R.id.tvTitle);</span><br><span class="line">        TextView detailTextView = (TextView) rootView.findViewById(R.id.tvDetail);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//设置显示内容</span></span><br><span class="line">        titleTextView.setText(item.getTitle());</span><br><span class="line">        detailTextView.setText(item.getDetail() + <span class="string">" 本行Tag中保存的值为:"</span> + rootView.getTag());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> rootView;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="ViewHolder设计模式">ViewHolder设计模式</h4><blockquote>
+<p>创建一个内部类ViewHolder保存控件。只加载View的时候使用findViewById()方法。使用View的setTag()方法保存ViewHolder。当convertView不为空的时候，直接取出来即可<br>。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> View <span class="title">getView</span><span class="params">(<span class="keyword">int</span> position, View convertView, ViewGroup parent)</span> </span>&#123;</span><br><span class="line">    ViewHolder holder=<span class="keyword">null</span>;</span><br><span class="line">    View rootView=convertView;</span><br><span class="line">    <span class="keyword">if</span>(convertView==<span class="keyword">null</span>)&#123;</span><br><span class="line">        LayoutInflater layoutInflater = LayoutInflater.from(context);</span><br><span class="line">        rootView = layoutInflater.inflate(R.layout.phoneinfo_item, parent, <span class="keyword">false</span>);</span><br><span class="line">        holder=<span class="keyword">new</span> ViewHolder();</span><br><span class="line">        holder.nameText= (TextView) rootView.findViewById(R.id.nameText);</span><br><span class="line">        holder.numberText= (TextView) rootView.findViewById(R.id.numberText);</span><br><span class="line">        rootView.setTag(holder);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        holder= (ViewHolder) rootView.getTag();</span><br><span class="line">    &#125;</span><br><span class="line">    PhoneInfo phoneInfo = phoneInfoList.get(position);</span><br><span class="line">    holder.nameText.setText(phoneInfo.getPhoneName());</span><br><span class="line">    holder.numberText.setText(phoneInfo.getPhoneNumber());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> rootView;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ViewHolder</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> TextView nameText =<span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">public</span> TextView numberText=<span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="含有多种视图的布局ListView">含有多种视图的布局ListView</h4><blockquote>
+<p>这应该是一种比较常见的情况。</p>
+<p>如果你要加载多种布局那么首先你一定重写这两个方法</p>
+<p>注意！type一定要从0开始！！ </p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getItemViewType</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">   BaseModel baseModel=models.get(position);</span><br><span class="line">   <span class="keyword">int</span> type=baseModel.getType();</span><br><span class="line">   <span class="keyword">return</span> type;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getViewTypeCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>剩下的重点getView()其实也很简单啦，也就是弄多个ViewHolder保存即可</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> View <span class="title">getView</span><span class="params">(<span class="keyword">int</span> position, View convertView, ViewGroup parent)</span> </span>&#123;</span><br><span class="line">   BaseModel baseModel=models.get(position);</span><br><span class="line">   <span class="keyword">int</span> type=getItemViewType(position);</span><br><span class="line">   HeaderViewHolder headerViewHolder=<span class="keyword">null</span>;</span><br><span class="line">   DetailViewHolder detailViewHolder=<span class="keyword">null</span>;</span><br><span class="line">   <span class="keyword">if</span>(convertView==<span class="keyword">null</span>)&#123;</span><br><span class="line">       LayoutInflater layoutInflater=LayoutInflater.from(context);</span><br><span class="line">       <span class="keyword">if</span>(type==<span class="number">0</span>)&#123;</span><br><span class="line">           headerViewHolder=<span class="keyword">new</span> HeaderViewHolder();</span><br><span class="line">           convertView=layoutInflater.inflate(R.layout.header_item,<span class="keyword">null</span>);</span><br><span class="line">           headerViewHolder.headerText= (TextView) convertView.findViewById(R.id.headerText);</span><br><span class="line">           convertView.setTag(headerViewHolder);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">else</span> <span class="keyword">if</span>(type==<span class="number">1</span>)&#123;</span><br><span class="line">           detailViewHolder=<span class="keyword">new</span> DetailViewHolder();</span><br><span class="line">           convertView=layoutInflater.inflate(R.layout.detail_item,<span class="keyword">null</span>);</span><br><span class="line">           detailViewHolder.contentText= (TextView) convertView.findViewById(R.id.contentText);</span><br><span class="line">           detailViewHolder.detailText=(TextView) convertView.findViewById(R.id.detailText);</span><br><span class="line">           detailViewHolder.clickBtn= (Button) convertView.findViewById(R.id.clickButton);</span><br><span class="line">           convertView.setTag(detailViewHolder);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">else</span>  &#123;</span><br><span class="line">       <span class="keyword">if</span>(type==<span class="number">0</span>)</span><br><span class="line">           headerViewHolder= (HeaderViewHolder) convertView.getTag();</span><br><span class="line">       <span class="keyword">else</span> <span class="keyword">if</span>(type==<span class="number">1</span>)</span><br><span class="line">           detailViewHolder= (DetailViewHolder) convertView.getTag();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span>(type==<span class="number">0</span>)&#123;</span><br><span class="line">       HeaderModel headerModel= (HeaderModel) baseModel;</span><br><span class="line">       headerViewHolder.headerText.setText(headerModel.getHeader());</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">else</span> <span class="keyword">if</span>(type==<span class="number">1</span>)&#123;</span><br><span class="line">       <span class="keyword">final</span> DetailModel detailModel= (DetailModel) baseModel;</span><br><span class="line">       detailViewHolder.contentText.setText(detailModel.getContext());</span><br><span class="line">       detailViewHolder.detailText.setText(detailModel.getDetail());</span><br><span class="line">       detailViewHolder.clickBtn.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">           <span class="annotation">@Override</span></span><br><span class="line">           <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">               Toast.makeText(context,detailModel.getContext()+<span class="string">"被点击"</span>,Toast.LENGTH_SHORT).show();</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> convertView;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">HeaderViewHolder</span> </span>&#123;</span><br><span class="line">   TextView headerText=<span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">DetailViewHolder</span> </span>&#123;</span><br><span class="line">   TextView contentText=<span class="keyword">null</span>;</span><br><span class="line">   TextView detailText=<span class="keyword">null</span>;</span><br><span class="line">   Button clickBtn=<span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/activity/" rel="tag">#activity</a>
+          
+            <a href="/tags/android/" rel="tag">#android</a>
+          
+            <a href="/tags/fragment/" rel="tag">#fragment</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/17/android-http/" rel="next">动手开发一个安卓APP - HTTP 网络请求</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar.jpg" alt="Johnson Zhang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Johnson Zhang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/hpze2000" target="_blank">github</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#课程源码"><span class="nav-number">1.</span> <span class="nav-text">课程源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资源"><span class="nav-number">2.</span> <span class="nav-text">参考资源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#activity"><span class="nav-number">2.1.</span> <span class="nav-text">activity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fragments"><span class="nav-number">2.2.</span> <span class="nav-text">fragments</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#fragments_加载方式"><span class="nav-number">2.2.1.</span> <span class="nav-text">fragments 加载方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linear_Layout"><span class="nav-number">2.3.</span> <span class="nav-text">Linear Layout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Relative_Layout"><span class="nav-number">2.4.</span> <span class="nav-text">Relative Layout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#style_和_theme"><span class="nav-number">2.5.</span> <span class="nav-text">style 和 theme</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#style和theme的区别"><span class="nav-number">2.5.1.</span> <span class="nav-text">style和theme的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#style的继承用法"><span class="nav-number">2.5.2.</span> <span class="nav-text">style的继承用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么时候用@android:style什么时候用@style？"><span class="nav-number">2.5.3.</span> <span class="nav-text">什么时候用@android:style什么时候用@style？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Action_Bar_/_toolbar"><span class="nav-number">2.6.</span> <span class="nav-text">Action Bar / toolbar</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关于ActionBar"><span class="nav-number">2.6.1.</span> <span class="nav-text">关于ActionBar</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#加入一个ActionBar"><span class="nav-number">2.6.2.</span> <span class="nav-text">加入一个ActionBar</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除ActionBar"><span class="nav-number">2.6.3.</span> <span class="nav-text">删除ActionBar</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调整图标和标题"><span class="nav-number">2.6.4.</span> <span class="nav-text">调整图标和标题</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#添加Action_Items"><span class="nav-number">2.6.4.1.</span> <span class="nav-text">添加Action Items</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#监听Action_Button的点击事件"><span class="nav-number">2.6.4.2.</span> <span class="nav-text">监听Action Button的点击事件</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用Split_Action_Bar"><span class="nav-number">2.6.5.</span> <span class="nav-text">使用Split Action Bar</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用向上导航菜单(Navigating_Up)"><span class="nav-number">2.6.6.</span> <span class="nav-text">使用向上导航菜单(Navigating Up)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加Action_View"><span class="nav-number">2.6.7.</span> <span class="nav-text">添加Action View</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#处理可折叠的Action_View"><span class="nav-number">2.6.7.1.</span> <span class="nav-text">处理可折叠的Action View</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Action_Provider"><span class="nav-number">2.6.8.</span> <span class="nav-text">Action Provider</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#使用ShareActionProvider"><span class="nav-number">2.6.8.1.</span> <span class="nav-text">使用ShareActionProvider</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建自定义Acion_Provider"><span class="nav-number">2.6.8.2.</span> <span class="nav-text">创建自定义Acion Provider</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加Navigation_Tabs"><span class="nav-number">2.6.9.</span> <span class="nav-text">添加Navigation Tabs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加_Drop-down_Navigation"><span class="nav-number">2.6.10.</span> <span class="nav-text">添加 Drop-down Navigation</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ListView_和_Adapter"><span class="nav-number">2.7.</span> <span class="nav-text">ListView 和 Adapter</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是ListView"><span class="nav-number">2.7.1.</span> <span class="nav-text">什么是ListView</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ListView和Adapter"><span class="nav-number">2.7.2.</span> <span class="nav-text">ListView和Adapter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ListView工作原理"><span class="nav-number">2.7.3.</span> <span class="nav-text">ListView工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#继承BaseAdapter来使用ListView"><span class="nav-number">2.7.4.</span> <span class="nav-text">继承BaseAdapter来使用ListView</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ViewHolder设计模式"><span class="nav-number">2.7.5.</span> <span class="nav-text">ViewHolder设计模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#含有多种视图的布局ListView"><span class="nav-number">2.7.6.</span> <span class="nav-text">含有多种视图的布局ListView</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Johnson Zhang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
