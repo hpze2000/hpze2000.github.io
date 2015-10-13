@@ -1,0 +1,768 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="GestureDetector,android,手势," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="在Android中，当用户触摸屏幕的时候，会产生许多手势，例如down，up，scroll，filing，onSingleTapConfirmed(单击)，onDoubleTap(双击)等等。一般情况下，我们知道View类有个View.OnTouchListener内部接口，通过重写他的onTouch(View v, MotionEvent event)方法，我们可以处理一些在该控件中触发的tou">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 触摸手势检测GestureDetector使用详解">
+<meta property="og:url" content="http://yoursite.com/2015/10/13/android-gesture-detector/index.html">
+<meta property="og:site_name" content="Johnson Zhang">
+<meta property="og:description" content="在Android中，当用户触摸屏幕的时候，会产生许多手势，例如down，up，scroll，filing，onSingleTapConfirmed(单击)，onDoubleTap(双击)等等。一般情况下，我们知道View类有个View.OnTouchListener内部接口，通过重写他的onTouch(View v, MotionEvent event)方法，我们可以处理一些在该控件中触发的tou">
+<meta property="og:image" content="http://yoursite.com/uploads/android_GestureDetector.png">
+<meta property="og:image" content="http://yoursite.com/uploads/android_GestureDetector_demo1.png">
+<meta property="og:image" content="http://yoursite.com/uploads/android_GestureDetector_demo2.png">
+<meta property="og:image" content="http://yoursite.com/uploads/android_GestureDetector_demo3.png">
+<meta property="og:image" content="http://yoursite.com/uploads/android_GestureDetector_demo4.png">
+<meta property="og:updated_time" content="2015-10-13T05:06:11.423Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 触摸手势检测GestureDetector使用详解">
+<meta name="twitter:description" content="在Android中，当用户触摸屏幕的时候，会产生许多手势，例如down，up，scroll，filing，onSingleTapConfirmed(单击)，onDoubleTap(双击)等等。一般情况下，我们知道View类有个View.OnTouchListener内部接口，通过重写他的onTouch(View v, MotionEvent event)方法，我们可以处理一些在该控件中触发的tou">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> Android 触摸手势检测GestureDetector使用详解 | Johnson Zhang </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?886f45b065a917294e24691553891b06";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Johnson Zhang</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon icon-next-commonweal"></i> <br />
+            公益404
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Android 触摸手势检测GestureDetector使用详解
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-10-13T11:40:32+08:00" content="2015-10-13">
+            2015-10-13
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/android/" itemprop="url" rel="index">
+                  <span itemprop="name">android</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/10/13/android-gesture-detector/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/13/android-gesture-detector/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>在Android中，当用户触摸屏幕的时候，会产生许多手势，例如<code>down</code>，<code>up</code>，<code>scroll</code>，<code>filing</code>，<code>onSingleTapConfirmed(单击)</code>，<code>onDoubleTap(双击)</code>等等。<br>一般情况下，我们知道View类有个<code>View.OnTouchListener</code>内部接口，通过重写他的<code>onTouch(View v, MotionEvent event)</code>方法，我们可以处理一些在该控件中触发的touch事件，但是这个方法太过简单，如果需要处理一些复杂的手势，用这个接口就会很麻烦（因为我们要自己根据用户触摸的轨迹去判断是什么手势），所以我们常常需要在这个方法中用手势识别器中的<code>onTouchEvent(event)</code>方法去拦截到触摸事件至手势识别器中处理。</p>
+<h1 id="Android_sdk给我们提供了GestureDetector（Gesture：手势Detector：识别）类">Android sdk给我们提供了GestureDetector（Gesture：手势Detector：识别）类</h1><blockquote>
+<p>通过这个类我们可以识别很多的手势，主要是通过他自身的onTouchEvent(event)</p>
+</blockquote>
+<a id="more"></a>
+<p>方法完成了不同手势的识别。他虽然能识别各种手势，但是不同的手势要怎么处理，就需要根据我们自己的需要去实现它内部的三个接口：</p>
+<ol>
+<li>接口：<code>OnGestureListener</code>手势识别接口，</li>
+<li>接口：<code>OnDoubleTapListener</code>双击与单击识别接口</li>
+<li>内部类: <code>SimpleOnGestureListener</code>  这个内部类是静态内部类，实现了<code>OnGestureListener</code>, <code>OnDoubleTapListener</code>接口，相当于是这两个接口功能的集合<br>从GestureDetector手势识别类源码中我们也可以清楚的看到这个类中的各个构造方法和接口：</li>
+</ol>
+<p><img src="/uploads/android_GestureDetector.png" alt="Android 触摸手势检测GestureDetector" title="Android 触摸手势检测GestureDetector"></p>
+<p>从源码中可以看出，GestureDetector的构造函数中只能传入OnGestureListener接口对象，也就是说，要使用OnDoubleTapListener接口，可以通过setOnDoubleTapListener()设置监听器来实现，但是必须先构造出GestureDetector对象，要构造GestureDetector对象就必须实现OnGestureListener接口。或者使用SimpleOnGestureListener这个内部类，然后自己重写对应的方法。所以不管什么方法要用OnDoubleTapListener接口，就必须先实现OnGestureListener接口。</p>
+<p>这个内部类，其实是两个接口中所有函数的集成，它包含了这两个接口里所有必须要实现的函数而且都已经重写，但所有方法体都是空的；不同点在于：该类是static class，我们如果需要用这个内部类，就可以在外面继承这个类，重写里面的手势处理方法。</p>
+<p>下面我们先看OnGestureListener接口；</p>
+<h2 id="GestureDetector-OnGestureListener—接口">GestureDetector.OnGestureListener—接口</h2><h3 id="1、基本讲解">1、基本讲解</h3><p>如果我们要实现OnGestureListener接口，会提示有几个必须重写的函数，加上之后是这个样子的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">detector = <span class="keyword">new</span> GestureDetector(<span class="keyword">this</span>, <span class="keyword">new</span> OnGestureListener() &#123;  </span><br><span class="line">      </span><br><span class="line">    <span class="annotation">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onSingleTapUp</span><span class="params">(MotionEvent e)</span> </span>&#123;  </span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub  </span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    <span class="annotation">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onShowPress</span><span class="params">(MotionEvent e)</span> </span>&#123;  </span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub  </span></span><br><span class="line">          </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    <span class="annotation">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onScroll</span><span class="params">(MotionEvent e1, MotionEvent e2, <span class="keyword">float</span> distanceX,  </span><br><span class="line">            <span class="keyword">float</span> distanceY)</span> </span>&#123;  </span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub  </span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    <span class="annotation">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onLongPress</span><span class="params">(MotionEvent e)</span> </span>&#123;  </span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub  </span></span><br><span class="line">          </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    <span class="annotation">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onFling</span><span class="params">(MotionEvent e1, MotionEvent e2, <span class="keyword">float</span> velocityX,  </span><br><span class="line">            <span class="keyword">float</span> velocityY)</span> </span>&#123;  </span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub  </span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    <span class="annotation">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onDown</span><span class="params">(MotionEvent e)</span> </span>&#123;  </span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub  </span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>可见，这里总共重写了六个函数，这些函数都在什么情况下才会触发呢，下面讲一下：</p>
+<ol>
+<li><code>onDown(MotionEvent e)</code>：用户按下屏幕就会触发；</li>
+<li><code>onShowPress(MotionEvent e)</code>：如果是按下的时间超过瞬间，不是立即弹起，而且在按下的时候没有松开或者是拖动的，那么onShowPress就会执行</li>
+<li><code>onLongPress(MotionEvent e)</code>：长按触摸屏，超过一定时长，就会触发这个事件<ul>
+<li>触发顺序：<code>onDown</code>-&gt;<code>onShowPress</code>-&gt;<code>onLongPress</code></li>
+</ul>
+</li>
+<li><code>onSingleTapUp(MotionEvent e)</code>：从名子也可以看出,一次单独的轻击抬起操作,也就是轻击一下屏幕，立刻抬起来，才会有这个触发，当然,如果除了Down以外还有其它操作,那就不再算是Single操作了,所以也就不会触发这个事件<ul>
+<li>触发顺序：</li>
+<li>点击一下非常快的（不滑动）Touchup： <code>onDown</code>-&gt;<code>onSingleTapUp</code>-&gt;<code>onSingleTapConfirmed</code></li>
+<li>点击一下稍微慢点的（不滑动）Touchup：<code>onDown</code>-&gt;<code>onShowPress</code>-&gt;<code>onSingleTapUp</code>-&gt;<code>onSingleTapConfirmed</code></li>
+</ul>
+</li>
+<li><code>onFling(MotionEvent e1, MotionEvent e2, float velocityX,float velocityY)</code> ：滑屏，用户按下触摸屏、快速移动后松开，由1个MotionEvent ACTION_DOWN, 多个ACTION_MOVE, 1个ACTION_UP触发   <blockquote>
+<p>参数解释：<br> <code>e1</code>：第1个ACTION_DOWN MotionEvent  可以得到第一次按下时的X轴和Y轴的坐标，分别为：e1.getX(),e1.getY();<br> <code>e2</code>：最后一个ACTION_MOVE MotionEvent     可以得到最后一次抬起时的X轴和Y轴的坐标，分别为：e2.getX(),e2.getY();<br> <code>velocityX</code>：X轴上的移动速度，像素/秒<br> <code>velocityY</code>：Y轴上的移动速度，像素/秒   </p>
+</blockquote>
+</li>
+<li><code>onScroll(MotionEvent e1, MotionEvent e2,float distanceX, float distanceY)</code>：在屏幕上拖动事件。无论是用手拖动view，或者是以抛的动作滚动，都会多次触发,这个方法<blockquote>
+<p>在ACTION_MOVE动作发生时就会触发<br> 滑屏：手指触动屏幕后，稍微滑动后立即松开<br> <code>onDown</code>—–》<code>onScroll</code>—-》<code>onScroll</code>—-》<code>onScroll</code>—-》………—–&gt;<code>onFling</code><br> 拖动<br> <code>onDown</code>——》<code>onScroll</code>—-》<code>onScroll</code>——》<code>onFiling</code><br> 可见，无论是滑屏，还是拖动，影响的只是中间OnScroll触发的数量多少而已，最终都会触发onFling事件！</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="2、实例">2、实例</h3><p>要使用GestureDetector，有四步：</p>
+<ol>
+<li><p>创建OnGestureListener监听函数：<br> 可以使用构造对象或者构造匿名对象：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> GestureDetector(<span class="keyword">this</span>, <span class="keyword">new</span> OnGestureListener() &#123; &#125;);</span><br><span class="line"><span class="comment">//或</span></span><br><span class="line">GestureDetector.OnGestureListener listener = <span class="keyword">new</span> GestureDetector.OnGestureListener()&#123;  </span><br><span class="line">         </span><br><span class="line">   &#125;;</span><br></pre></td></tr></table></figure>
+<p> 也可以构造类</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">gestureListener</span> <span class="keyword">implements</span> <span class="title">GestureDetector</span>.<span class="title">OnGestureListener</span></span>&#123;  </span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建GestureDetector实例mGestureDetector </p>
+</li>
+<li><p>在onTouch(View v, MotionEvent event)中使用手势识别器中的onTouchEvent()方法拦截：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouch</span><span class="params">(View v, MotionEvent event)</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> mGestureDetector.onTouchEvent(event);     </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>控件绑定</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">TextView tv = (TextView)findViewById(R.id.tv);  </span><br><span class="line">tv.setOnTouchListener(<span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="3、GestureDetector-OnDoubleTapListener—接口">3、GestureDetector.OnDoubleTapListener—接口</h3><h4 id="1、构建">1、构建</h4><p>有两种方式设置双击监听：</p>
+<ol>
+<li><p>方法一：使用静态的内部类SimpleOnGestureListener</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">detector = <span class="keyword">new</span> GestureDetector(<span class="keyword">this</span>, <span class="keyword">new</span> SimpleOnGestureListener()&#123;  </span><br><span class="line">       <span class="annotation">@Override</span>  </span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onFling</span><span class="params">(MotionEvent e1, MotionEvent e2,  </span><br><span class="line">               <span class="keyword">float</span> velocityX, <span class="keyword">float</span> velocityY)</span> </span>&#123;<span class="comment">//滑动  </span></span><br><span class="line">           <span class="comment">// TODO Auto-generated method stub  </span></span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">super</span>.onFling(e1, e2, velocityX, velocityY);  </span><br><span class="line">       &#125;  </span><br><span class="line"></span><br><span class="line">       <span class="annotation">@Override</span>  </span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onDoubleTap</span><span class="params">(MotionEvent e)</span> </span>&#123;<span class="comment">//双击  </span></span><br><span class="line">           <span class="comment">// TODO Auto-generated method stub  </span></span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">super</span>.onDoubleTap(e);  </span><br><span class="line">       &#125;  </span><br><span class="line"></span><br><span class="line">       <span class="annotation">@Override</span>  </span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onSingleTapConfirmed</span><span class="params">(MotionEvent e)</span> </span>&#123;<span class="comment">//单击  </span></span><br><span class="line">           <span class="comment">// TODO Auto-generated method stub  </span></span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">super</span>.onSingleTapConfirmed(e);  </span><br><span class="line">       &#125;  </span><br><span class="line">       <span class="comment">//自己重写需要用到的方法，这里我只重写了三个  </span></span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方法二：使用GestureDetector::setOnDoubleTapListener();函数设置监听：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置双击监听器  </span></span><br><span class="line">detector.setOnDoubleTapListener(<span class="keyword">new</span> OnDoubleTapListener() &#123;  </span><br><span class="line">  </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>注意：大家可以看到无论在方法一还是在方法二中，都需要派生自<code>GestureDetector.OnGestureListener</code>，前面我们说过 GestureDetector 的构造函数只能传入这一个接口。<br>可以看到，在构造函数中，除了后面要讲的SimpleOnGestureListener 以外的其它两个构造函数都必须是OnGestureListener的实例。所以要想使用OnDoubleTapListener的几个函数，就必须先实现OnGestureListener。    </p>
+</blockquote>
+<h4 id="2、函数讲解">2、函数讲解</h4><p>首先看一下OnDoubleTapListener接口必须重写的三个函数：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置双击监听器  </span></span><br><span class="line">detector.setOnDoubleTapListener(<span class="keyword">new</span> OnDoubleTapListener() &#123;  </span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onSingleTapConfirmed</span><span class="params">(MotionEvent e)</span> </span>&#123;  </span><br><span class="line">        Toast.makeText(getApplicationContext(), <span class="string">"单击"</span>, <span class="number">0</span>).show();  </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;<span class="comment">//【注】返回ture，意思为该触摸事件被该回调函数消耗掉了，不会再返回给在我们拦截的方法中  </span></span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onDoubleTapEvent</span><span class="params">(MotionEvent e)</span> </span>&#123;  </span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub  </span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onDoubleTap</span><span class="params">(MotionEvent e)</span> </span>&#123;  </span><br><span class="line">        Toast.makeText(getApplicationContext(), <span class="string">"双击"</span>, <span class="number">0</span>).show();  </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;<span class="comment">//【注】返回ture，意思为该触摸事件被该回调函数消耗掉了，不会再返回给在我们拦截的方法中  </span></span><br><span class="line">    &#125;  </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p><code>onSingleTapConfirmed(MotionEvent e)</code>：单击事件。用来判定该次点击是<code>SingleTap</code>而不是<code>DoubleTap</code>，如果连续点击两次就是<code>DoubleTap</code>手势，如果只点击一次，系统等待一段时间后没有收到第二次点击则判定该次点击为<code>SingleTap</code>而不是<code>DoubleTap</code>，然后触发SingleTapConfirmed事件。触发顺序是：<code>OnDown</code>-&gt;<code>OnsingleTapUp</code>-&gt;<code>OnsingleTapConfirmed</code></p>
+<p>关于<code>onSingleTapConfirmed</code>和<code>onSingleTapUp</code>的一点区别： <code>OnGestureListener</code>有这样的一个方法<code>onSingleTapUp</code>，和<code>onSingleTapConfirmed</code>容易混淆。二者的区别是：<code>onSingleTapUp</code>，只要手抬起就会执行，而对于<code>onSingleTapConfirmed</code>来说，如果双击的话，则<code>onSingleTapConfirmed</code>不会执行。</p>
+<ul>
+<li><code>onSingleTapConfirmed(MotionEvent e)</code>：单击事件</li>
+<li><code>onDoubleTap(MotionEvent e)</code>：双击事件</li>
+<li><code>onDoubleTapEvent(MotionEvent e)</code>：指触发onDoubleTap以后，在双击之间发生的其它动作</li>
+</ul>
+</blockquote>
+<p>下面我就把一个用来判断用户滑动的方法demo代码贴上来吧：<br>xml文件：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">RelativeLayout</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span>  </span><br><span class="line">    <span class="attribute">xmlns:tools</span>=<span class="value">"http://schemas.android.com/tools"</span>  </span><br><span class="line">    <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span>  </span><br><span class="line">    <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span>  </span><br><span class="line">    <span class="attribute">android:paddingBottom</span>=<span class="value">"@dimen/activity_vertical_margin"</span>  </span><br><span class="line">    <span class="attribute">android:paddingLeft</span>=<span class="value">"@dimen/activity_horizontal_margin"</span>  </span><br><span class="line">    <span class="attribute">android:paddingRight</span>=<span class="value">"@dimen/activity_horizontal_margin"</span>  </span><br><span class="line">    <span class="attribute">android:paddingTop</span>=<span class="value">"@dimen/activity_vertical_margin"</span>  </span><br><span class="line">    <span class="attribute">tools:context</span>=<span class="value">".MainActivity"</span> &gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="title">TextView</span>  </span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/textview1"</span>  </span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span>  </span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"300dp"</span>  </span><br><span class="line">        <span class="attribute">android:background</span>=<span class="value">"#a0a0ee"</span> /&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="title">RelativeLayout</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>java 文件<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> <span class="keyword">implements</span> <span class="title">OnTouchListener</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">private</span> GestureDetector detector;  </span><br><span class="line">  </span><br><span class="line">    <span class="annotation">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);  </span><br><span class="line">        setContentView(R.layout.activity_main);  </span><br><span class="line">        TextView mTextView = (TextView) findViewById(R.id.textview1);  </span><br><span class="line">        mTextView.setOnTouchListener(<span class="keyword">this</span>);<span class="comment">// 如果单独为控件设置了触摸监听器，那么触摸操作只对该控件的区域里面有效，并用手势识别器中的onTouchEvent(event)方法去拦截到触摸事件至手势识别器中处理  </span></span><br><span class="line">        <span class="comment">// [注]如果想触摸操作对全屏任意地方都有效，那么就不必单独为该控件设置触摸监听器，直接重写Activity中的onTouchEvent（）方法，并用手势识别器中的onTouchEvent(event)方法去拦截到触摸事件至手势识别器中处理就可以了  </span></span><br><span class="line">  </span><br><span class="line">        <span class="comment">// 设置手势监听器  </span></span><br><span class="line">        detector = <span class="keyword">new</span> GestureDetector(<span class="keyword">this</span>, <span class="keyword">new</span> OnGestureListener() &#123;  </span><br><span class="line">  </span><br><span class="line">            <span class="annotation">@Override</span>  </span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onSingleTapUp</span><span class="params">(MotionEvent e)</span> </span>&#123;  </span><br><span class="line">  </span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;  </span><br><span class="line">            &#125;  </span><br><span class="line">  </span><br><span class="line">            <span class="annotation">@Override</span>  </span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onShowPress</span><span class="params">(MotionEvent e)</span> </span>&#123;  </span><br><span class="line">                <span class="comment">// TODO Auto-generated method stub  </span></span><br><span class="line">  </span><br><span class="line">            &#125;  </span><br><span class="line">  </span><br><span class="line">            <span class="annotation">@Override</span>  </span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onScroll</span><span class="params">(MotionEvent e1, MotionEvent e2,  </span><br><span class="line">                    <span class="keyword">float</span> distanceX, <span class="keyword">float</span> distanceY)</span> </span>&#123;  </span><br><span class="line">                <span class="comment">// TODO Auto-generated method stub  </span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;  </span><br><span class="line">            &#125;  </span><br><span class="line">  </span><br><span class="line">            <span class="annotation">@Override</span>  </span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onLongPress</span><span class="params">(MotionEvent e)</span> </span>&#123;  </span><br><span class="line">                <span class="comment">// TODO Auto-generated method stub  </span></span><br><span class="line">  </span><br><span class="line">            &#125;  </span><br><span class="line">             <span class="comment">/*   </span><br><span class="line">             * 用户按下触摸屏、快速移动后松开即触发这个事件   </span><br><span class="line">             * e1：第1个ACTION_DOWN MotionEvent   </span><br><span class="line">             * e2：最后一个ACTION_MOVE MotionEvent   </span><br><span class="line">             * velocityX：X轴上的移动速度，像素/秒   </span><br><span class="line">             * velocityY：Y轴上的移动速度，像素/秒   </span><br><span class="line">             * 触发条件 ：   </span><br><span class="line">             * X轴的坐标位移大于FLING_MIN_DISTANCE，且移动速度大于FLING_MIN_VELOCITY个像素/秒   </span><br><span class="line">             */</span>  </span><br><span class="line">            <span class="annotation">@Override</span>  </span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onFling</span><span class="params">(MotionEvent e1, MotionEvent e2,  </span><br><span class="line">                    <span class="keyword">float</span> velocityX, <span class="keyword">float</span> velocityY)</span> </span>&#123;  </span><br><span class="line">                <span class="keyword">final</span> <span class="keyword">float</span> FLING_MIN_DISTANCE = <span class="number">100</span>;  </span><br><span class="line">                <span class="keyword">final</span> <span class="keyword">float</span> FLING_MIN_VELOCITY = <span class="number">150</span>;  </span><br><span class="line">                <span class="keyword">if</span> (e1.getX() - e2.getX() &gt; FLING_MIN_DISTANCE  </span><br><span class="line">                        &amp;&amp; Math.abs(velocityX) &gt; FLING_MIN_VELOCITY) &#123;  </span><br><span class="line">                    <span class="comment">//X轴上的移动速度去绝对值进行比较  </span></span><br><span class="line">                    <span class="comment">//判断x轴坐标如果第一次按下时的坐标减去第二次离开屏幕时的坐标大于我们设置的位移，就说明此时是向左滑动的,坐标的原点位于该控件的左上角  </span></span><br><span class="line">                    Toast.makeText(getApplicationContext(), <span class="string">"向左滑动"</span>, <span class="number">0</span>).show();  </span><br><span class="line">                &#125;  </span><br><span class="line">                <span class="keyword">if</span> (e2.getX() - e1.getX() &gt; FLING_MIN_DISTANCE  </span><br><span class="line">                        &amp;&amp; Math.abs(velocityX) &gt; FLING_MIN_VELOCITY) &#123;  </span><br><span class="line">                    <span class="comment">//判断x轴坐标如果第二次离开屏幕时的坐标减去第一次按下时的坐标大于我们设置的位移，就说明此时是向右滑动的,坐标的原点位于该控件的左上角  </span></span><br><span class="line">                    Toast.makeText(getApplicationContext(), <span class="string">"向右滑动"</span>, <span class="number">0</span>).show();  </span><br><span class="line">                &#125;  </span><br><span class="line">                <span class="keyword">if</span> (e2.getY() - e1.getY() &gt; FLING_MIN_DISTANCE  </span><br><span class="line">                        &amp;&amp; Math.abs(velocityY) &gt; FLING_MIN_VELOCITY) &#123;  </span><br><span class="line">                    <span class="comment">//判断Y轴坐标如果第二次离开屏幕时的坐标减去第一次按下时的坐标大于我们设置的位移，就说明此时是向下滑动的,坐标的原点位于该控件的左上角  </span></span><br><span class="line">                    Toast.makeText(getApplicationContext(), <span class="string">"向下滑动"</span>, <span class="number">0</span>).show();  </span><br><span class="line">                &#125;  </span><br><span class="line">                <span class="keyword">if</span> (e1.getY() - e2.getY() &gt; FLING_MIN_DISTANCE  </span><br><span class="line">                        &amp;&amp; Math.abs(velocityY) &gt; FLING_MIN_VELOCITY) &#123;  </span><br><span class="line">                    <span class="comment">//判断Y轴坐标如果第一次按下屏幕时的坐标减去第二次离开屏幕时的坐标大于我们设置的位移，就说明此时是向上滑动的,坐标的原点位于该控件的左上角  </span></span><br><span class="line">                    Toast.makeText(getApplicationContext(), <span class="string">"向上滑动"</span>, <span class="number">0</span>).show();  </span><br><span class="line">                &#125;  </span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;<span class="comment">//【注】返回ture，意思为该触摸事件被该回调函数消耗掉了，不会再返回给在我们拦截的方法中  </span></span><br><span class="line">            &#125;  </span><br><span class="line">  </span><br><span class="line">            <span class="annotation">@Override</span>  </span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onDown</span><span class="params">(MotionEvent e)</span> </span>&#123;  </span><br><span class="line">                <span class="comment">// TODO Auto-generated method stub  </span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;<span class="comment">//【注】任何时候都必须把这个设置为true，因为无论什么手势都会触发这个方法，只要碰到屏幕就会  </span></span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;);  </span><br><span class="line">        <span class="comment">// 设置双击监听器  </span></span><br><span class="line">        detector.setOnDoubleTapListener(<span class="keyword">new</span> OnDoubleTapListener() &#123;  </span><br><span class="line">  </span><br><span class="line">            <span class="annotation">@Override</span>  </span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onSingleTapConfirmed</span><span class="params">(MotionEvent e)</span> </span>&#123;  </span><br><span class="line">                Toast.makeText(getApplicationContext(), <span class="string">"单击"</span>, <span class="number">0</span>).show();  </span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;<span class="comment">//【注】返回ture，意思为该触摸事件被该回调函数消耗掉了，不会再返回给在我们拦截的方法中  </span></span><br><span class="line">            &#125;  </span><br><span class="line">  </span><br><span class="line">            <span class="annotation">@Override</span>  </span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onDoubleTapEvent</span><span class="params">(MotionEvent e)</span> </span>&#123;  </span><br><span class="line">                <span class="comment">// TODO Auto-generated method stub  </span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;  </span><br><span class="line">            &#125;  </span><br><span class="line">  </span><br><span class="line">            <span class="annotation">@Override</span>  </span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onDoubleTap</span><span class="params">(MotionEvent e)</span> </span>&#123;  </span><br><span class="line">                Toast.makeText(getApplicationContext(), <span class="string">"双击"</span>, <span class="number">0</span>).show();  </span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;<span class="comment">//【注】返回ture，意思为该触摸事件被该回调函数消耗掉了，不会再返回给在我们拦截的方法中  </span></span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">//  @Override  </span></span><br><span class="line"><span class="comment">//  public boolean onTouchEvent(MotionEvent event) &#123;// 从Activity中重写而来的方法，该回调函数在用户触摸整个屏幕任意地方时都会调用，并拦截触摸事件给手势识别器处理  </span></span><br><span class="line"><span class="comment">//      // TODO Auto-generated method stub  </span></span><br><span class="line"><span class="comment">//      return detector.onTouchEvent(event);  </span></span><br><span class="line"><span class="comment">//  &#125;  </span></span><br><span class="line">  </span><br><span class="line">    <span class="annotation">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouch</span><span class="params">(View v, MotionEvent event)</span> </span>&#123;<span class="comment">// 控件设置mTextView.onTouchListener(this)触摸监听器时,重写的的方法,触摸事件只对该控件区域内有效，并用手势识别器中的onTouchEvent(event)方法去拦截到触摸事件至手势识别器中处理  </span></span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub  </span></span><br><span class="line">        <span class="keyword">return</span> detector.onTouchEvent(event);  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行效果图：</p>
+<p><img src="/uploads/android_GestureDetector_demo1.png" alt="Android GestureDetector,手势" title="Android GestureDetector,手势"><br><img src="/uploads/android_GestureDetector_demo2.png" alt="Android GestureDetector,手势" title="Android GestureDetector,手势"><br><img src="/uploads/android_GestureDetector_demo3.png" alt="Android GestureDetector,手势" title="Android GestureDetector,手势"><br><img src="/uploads/android_GestureDetector_demo4.png" alt="Android GestureDetector,手势" title="Android GestureDetector,手势"></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/GestureDetector/" rel="tag">#GestureDetector</a>
+          
+            <a href="/tags/android/" rel="tag">#android</a>
+          
+            <a href="/tags/手势/" rel="tag">#手势</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/12/android_toolbar/" rel="next">android ToolBar详解</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/10/13/android-gesture-detector/"
+                   data-title="Android 触摸手势检测GestureDetector使用详解" data-url="http://yoursite.com/2015/10/13/android-gesture-detector/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar.jpg" alt="Johnson Zhang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Johnson Zhang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/hpze2000" target="_blank">github</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android_sdk给我们提供了GestureDetector（Gesture：手势Detector：识别）类"><span class="nav-number">1.</span> <span class="nav-text">Android sdk给我们提供了GestureDetector（Gesture：手势Detector：识别）类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GestureDetector-OnGestureListener—接口"><span class="nav-number">1.1.</span> <span class="nav-text">GestureDetector.OnGestureListener—接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、基本讲解"><span class="nav-number">1.1.1.</span> <span class="nav-text">1、基本讲解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、实例"><span class="nav-number">1.1.2.</span> <span class="nav-text">2、实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、GestureDetector-OnDoubleTapListener—接口"><span class="nav-number">1.1.3.</span> <span class="nav-text">3、GestureDetector.OnDoubleTapListener—接口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、构建"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">1、构建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、函数讲解"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">2、函数讲解</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Johnson Zhang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hpze2000"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
