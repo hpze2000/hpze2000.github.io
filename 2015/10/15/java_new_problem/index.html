@@ -1,0 +1,850 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="java,问题集锦," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="Java是目前最流行的编程语言之一——它可以用来编写Windows程序或者是Web应用，移动应用，网络程序，消费电子产品，机顶盒设备，它无处不在。
+有超过30亿的设备是运行在Java之上的。根据Oracle的统计数据，光是使用中的Java Card就有有50亿。
+超过900万程序员选择使用Java进行开发，它是最受开发人员欢迎的语言，同时也是最流行的开发平台。
+
+本文为那些准Java程序员们准备了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 新手问题集锦">
+<meta property="og:url" content="http://yoursite.com/2015/10/15/java_new_problem/index.html">
+<meta property="og:site_name" content="Johnson Zhang">
+<meta property="og:description" content="Java是目前最流行的编程语言之一——它可以用来编写Windows程序或者是Web应用，移动应用，网络程序，消费电子产品，机顶盒设备，它无处不在。
+有超过30亿的设备是运行在Java之上的。根据Oracle的统计数据，光是使用中的Java Card就有有50亿。
+超过900万程序员选择使用Java进行开发，它是最受开发人员欢迎的语言，同时也是最流行的开发平台。
+
+本文为那些准Java程序员们准备了">
+<meta property="og:updated_time" content="2015-10-15T05:51:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java 新手问题集锦">
+<meta name="twitter:description" content="Java是目前最流行的编程语言之一——它可以用来编写Windows程序或者是Web应用，移动应用，网络程序，消费电子产品，机顶盒设备，它无处不在。
+有超过30亿的设备是运行在Java之上的。根据Oracle的统计数据，光是使用中的Java Card就有有50亿。
+超过900万程序员选择使用Java进行开发，它是最受开发人员欢迎的语言，同时也是最流行的开发平台。
+
+本文为那些准Java程序员们准备了">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> Java 新手问题集锦 | Johnson Zhang </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?886f45b065a917294e24691553891b06";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Johnson Zhang</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon icon-next-commonweal"></i> <br />
+            公益404
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Java 新手问题集锦
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-10-15T13:51:16+08:00" content="2015-10-15">
+            2015-10-15
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/java/" itemprop="url" rel="index">
+                  <span itemprop="name">java</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/10/15/java_new_problem/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/15/java_new_problem/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><blockquote>
+<p>Java是目前最流行的编程语言之一——它可以用来编写Windows程序或者是Web应用，移动应用，网络程序，消费电子产品，机顶盒设备，它无处不在。</p>
+<p>有超过30亿的设备是运行在Java之上的。根据Oracle的统计数据，光是使用中的Java Card就有有50亿。</p>
+<p>超过900万程序员选择使用Java进行开发，它是最受开发人员欢迎的语言，同时也是最流行的开发平台。</p>
+</blockquote>
+<p>本文为那些准Java程序员们准备了一系列广为流传的Java最佳编程实践：</p>
+<a id="more"></a>
+<ul>
+<li><p>优先返回空集合而非null<br>  如果程序要返回一个不包含任何值的集合，确保返回的是空集合而不是null。这能节省大量的”if else”检查。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">getLocationName</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">null</span>==cityName ? <span class="string">""</span>: cityName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>谨慎操作字符串<br>  如果两个字符串在for循环中使用+操作符进行拼接，那么每次循环都会产生一个新的字符串对象。这不仅浪费内存空间同时还会影响性能。类似的，如果初始化字符串对象，尽量不要使用构造方法，而应该直接初始化。比方说：    </p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Slower Instantiation</span></span><br><span class="line">String bad = <span class="keyword">new</span> String(<span class="string">"Yet another string object"</span>);</span><br><span class="line">     </span><br><span class="line"><span class="comment">//Faster Instantiation</span></span><br><span class="line">String good = <span class="string">"Yet another string object"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>避免无用对象<br>  创建对象是Java中最昂贵的操作之一。因此最好在有需要的时候再进行对象的创建/初始化。如下：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Employees</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List Employees;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List <span class="title">getEmployees</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//initialize only when required</span></span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">null</span> == Employees) &#123;</span><br><span class="line">            Employees = <span class="keyword">new</span> ArrayList();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Employees;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>数组与ArrayList之争<br>  开发人员经常会发现很难在数组和ArrayList间做选择。它们二者互有优劣。如何选择应该视情况而定。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">arrayVsArrayList</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] myArray = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">6</span>];</span><br><span class="line">        myArray[<span class="number">7</span>]= <span class="number">10</span>; <span class="comment">// ArraysOutOfBoundException</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//Declaration of ArrayList. Add and Remove of elements is easy.</span></span><br><span class="line">        ArrayList&lt;Integer&gt; myArrayList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        myArrayList.add(<span class="number">1</span>);</span><br><span class="line">        myArrayList.add(<span class="number">2</span>);</span><br><span class="line">        myArrayList.add(<span class="number">3</span>);</span><br><span class="line">        myArrayList.add(<span class="number">4</span>);</span><br><span class="line">        myArrayList.add(<span class="number">5</span>);</span><br><span class="line">        myArrayList.remove(<span class="number">0</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; myArrayList.size(); i++) &#123;</span><br><span class="line">        	System.out.println(<span class="string">"Element: "</span> + myArrayList.get(i));</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//Multi-dimensional Array </span></span><br><span class="line">        <span class="keyword">int</span>[][][] multiArray = <span class="keyword">new</span> <span class="keyword">int</span> [<span class="number">3</span>][<span class="number">3</span>][<span class="number">3</span>]; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>数组是定长的，而ArrayList是变长的。由于数组长度是固定的，因此在声明数组时就已经分配好内存了。而数组的操作则会更快一些。另一方面，如果我们不知道数据的大小，那么过多的数据便会导致ArrayOutOfBoundException，而少了又会浪费存储空间。</li>
+<li>ArrayList在增删元素方面要比数组简单。</li>
+<li>数组可以是多维的，但ArrayList只能是一维的。</li>
+</ol>
+</li>
+<li><p>try块的finally块没有被执行<br>  下面这段代码:</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">shutDownHooksDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span>(i==<span class="number">4</span>) &#123;</span><br><span class="line">                    System.out.println(<span class="string">"Inside Try Block.Exiting without executing Finally block."</span>);</span><br><span class="line">                    System.exit(<span class="number">0</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">finally</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">"Inside Finally Block."</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>从代码来看，貌似finally块中的println语句应该会被执行5次。但当程序运行后，你会发现finally块只执行了4次。第5次迭代的时候会触发exit函数的调用，于是这第5次的finally便永远也触发不到了。原因便是——System.exit会挂起所有线程的执行，包括当前线程。即便是try语句后的finally块，只要是执行了exit，便也无力回天了。</p>
+<p>在调用System.exit时，JVM会在关闭前执行两个结束任务：</p>
+<p>首先，它会执行完所有通过Runtime.addShutdownHook注册进来的终止的钩子程序。这一点很关键，因为它会释放JVM外部的资源。</p>
+<p>接下来的便是Finalizer了。可能是System.runFinalizersOnExit也可能是Runtime.runFinalizersOnExit。finalizer的使用已经被废弃有很长一段时间了。finalizer可以在存活对象上进行调用，即便是这些对象仍在被其它线程所使用。而这会导致不可预期的结果甚至是死锁。</p>
+</blockquote>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">shutDownHooksDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)</span><br><span class="line">            &#123;</span><br><span class="line">                    <span class="keyword">final</span> <span class="keyword">int</span> final_i = i;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                            Runtime.getRuntime().addShutdownHook(</span><br><span class="line">                                            <span class="keyword">new</span> Thread() &#123;</span><br><span class="line">                                            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                                            <span class="keyword">if</span>(final_i==<span class="number">4</span>) &#123;</span><br><span class="line">                                            System.out.println(<span class="string">"Inside Try Block.Exiting without executing Finally block."</span>);</span><br><span class="line">                                            System.exit(<span class="number">0</span>);</span><br><span class="line">                                            &#125;</span><br><span class="line">                                            &#125;</span><br><span class="line">                                            &#125;);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">finally</span> &#123;</span><br><span class="line">                            System.out.println(<span class="string">"Inside Finally Block."</span>);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>判断奇数<br>  看下这几行代码，看看它们是否能用来准确地判断一个数是奇数？</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">oddOrNot</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> num % <span class="number">2</span> == <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  看似是对的，但是每执行四便会有一个错误的结果（用数据说话）。考虑到负奇数的情况，它除以2的结果就不会是1。因此，返回值是false，而这样是不对的。</p>
+<p>  代码可以修改成这样：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">oddOrNot</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (num &amp; <span class="number">1</span>) != <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  这么写不光是负奇数的问题解决了，并且还是经过充分优化过的。因为算术运算和逻辑运行要比乘除运算更高效，计算的结果也会更快。</p>
+</li>
+<li><p>单引号与双引号的区别</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Haha</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line">    System.out.print(<span class="string">"H"</span> + <span class="string">"a"</span>);</span><br><span class="line">    System.out.print(<span class="string">'H'</span> + <span class="string">'a'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  看起来这段代码会返回”Haha”,但实际返回的是Ha169。原因就是用了双引号的时候，字符会被当作字符串处理，而如果是单引号的话，字符值会通过一个叫做基础类型拓宽的操作来转换成整型值。然后再将值相加得到169。</p>
+</li>
+<li><p>一些防止内存泄露的小技巧<br>  内存泄露会导致软件的性能降级。由于Java是自动管理内存的，因此开发人员并没有太多办法介入。不过还是有一些方法能够用来防止内存泄露的。</p>
+<ol>
+<li>查询完数据后立即释放数据库连接</li>
+<li>尽可能使用finally块</li>
+<li>释放静态变量中的实例    </li>
+</ol>
+</li>
+<li><p>避免死锁<br>  死锁出现的原因有很多。避免死锁不是一句话就能解决的。通常来说，当某个同步对象在等待另一个同步对象所拥有的资源上的锁时，便会产生死锁。</p>
+<p>  试着运行下下面的程序。它会告诉你什么是死锁。这个死锁是由于两个线程都在等待对方所拥有的资源，因此会产生死锁。它们会一直等待，没有谁会先放手。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeadlockDemo</span> </span>&#123;</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> Object addLock = <span class="keyword">new</span> Object();</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> Object subLock = <span class="keyword">new</span> Object();</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">      MyAdditionThread add = <span class="keyword">new</span> MyAdditionThread();</span><br><span class="line">      MySubtractionThread sub = <span class="keyword">new</span> MySubtractionThread();</span><br><span class="line">      add.start();</span><br><span class="line">      sub.start();</span><br><span class="line">   &#125;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAdditionThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         <span class="keyword">synchronized</span> (addLock) &#123;</span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">10</span>, b = <span class="number">3</span>;</span><br><span class="line">        <span class="keyword">int</span> c = a + b;</span><br><span class="line">            System.out.println(<span class="string">"Addition Thread: "</span> + c);</span><br><span class="line">            System.out.println(<span class="string">"Holding First Lock..."</span>);</span><br><span class="line">            <span class="keyword">try</span> &#123; Thread.sleep(<span class="number">10</span>); &#125;</span><br><span class="line">            <span class="keyword">catch</span> (InterruptedException e) &#123;&#125;</span><br><span class="line">            System.out.println(<span class="string">"Addition Thread: Waiting for AddLock..."</span>);</span><br><span class="line">            <span class="keyword">synchronized</span> (subLock) &#123;</span><br><span class="line">               System.out.println(<span class="string">"Threads: Holding Add and Sub Locks..."</span>);</span><br><span class="line">            &#125;</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MySubtractionThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         <span class="keyword">synchronized</span> (subLock) &#123;</span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">10</span>, b = <span class="number">3</span>;</span><br><span class="line">        <span class="keyword">int</span> c = a - b;</span><br><span class="line">            System.out.println(<span class="string">"Subtraction Thread: "</span> + c);</span><br><span class="line">            System.out.println(<span class="string">"Holding Second Lock..."</span>);</span><br><span class="line">            <span class="keyword">try</span> &#123; Thread.sleep(<span class="number">10</span>); &#125;</span><br><span class="line">            <span class="keyword">catch</span> (InterruptedException e) &#123;&#125;</span><br><span class="line">            System.out.println(<span class="string">"Subtraction  Thread: Waiting for SubLock..."</span>);</span><br><span class="line">            <span class="keyword">synchronized</span> (addLock) &#123;</span><br><span class="line">               System.out.println(<span class="string">"Threads: Holding Add and Sub Locks..."</span>);</span><br><span class="line">            &#125;</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  输出：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Addition Thread: <span class="number">13</span></span><br><span class="line">Subtraction Thread: <span class="number">7</span></span><br><span class="line">Holding First Lock...</span><br><span class="line">Holding Second Lock...</span><br><span class="line">Addition Thread: Waiting <span class="keyword">for</span> AddLock...</span><br><span class="line">Subtraction  Thread: Waiting <span class="keyword">for</span> SubLock...</span><br></pre></td></tr></table></figure>
+<p>  但如果调用的顺序变一下的话，死锁的问题就解决了。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeadlockSolutionDemo</span> </span>&#123;</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> Object addLock = <span class="keyword">new</span> Object();</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> Object subLock = <span class="keyword">new</span> Object();</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">      MyAdditionThread add = <span class="keyword">new</span> MyAdditionThread();</span><br><span class="line">      MySubtractionThread sub = <span class="keyword">new</span> MySubtractionThread();</span><br><span class="line">      add.start();</span><br><span class="line">      sub.start();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAdditionThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         <span class="keyword">synchronized</span> (addLock) &#123;</span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">10</span>, b = <span class="number">3</span>;</span><br><span class="line">        <span class="keyword">int</span> c = a + b;</span><br><span class="line">            System.out.println(<span class="string">"Addition Thread: "</span> + c);</span><br><span class="line">            System.out.println(<span class="string">"Holding First Lock..."</span>);</span><br><span class="line">            <span class="keyword">try</span> &#123; Thread.sleep(<span class="number">10</span>); &#125;</span><br><span class="line">            <span class="keyword">catch</span> (InterruptedException e) &#123;&#125;</span><br><span class="line">            System.out.println(<span class="string">"Addition Thread: Waiting for AddLock..."</span>);</span><br><span class="line">            <span class="keyword">synchronized</span> (subLock) &#123;</span><br><span class="line">               System.out.println(<span class="string">"Threads: Holding Add and Sub Locks..."</span>);</span><br><span class="line">            &#125;</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MySubtractionThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         <span class="keyword">synchronized</span> (addLock) &#123;</span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">10</span>, b = <span class="number">3</span>;</span><br><span class="line">        <span class="keyword">int</span> c = a - b;</span><br><span class="line">            System.out.println(<span class="string">"Subtraction Thread: "</span> + c);</span><br><span class="line">            System.out.println(<span class="string">"Holding Second Lock..."</span>);</span><br><span class="line">            <span class="keyword">try</span> &#123; Thread.sleep(<span class="number">10</span>); &#125;</span><br><span class="line">            <span class="keyword">catch</span> (InterruptedException e) &#123;&#125;</span><br><span class="line">            System.out.println(<span class="string">"Subtraction  Thread: Waiting for SubLock..."</span>);</span><br><span class="line">            <span class="keyword">synchronized</span> (subLock) &#123;</span><br><span class="line">               System.out.println(<span class="string">"Threads: Holding Add and Sub Locks..."</span>);</span><br><span class="line">            &#125;</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  输出：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Addition Thread: <span class="number">13</span></span><br><span class="line">Holding First Lock...</span><br><span class="line">Addition Thread: Waiting <span class="keyword">for</span> AddLock...</span><br><span class="line">Threads: Holding Add and Sub Locks...</span><br><span class="line">Subtraction Thread: <span class="number">7</span></span><br><span class="line">Holding Second Lock...</span><br><span class="line">Subtraction  Thread: Waiting <span class="keyword">for</span> SubLock...</span><br><span class="line">Threads: Holding Add and Sub Locks...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>替Java省点内存<br>  某些Java程序是CPU密集型的，但它们会需要大量的内存。这类程序通常运行得很缓慢，因为它们对内存的需求很大。为了能提升这类应用的性能，可得给它们多留点内存。因此，假设我们有一台拥有10G内存的Tomcat服务器。在这台机器上，我们可以用如下的这条命令来分配内存:    </p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_OPTS=<span class="string">"<span class="variable">$JAVA_OPTS</span> -Xms5000m -Xmx6000m -XX:PermSize=1024m -XX:MaxPermSize=2048m"</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Xms = 最小内存分配</li>
+<li>Xmx = 最大内存分配</li>
+<li>XX:PermSize = JVM启动时的初始大小</li>
+<li>XX:MaxPermSize = JVM启动后可分配的最大空间</li>
+</ul>
+</li>
+<li><p>如何计算Java中操作的耗时<br>  在Java中进行操作计时有两个标准的方法：System.currentTimeMillis()和System.nanoTime()。问题就在于，什么情况下该用哪个。从本质上来讲，他们的作用都是一样的，但有以下几点不同：    </p>
+<ul>
+<li>System.currentTimeMillis()的精度在千分之一秒到千分之15秒之间（取决于系统）而System.nanoTime()则能到纳秒级。</li>
+<li>System.currentTimeMillis读操作耗时在数个CPU时钟左右。而System.nanoTime()则需要上百个。</li>
+<li>System.currentTimeMillis对应的是绝对时间（1970年1 月1日所经历的毫秒数），而System.nanoTime()则不与任何时间点相关。</li>
+<li>Float还是double</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th style="text-align:center">所用字节</th>
+<th style="text-align:center">有效位数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>float</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">7</td>
+</tr>
+<tr>
+<td>double</td>
+<td style="text-align:center">8</td>
+<td style="text-align:center">15</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>在对精度要求高的场景下，double类型相对float要更流行一些，理由如下：</p>
+<p>大多数处理器在处理float和double上所需的时间都是差不多的。而计算时间一样的前提下，double类型却能提供更高的精度。</p>
+</blockquote>
+<ul>
+<li><p>幂运算<br>  Java是通过异或操作来进行幂运算的。Java对于幂运算有两种处理方式：</p>
+<ol>
+<li><p>乘积：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> square = <span class="keyword">double</span> a * <span class="keyword">double</span> a;                           <span class="comment">// Optimized</span></span><br><span class="line"><span class="keyword">double</span> cube = <span class="keyword">double</span> a * <span class="keyword">double</span> a * <span class="keyword">double</span> a;                   <span class="comment">// Non-optimized</span></span><br><span class="line"><span class="keyword">double</span> cube = <span class="keyword">double</span> a * <span class="keyword">double</span> square;                       <span class="comment">// Optimized</span></span><br><span class="line"><span class="keyword">double</span> quad = <span class="keyword">double</span> a * <span class="keyword">double</span> a * <span class="keyword">double</span> a * <span class="keyword">double</span> a;          <span class="comment">// Non-optimized</span></span><br><span class="line"><span class="keyword">double</span> quad = <span class="keyword">double</span> square * <span class="keyword">double</span> square;                  <span class="comment">// Optimized</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>pow方法：在无法使用乘积的情况下可以使用pow方法。</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> cube = Math.pow(base, exponent);</span><br></pre></td></tr></table></figure>
+<p> 不到万不得已不要使用Math.pow。比方说，当指数是小数的时候。因为Math.pow要比乘积慢300-600倍左右。</p>
+</li>
+</ol>
+</li>
+<li><p>如何处理空指针异常<br>  空指针异常是Java中很常见的异常。当你尝试调用一个null对象上的方法时便会抛出这个异常。比如：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> noOfStudents = school.listStudents().count;</span><br></pre></td></tr></table></figure>
+<p>  在上述例子中，school为空或者listStudents()为空都可能会抛出了NullPointerException。因此最好检查下对象是否为空以避免类似情况。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getListOfStudents</span><span class="params">(File[] files)</span> </span>&#123;</span><br><span class="line">     	<span class="keyword">if</span> (files == <span class="keyword">null</span>)</span><br><span class="line">       	<span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">"File list cannot be null"</span>);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>JSON编码<br>  JSON是数据存储及传输的一种协议。与XML相比，它更易于使用。由于它非常轻量级以及自身的一些特性，现在JSON在网络上已经是越来越流行了。常见的数据结构都可以编码成JSON然后在各个网页间自由地传输。不过在开始编码前，你得先安装一个JSON解析器。在下面的例子中，我们将使用json.simple库来完成这项工作 (<a href="https://code.google.com/p/json-simple/)。" target="_blank" rel="external">https://code.google.com/p/json-simple/)。</a><br>  下面是编码成JSON串的一个简单的例子。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.json.simple.JSONObject;</span><br><span class="line"><span class="keyword">import</span> org.json.simple.JSONArray;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JsonEncodeDemo</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        JSONObject obj = <span class="keyword">new</span> JSONObject();</span><br><span class="line">        obj.put(<span class="string">"Novel Name"</span>, <span class="string">"Godaan"</span>);</span><br><span class="line">        obj.put(<span class="string">"Author"</span>, <span class="string">"Munshi Premchand"</span>);</span><br><span class="line"> </span><br><span class="line">        JSONArray novelDetails = <span class="keyword">new</span> JSONArray();</span><br><span class="line">        novelDetails.add(<span class="string">"Language: Hindi"</span>);</span><br><span class="line">        novelDetails.add(<span class="string">"Year of Publication: 1936"</span>);</span><br><span class="line">        novelDetails.add(<span class="string">"Publisher: Lokmanya Press"</span>);</span><br><span class="line">        </span><br><span class="line">        obj.put(<span class="string">"Novel Details"</span>, novelDetails);</span><br><span class="line">        </span><br><span class="line">        System.out.print(obj);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  输出：</p>
+  <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;"<span class="attribute">Novel Name</span>":<span class="value"><span class="string">"Godaan"</span></span>,"<span class="attribute">Novel Details</span>":<span class="value">[<span class="string">"Language: Hindi"</span>,<span class="string">"Year of Publication: 1936"</span>,<span class="string">"Publisher: Lokmanya Press"</span>]</span>,"<span class="attribute">Author</span>":<span class="value"><span class="string">"Munshi Premchand"</span></span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>JSON解析<br>  开发人员要想解析JSON串，首先你得知道它的格式。下面例子有助于你来理解这一点：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.FileNotFoundException;</span><br><span class="line"><span class="keyword">import</span> java.io.FileReader;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.json.simple.JSONArray;</span><br><span class="line"><span class="keyword">import</span> org.json.simple.JSONObject;</span><br><span class="line"><span class="keyword">import</span> org.json.simple.parser.JSONParser;</span><br><span class="line"><span class="keyword">import</span> org.json.simple.parser.ParseException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JsonParseTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String filePath = <span class="string">"//home//user//Documents//jsonDemoFile.json"</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// read the json file</span></span><br><span class="line">            FileReader reader = <span class="keyword">new</span> FileReader(filePath);</span><br><span class="line">            JSONParser jsonParser = <span class="keyword">new</span> JSONParser();</span><br><span class="line">            JSONObject jsonObject = (JSONObject)jsonParser.parse(reader);</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// get a number from the JSON object</span></span><br><span class="line">            Long id =  (Long) jsonObject.get(<span class="string">"id"</span>);</span><br><span class="line">            System.out.println(<span class="string">"The id is: "</span> + id);           </span><br><span class="line"></span><br><span class="line">            <span class="comment">// get a String from the JSON object</span></span><br><span class="line">            String   type = (String) jsonObject.get(<span class="string">"type"</span>);</span><br><span class="line">            System.out.println(<span class="string">"The type is: "</span> + type);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// get a String from the JSON object</span></span><br><span class="line">            String   name = (String) jsonObject.get(<span class="string">"name"</span>);</span><br><span class="line">            System.out.println(<span class="string">"The name is: "</span> + name);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// get a number from the JSON object</span></span><br><span class="line">            Double ppu =  (Double) jsonObject.get(<span class="string">"ppu"</span>);</span><br><span class="line">            System.out.println(<span class="string">"The PPU is: "</span> + ppu);</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// get an array from the JSON object</span></span><br><span class="line">            System.out.println(<span class="string">"Batters:"</span>);</span><br><span class="line">            JSONArray batterArray= (JSONArray) jsonObject.get(<span class="string">"batters"</span>);</span><br><span class="line">            Iterator i = batterArray.iterator();</span><br><span class="line">            <span class="comment">// take each value from the json array separately</span></span><br><span class="line">            <span class="keyword">while</span> (i.hasNext()) &#123;</span><br><span class="line">                JSONObject innerObj = (JSONObject) i.next();</span><br><span class="line">                System.out.println(<span class="string">"ID "</span>+ innerObj.get(<span class="string">"id"</span>) + </span><br><span class="line">                        <span class="string">" type "</span> + innerObj.get(<span class="string">"type"</span>));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// get an array from the JSON object</span></span><br><span class="line">            System.out.println(<span class="string">"Topping:"</span>);</span><br><span class="line">            JSONArray toppingArray= (JSONArray) jsonObject.get(<span class="string">"topping"</span>);</span><br><span class="line">            Iterator j = toppingArray.iterator();</span><br><span class="line">            <span class="comment">// take each value from the json array separately</span></span><br><span class="line">            <span class="keyword">while</span> (j.hasNext()) &#123;</span><br><span class="line">                JSONObject innerObj = (JSONObject) j.next();</span><br><span class="line">                System.out.println(<span class="string">"ID "</span>+ innerObj.get(<span class="string">"id"</span>) + </span><br><span class="line">                        <span class="string">" type "</span> + innerObj.get(<span class="string">"type"</span>));</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (FileNotFoundException ex) &#123;</span><br><span class="line">            ex.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException ex) &#123;</span><br><span class="line">            ex.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ParseException ex) &#123;</span><br><span class="line">            ex.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NullPointerException ex) &#123;</span><br><span class="line">            ex.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  jsonDemoFile.json</p>
+  <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    "<span class="attribute">id</span>": <span class="value"><span class="number">0001</span></span>,</span><br><span class="line">    "<span class="attribute">type</span>": <span class="value"><span class="string">"donut"</span></span>,</span><br><span class="line">    "<span class="attribute">name</span>": <span class="value"><span class="string">"Cake"</span></span>,</span><br><span class="line">    "<span class="attribute">ppu</span>": <span class="value"><span class="number">0.55</span></span>,</span><br><span class="line">    "<span class="attribute">batters</span>":</span><br><span class="line">        <span class="value">[</span><br><span class="line">            &#123; "<span class="attribute">id</span>": <span class="value"><span class="number">1001</span></span>, "<span class="attribute">type</span>": <span class="value"><span class="string">"Regular"</span> </span>&#125;,</span><br><span class="line">            &#123; "<span class="attribute">id</span>": <span class="value"><span class="number">1002</span></span>, "<span class="attribute">type</span>": <span class="value"><span class="string">"Chocolate"</span> </span>&#125;,</span><br><span class="line">            &#123; "<span class="attribute">id</span>": <span class="value"><span class="number">1003</span></span>, "<span class="attribute">type</span>": <span class="value"><span class="string">"Blueberry"</span> </span>&#125;,</span><br><span class="line">            &#123; "<span class="attribute">id</span>": <span class="value"><span class="number">1004</span></span>, "<span class="attribute">type</span>": <span class="value"><span class="string">"Devil's Food"</span> </span>&#125;</span><br><span class="line">        ]</span>,</span><br><span class="line">    "<span class="attribute">topping</span>":</span><br><span class="line">        <span class="value">[</span><br><span class="line">            &#123; "<span class="attribute">id</span>": <span class="value"><span class="number">5001</span></span>, "<span class="attribute">type</span>": <span class="value"><span class="string">"None"</span> </span>&#125;,</span><br><span class="line">            &#123; "<span class="attribute">id</span>": <span class="value"><span class="number">5002</span></span>, "<span class="attribute">type</span>": <span class="value"><span class="string">"Glazed"</span> </span>&#125;,</span><br><span class="line">            &#123; "<span class="attribute">id</span>": <span class="value"><span class="number">5005</span></span>, "<span class="attribute">type</span>": <span class="value"><span class="string">"Sugar"</span> </span>&#125;,</span><br><span class="line">            &#123; "<span class="attribute">id</span>": <span class="value"><span class="number">5007</span></span>, "<span class="attribute">type</span>": <span class="value"><span class="string">"Powdered Sugar"</span> </span>&#125;,</span><br><span class="line">            &#123; "<span class="attribute">id</span>": <span class="value"><span class="number">5006</span></span>, "<span class="attribute">type</span>": <span class="value"><span class="string">"Chocolate with Sprinkles"</span> </span>&#125;,</span><br><span class="line">            &#123; "<span class="attribute">id</span>": <span class="value"><span class="number">5003</span></span>, "<span class="attribute">type</span>": <span class="value"><span class="string">"Chocolate"</span> </span>&#125;,</span><br><span class="line">            &#123; "<span class="attribute">id</span>": <span class="value"><span class="number">5004</span></span>, "<span class="attribute">type</span>": <span class="value"><span class="string">"Maple"</span> </span>&#125;</span><br><span class="line">        ]</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>简单字符串查找<br>  Java提供了一个库函数叫做indexOf()。这个方法可以用在String对象上，它返回的是要查找的字符串所在的位置序号。如果查找不到则会返回-1。</p>
+</li>
+<li><p>列出目录下的文件<br>  你可以用下面的代码来列出目录下的文件。这个程序会遍历某个目录下的所有子目录及文件，并存储到一个数组里，然后通过遍历数组来列出所有文件。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListContents</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        File file = <span class="keyword">new</span> File(<span class="string">"//home//user//Documents/"</span>);</span><br><span class="line">        String[] files = file.list();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"Listing contents of "</span> + file.getPath());</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span> ; i &lt; files.length ; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            System.out.println(files[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>一个简单的IO程序<br>  Java提供了FileInputStream以及FileOutputStream类来进行文件的读写操作。FileInputStream的构造方法会接收输入文件的路径作为入参然后创建出一个文件的输入流。同样的，FileOutputStream的构造方法也会接收一个文件路径作为入参然后创建出文件的输出流。在处理完文件之后，一个很重要的操作就是要记得”close”掉这些流。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">myIODemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        FileInputStream in = <span class="keyword">null</span>;</span><br><span class="line">        FileOutputStream out = <span class="keyword">null</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            in = <span class="keyword">new</span> FileInputStream(<span class="string">"//home//user//Documents//InputFile.txt"</span>);</span><br><span class="line">            out = <span class="keyword">new</span> FileOutputStream(<span class="string">"//home//user//Documents//OutputFile.txt"</span>);</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">int</span> c;</span><br><span class="line">            <span class="keyword">while</span>((c = in.read()) != -<span class="number">1</span>) &#123;</span><br><span class="line">                out.write(c);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(in != <span class="keyword">null</span>) &#123;</span><br><span class="line">                in.close();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(out != <span class="keyword">null</span>) &#123;</span><br><span class="line">                out.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在Java中执行某个shell命令<br>  Java提供了Runtime类来执行shell命令。由于这些是外部的命令，因此异常处理就显得异常重要。在下面的例子中，我们将通过一个简单的例子来演示一下。我们会在shell命令行中打开一个pdf文件。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.BufferedReader;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStreamReader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ShellCommandExec</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String gnomeOpenCommand = <span class="string">"gnome-open //home//user//Documents//MyDoc.pdf"</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Runtime rt = Runtime.getRuntime();</span><br><span class="line">            Process processObj = rt.exec(gnomeOpenCommand);</span><br><span class="line"></span><br><span class="line">            InputStream stdin = processObj.getErrorStream();</span><br><span class="line">            InputStreamReader isr = <span class="keyword">new</span> InputStreamReader(stdin);</span><br><span class="line">            BufferedReader br = <span class="keyword">new</span> BufferedReader(isr);</span><br><span class="line"></span><br><span class="line">            String myoutput = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span> ((myoutput=br.readLine()) != <span class="keyword">null</span>) &#123;</span><br><span class="line">                myoutput = myoutput+<span class="string">"\n"</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(myoutput);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用equals而非==<br>  ==是用来比较对象引用的，它会检查两个操作数指向的是不是同一个对象（不是相同的对象，而是同一个对象）。而”equals”则比较的是两个字符串是不是相同（假设是字符串对象）。</p>
+</li>
+<li><p>避免使用浮点数<br>  只有当确实有必要的时候才使用浮点数。比方说，使用浮点数来表示卢比或者派萨就很容易产生问题——这种情况应当使用BigDecimal。而浮点数更多地是用于测量。</p>
+</li>
+<li><p>集合的使用<br>  Java提供了许多集合类——比如，Vector，Stack，Hashtable等。所以鼓励开发人员尽可能地使用这些集合类有如下原因：</p>
+<ul>
+<li>使用集合使得代码的可重用度更高。</li>
+<li>集合类使得代码的结构更良好，更易于理解与维护。</li>
+<li>最重要的是这些集合类都经过充分的测试，代码质量很高。    </li>
+</ul>
+</li>
+</ul>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+            <a href="/tags/问题集锦/" rel="tag">#问题集锦</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/16/android-custom-component/" rel="prev">Android  自定义View 实现下载进度的显示</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/13/android-gesture-detector/" rel="next">Android 触摸手势检测GestureDetector使用详解</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/10/15/java_new_problem/"
+                   data-title="Java 新手问题集锦" data-url="http://yoursite.com/2015/10/15/java_new_problem/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar.jpg" alt="Johnson Zhang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Johnson Zhang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/hpze2000" target="_blank">github</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目錄</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Johnson Zhang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hpze2000"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
