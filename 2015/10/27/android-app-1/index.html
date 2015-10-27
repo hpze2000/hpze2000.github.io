@@ -30,7 +30,7 @@
 
 
 
-  <meta name="keywords" content="java,spring boot,spring mvc," />
+  <meta name="keywords" content="android,app," />
 
 
 
@@ -39,18 +39,22 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。我们来看看如何配置Spring Boot的开发环境，做一个最简单的Spring Boot应用。">
+<meta name="description" content="一、简介实现一款具备cool属性的产品是众多独立开发者都渴望的。然而，很多独立开发者之所以迟迟无法下手，并非热情不够，而是对于整个开发流程的未知与畏惧。而本文就是介绍本人耗时一周左右完成的一款Android产品的开发流程,从idea，到产品原型及设计，再到code架构与编写。希望读者看完后能对独立开发有不同的认识，然后挥舞起手中的键盘，开发出很cool的个人产品。
+二、开发流程1. idea2.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spring MVC 系列 - Spring Boot应用开发环境">
-<meta property="og:url" content="http://yoursite.com/2015/10/01/spring-boot-env-config/index.html">
+<meta property="og:title" content="动手开发一个安卓APP - 第三节 ：结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端 (一)">
+<meta property="og:url" content="http://yoursite.com/2015/10/27/android-app-1/index.html">
 <meta property="og:site_name" content="Johnson Zhang">
-<meta property="og:description" content="Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。我们来看看如何配置Spring Boot的开发环境，做一个最简单的Spring Boot应用。">
-<meta property="og:image" content="http://yoursite.com/uploads/maven-new-project.png">
-<meta property="og:image" content="http://yoursite.com/uploads/new-application.png">
-<meta property="og:updated_time" content="2015-10-09T03:48:06.807Z">
+<meta property="og:description" content="一、简介实现一款具备cool属性的产品是众多独立开发者都渴望的。然而，很多独立开发者之所以迟迟无法下手，并非热情不够，而是对于整个开发流程的未知与畏惧。而本文就是介绍本人耗时一周左右完成的一款Android产品的开发流程,从idea，到产品原型及设计，再到code架构与编写。希望读者看完后能对独立开发有不同的认识，然后挥舞起手中的键盘，开发出很cool的个人产品。
+二、开发流程1. idea2.">
+<meta property="og:image" content="http://yoursite.com/uploads/app1.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/app2.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/app3.jpg">
+<meta property="og:updated_time" content="2015-10-27T03:53:16.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spring MVC 系列 - Spring Boot应用开发环境">
-<meta name="twitter:description" content="Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。我们来看看如何配置Spring Boot的开发环境，做一个最简单的Spring Boot应用。">
+<meta name="twitter:title" content="动手开发一个安卓APP - 第三节 ：结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端 (一)">
+<meta name="twitter:description" content="一、简介实现一款具备cool属性的产品是众多独立开发者都渴望的。然而，很多独立开发者之所以迟迟无法下手，并非热情不够，而是对于整个开发流程的未知与畏惧。而本文就是介绍本人耗时一周左右完成的一款Android产品的开发流程,从idea，到产品原型及设计，再到code架构与编写。希望读者看完后能对独立开发有不同的认识，然后挥舞起手中的键盘，开发出很cool的个人产品。
+二、开发流程1. idea2.">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -60,7 +64,7 @@
   };
 </script>
 
-  <title> Spring MVC 系列 - Spring Boot应用开发环境 | Johnson Zhang </title>
+  <title> 动手开发一个安卓APP - 第三节 ：结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端 (一) | Johnson Zhang </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="">
@@ -193,7 +197,7 @@
           
           
             
-              Spring MVC 系列 - Spring Boot应用开发环境
+              动手开发一个安卓APP - 第三节 ：结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端 (一)
             
           
         </h1>
@@ -202,8 +206,8 @@
       <div class="post-meta">
         <span class="post-time">
           發表於
-          <time itemprop="dateCreated" datetime="2015-10-01T10:13:35+08:00" content="2015-10-01">
-            2015-10-01
+          <time itemprop="dateCreated" datetime="2015-10-27T11:53:16+08:00" content="2015-10-27">
+            2015-10-27
           </time>
         </span>
 
@@ -212,8 +216,8 @@
             &nbsp; | &nbsp; 分類於
             
               <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/java/" itemprop="url" rel="index">
-                  <span itemprop="name">java</span>
+                <a href="/categories/android/" itemprop="url" rel="index">
+                  <span itemprop="name">android</span>
                 </a>
               </span>
 
@@ -228,8 +232,8 @@
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/10/01/spring-boot-env-config/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/01/spring-boot-env-config/" itemprop="commentsCount"></span>
+              <a href="/2015/10/27/android-app-1/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/27/android-app-1/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -243,41 +247,71 @@
       
 
       
-        <span itemprop="articleBody"><blockquote>
-<p>Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。我们来看看如何配置Spring Boot的开发环境，做一个最简单的Spring Boot应用。</p>
+        <span itemprop="articleBody"><h1 id="一、简介">一、简介</h1><p>实现一款具备cool属性的产品是众多独立开发者都渴望的。<br>然而，很多独立开发者之所以迟迟无法下手，并非热情不够，而是对于整个开发流程的未知与畏惧。而本文就是介绍本人耗时一周左右完成的一款Android产品的开发流程,从idea，到产品原型及设计，再到code架构与编写。<br>希望读者看完后能对独立开发有不同的认识，然后挥舞起手中的键盘，开发出很cool的个人产品。</p>
+<h1 id="二、开发流程">二、开发流程</h1><h2 id="1-_idea">1. idea</h2><h2 id="2-_产品原型和设计稿">2. 产品原型和设计稿</h2><h2 id="3-_Android架构">3. Android架构</h2><p>不要急着啪啪啪敲键盘，先思考下这个app会涉及到哪些技术细节，以防后知后觉。</p>
+<blockquote>
+<p>a. 网络请求<br>b. 就是数据的爬虫及服务端的接口设计 (此文主要介绍安卓开发，此点可以省略)<br>c. 几个android组件的使用和交互（viewpage,listview,webview等）<br>d. 头部滑动tab自定义组件的实现<br>e. 图片的处理库<br>f. 上拉刷新 下拉刷新组件的使用, banner切换组件的使用</p>
 </blockquote>
-<a id="more"></a>
-<h1 id="Java_Development_Toolkit">Java Development Toolkit</h1><p>安装JDK 1.8（注意是JDK，并非JRE），可以从<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="external">Oracle官网上下载</a></p>
-<p>在勾选Accept License Agreement后，选择和自己操作系统匹配的安装包下载，注意32位系统和64位系统的区别。(64位操作系统可以安装32位JDK，但反之不可以)</p>
-<h1 id="Eclipse">Eclipse</h1><h2 id="下载">下载</h2><p>Eclipse是我们的集成开发环境——也就是我们常说的IDE(Integrated Development Environment)，它是Java开发最常用的IDE，包含支持Java的语言编辑器、构建工具、调试器、版本控制系统等等开发中常用到的功能。我们的课程内容是Web开发，所以需要<a href="http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/marsr" target="_blank" rel="external">下载Eclipse IDE for Java EE Developers</a>。这个版本的Eclipse IDE除了拥有对Java语言和开发的支持，还集成了一系列Web开发的工具能够提升我们的开发效率。</p>
-<p>同样的，请根据上一步中Java的32位或64位版本来选择与之匹配的Eclipse版本</p>
-<h2 id="安装">安装</h2><p>下载完成后解压zip包到任意目录中，双击打开eclipse目录中的eclipse可执行程序，这样就能够正确启动Eclipse IDE了。在启动的过程中需要选择一个目录作为工作空间（Workspace），这个目录会存放着今后我们开发的项目源代码。</p>
-<h1 id="第一个Java_Web项目">第一个Java Web项目</h1><p>安装完Java环境和Eclipse后，我们的基本开发环境就已经成功配置完成了，接下来我们要一个简单的Web程序以验证开发环境是否配置成功。在这个过程中，可能会遇到很多你不能够理解的地方——没关系，在课程刚开始的时候这是正常的，以后我们会对每一个细节进行深入学习。当然如果你有一颗强烈的好奇心，可以把问题抛给你的导师。</p>
-<h2 id="创建一个Maven项目">创建一个Maven项目</h2><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">菜单File <span class="subst">-&gt; </span><span class="literal">New</span> <span class="subst">-&gt; </span>Other<span class="attribute">...</span></span><br></pre></td></tr></table></figure>
-<p>点击Other…后会弹出一个对话框，包含了一系列的项目类型，我们选择Maven Project。一个技巧是可以在type filter text中输入Maven进行搜索过滤，这样很快可以找到Maven Project。选中后出现了新的对话框：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">勾选<span class="operator"><span class="keyword">Create</span> a simple <span class="keyword">project</span> (<span class="keyword">skip</span> archetype selection)</span></span><br></pre></td></tr></table></figure>
-<p>点击Next &gt;后,按照下图输入内容：</p>
-<p><img src="/uploads/maven-new-project.png" alt="创建一个Maven项目" title="创建一个Maven项目"></p>
-<p>输入完成后点击Finish，第一个项目就创建成功了。</p>
-<h2 id="配置项目">配置项目</h2><p>项目创建成功后，在Eclipse IDE左边的Project Explorer中会出现我们刚刚创建的项目，其中有一个pom.xml文件，我们先对它进行修改，内容变为：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">project</span> <span class="attribute">xmlns</span>=<span class="value">"http://maven.apache.org/POM/4.0.0"</span> <span class="attribute">xmlns:xsi</span>=<span class="value">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">    <span class="attribute">xsi:schemaLocation</span>=<span class="value">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="title">modelVersion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">parent</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">version</span>&gt;</span>1.2.3.RELEASE<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>com.tmy<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>website<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">name</span>&gt;</span>tmy-website<span class="tag">&lt;/<span class="title">name</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>编辑完成后保存（可以使用Ctrl+S快捷键）。</p>
-<h2 id="编写Web应用程序">编写Web应用程序</h2><p>然后我们在src/main/java目录下新建一个Java文件，File-&gt;New-&gt;Java-&gt;Class:</p>
-<p><img src="/uploads/new-application.png" alt="编写Web应用程序" title="编写Web应用程序"></p>
-<p>在这里我们需要填写Package, Name两个字段就可以了，然后编辑这个java文件：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> tmy.webdev;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.ResponseBody;</span><br><span class="line"></span><br><span class="line"><span class="annotation">@SpringBootApplication</span></span><br><span class="line"><span class="annotation">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@RequestMapping</span>(<span class="string">"/"</span>)</span><br><span class="line">    <span class="annotation">@ResponseBody</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Hello World!"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(Application.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>运行Web应用程序</p>
-<p>经过以上步骤，我们的程序也就写完了，接下来我们要将他运行起来：</p>
+<h2 id="4-_Code实现">4. Code实现</h2><p>好了，下面就开始舞动键盘啦。</p>
 <ul>
-<li>在Project Explorer中找到Application.java</li>
-<li>右键弹出菜单Run as…，选中Java Application</li>
+<li>想好产品的名字，本款产品直接命名为&lt;公众号头条&gt;。</li>
+<li>Android studio创建一个新工程</li>
+<li>创建需要的Activity。这里包含了SplashActivity[产品启动页], MainActivity[主页面], DetailActivity[浏览界面], ListActivity[数据列表界面]。这些是主要的，其它的后续再加。</li>
+<li>先完成视图层的实现。<ul>
+<li>SplashActivity[最初产品介绍页] 可以放一张简洁的介绍页面，用AlphaAnimation定时1秒钟跳转到主页面。</li>
+<li>MainActivity[主页面]，主要是包括顶部的分类tab加载， 中部的新闻列表内容，底部的相关页面切换。</li>
+<li>DetailActivity[浏览界面] 主要是使用webview 对内容进行呈现，包括了一些内容的JS交互的操作等</li>
 </ul>
-<p>接下来就能看到在IDE下方的Console视图中出现运行信息，当你看到Started Application in 2.214 seconds (JVM running for 2.466)信息后，说明应用服务器启动成功，接下来打开浏览器，在地址栏中输入<code>http://localhost:8080</code>，如果能够看到Hello World!出现在浏览器中，那说明环境配置大功告成！</p>
-<h1 id="参考材料">参考材料</h1><ol>
-<li><a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="external">Java Development Kit下载</a></li>
-<li><a href="http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/marsr" target="_blank" rel="external">Eclipse IDE for JavaEE Developers</a></li>
-<li><a href="http://www.infoq.com/cn/maven-practice" target="_blank" rel="external">Maven实战</a></li>
-<li><a href="http://projects.spring.io/spring-boot/" target="_blank" rel="external">Spring Boot</a></li>
-</ol>
+</li>
+<li>然后进行逻辑层的实现。<ul>
+<li>接口部分主要包含了 ：</li>
+<li><code>获取列表标签接口</code> </li>
+<li><code>获取文章列表接口</code> </li>
+<li><code>获取新闻内容接口</code></li>
+<li>内容呈现方面：</li>
+<li>对webview 中图片加载的处理方法</li>
+<li>对webview 中视频加载的处理方法</li>
+</ul>
+</li>
+</ul>
+<h1 id="三、DEMO">三、DEMO</h1><p><img src="/uploads/app1.jpg" alt="结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端" title="结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端"></p>
+<p><img src="/uploads/app2.jpg" alt="结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端" title="结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端"></p>
+<p><img src="/uploads/app3.jpg" alt="结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端" title="结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端"></p>
+<h1 id="四、后续">四、后续</h1><ul>
+<li>客户端主要还是针对用户交互和用户体验方面的增强<ul>
+<li>用户登录，用户中心，收藏，订阅等用户交互功能的实现</li>
+<li>用户阅读习惯进行数据显示等功能</li>
+</ul>
+</li>
+<li>服务端功能的增强<ul>
+<li>包括用户阅读习惯的收集（包括喜欢阅读的分类，关键词等）</li>
+<li>对数据的合理使用的关注</li>
+<li>接口统计功能的完善</li>
+</ul>
+</li>
+</ul>
+<h1 id="五、必备工具推荐">五、必备工具推荐</h1><ul>
+<li><p>产品原型制作</p>
+<ul>
+<li><a href="http://bohemiancoding.com/sketch/" target="_blank" rel="external">Sketch，最佳原型制作工具</a></li>
+<li><a href="https://dribbble.com/designers" target="_blank" rel="external">Dribbble，养成一双发现并懂得美的眼睛</a></li>
+<li><a href="http://www.calltoidea.com/" target="_blank" rel="external">新奇-Get quickly inspiration!</a></li>
+</ul>
+</li>
+<li><p>颜色搭配及icon制作</p>
+<ul>
+<li><a href="http://www.colorhunt.co/" target="_blank" rel="external">ColorHunt-色彩搭配</a></li>
+<li><a href="https://romannurik.github.io/AndroidAssetStudio/icons-launcher.html" target="_blank" rel="external">icon在线制作</a></li>
+</ul>
+</li>
+<li><p>移动应用分发</p>
+<ul>
+<li><a href="http://fir.im/" target="_blank" rel="external">Fir.im</a></li>
+<li><a href="http://developer.wandoujia.com/" target="_blank" rel="external">豌豆荚</a>    </li>
+<li><a href="http://developer.android.com/distribute/tools/launch-checklist.html" target="_blank" rel="external">play store</a>    </li>
+</ul>
+</li>
+</ul>
 </span>
       
     </div>
@@ -286,11 +320,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/java/" rel="tag">#java</a>
+            <a href="/tags/android/" rel="tag">#android</a>
           
-            <a href="/tags/spring-boot/" rel="tag">#spring boot</a>
-          
-            <a href="/tags/spring-mvc/" rel="tag">#spring mvc</a>
+            <a href="/tags/app/" rel="tag">#app</a>
           
         </div>
       
@@ -299,13 +331,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/10/01/spring-mvc-quickstart/" rel="prev">Spring MVC 系列 - Spring MVC快速入门</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/09/29/android-component/" rel="next">动手开发一个安卓APP - 常用组件/控件使用介绍</a>
+              <a href="/2015/10/16/android_recycler_view/" rel="next">RecyclerView使用介绍</a>
             
           </div>
         </div>
@@ -353,8 +383,8 @@
         
           <div class="comments" id="comments">
             
-              <div class="ds-thread" data-thread-key="2015/10/01/spring-boot-env-config/"
-                   data-title="Spring MVC 系列 - Spring Boot应用开发环境" data-url="http://yoursite.com/2015/10/01/spring-boot-env-config/">
+              <div class="ds-thread" data-thread-key="2015/10/27/android-app-1/"
+                   data-title="动手开发一个安卓APP - 第三节 ：结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端 (一)" data-url="http://yoursite.com/2015/10/27/android-app-1/">
               </div>
             
           </div>
@@ -442,7 +472,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java_Development_Toolkit"><span class="nav-number">1.</span> <span class="nav-text">Java Development Toolkit</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Eclipse"><span class="nav-number">2.</span> <span class="nav-text">Eclipse</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载"><span class="nav-number">2.1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">2.2.</span> <span class="nav-text">安装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第一个Java_Web项目"><span class="nav-number">3.</span> <span class="nav-text">第一个Java Web项目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建一个Maven项目"><span class="nav-number">3.1.</span> <span class="nav-text">创建一个Maven项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置项目"><span class="nav-number">3.2.</span> <span class="nav-text">配置项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写Web应用程序"><span class="nav-number">3.3.</span> <span class="nav-text">编写Web应用程序</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考材料"><span class="nav-number">4.</span> <span class="nav-text">参考材料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、简介"><span class="nav-number">1.</span> <span class="nav-text">一、简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、开发流程"><span class="nav-number">2.</span> <span class="nav-text">二、开发流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-_idea"><span class="nav-number">2.1.</span> <span class="nav-text">1. idea</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-_产品原型和设计稿"><span class="nav-number">2.2.</span> <span class="nav-text">2. 产品原型和设计稿</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-_Android架构"><span class="nav-number">2.3.</span> <span class="nav-text">3. Android架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-_Code实现"><span class="nav-number">2.4.</span> <span class="nav-text">4. Code实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、DEMO"><span class="nav-number">3.</span> <span class="nav-text">三、DEMO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、后续"><span class="nav-number">4.</span> <span class="nav-text">四、后续</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、必备工具推荐"><span class="nav-number">5.</span> <span class="nav-text">五、必备工具推荐</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

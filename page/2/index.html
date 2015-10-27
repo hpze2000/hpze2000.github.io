@@ -192,6 +192,103 @@
           
           
             
+              <a class="post-title-link" href="/2015/10/02/android-http-download/" itemprop="url">
+                带断点续传的多线程下载
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-10-02T11:13:46+08:00" content="2015-10-02">
+            2015-10-02
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/android/" itemprop="url" rel="index">
+                  <span itemprop="name">android</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/10/02/android-http-download/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/02/android-http-download/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h1 id="多线程下载">多线程下载</h1><blockquote>
+<p>多线程下载就是抢占服务器资源<br>原理：服务器CPU 分配给每条线程的时间片相同，服务器带宽平均分配给每条线程，所以客户端开启的线程越多，就能抢占到更多的服务器资源。</p>
+</blockquote>
+<ol>
+<li>设置开启线程数，发送http请求到下载地址，获取下载文件的总长度<br>然后创建一个长度一致的临时文件，避免下载到一半存储空间不够了，并计算每个线程下载多少数据 </li>
+<li>计算每个线程下载数据的开始和结束位置<br>再次发送请求，用 Range 头请求开始位置和结束位置的数据</li>
+<li>将下载到的数据，存放至临时文件中</li>
+<li>带断点续传的多线程下载<br>定义一个int变量，记录每条线程下载的数据总长度，然后加上该线程的下载开始位置，得到的结果就是下次下载时，该线程的开始位置，把得到的结果存入缓存文件，当文件下载完成，删除临时进度文件。</li>
+</ol>
+<p><code>参考代码</code></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/02/android-http-download/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/10/01/spring-mvc-quickstart/" itemprop="url">
                 Spring MVC 系列 - Spring MVC快速入门
               </a>
@@ -683,7 +780,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-count">16</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
