@@ -30,7 +30,7 @@
 
 
 
-  <meta name="keywords" content="android,app," />
+  <meta name="keywords" content="java,学习," />
 
 
 
@@ -39,19 +39,43 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="一、简介实现一款具备cool属性的产品是众多独立开发者都渴望的。然而，很多独立开发者之所以迟迟无法下手，并非热情不够，而是对于整个开发流程的未知与畏惧。而本文就是介绍本人耗时一周左右完成的一款Android产品的开发流程,从idea，到产品原型及设计，再到code架构与编写。希望读者看完后能对独立开发有不同的认识，然后挥舞起手中的键盘，开发出很cool的个人产品。">
+<meta name="description" content="本文针对 对 web 开发有兴趣的同学进行 一些教学
+课程目录
+WEB 开发总览 - 学习路线，概念介绍等 （一课时）    
+
+Java 语言基础 （一课时）
+
+（SQL）Mysql以及市面上常用数据基础，介绍 Java JDBC 操作MYSQL（一课时）
+Java Web基础 - servlet, JSP（一至二课时）
+
+Web前端技术基础 HTML, CSS, JavaScript（一课时）">
 <meta property="og:type" content="article">
-<meta property="og:title" content="动手开发一个安卓APP - 第三节 ：结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端 (一)">
-<meta property="og:url" content="http://yoursite.com/2015/10/27/android-app-1/index.html">
+<meta property="og:title" content="Java WEB 开发">
+<meta property="og:url" content="http://yoursite.com/2015/10/28/java-web-learning/index.html">
 <meta property="og:site_name" content="Johnson Zhang">
-<meta property="og:description" content="一、简介实现一款具备cool属性的产品是众多独立开发者都渴望的。然而，很多独立开发者之所以迟迟无法下手，并非热情不够，而是对于整个开发流程的未知与畏惧。而本文就是介绍本人耗时一周左右完成的一款Android产品的开发流程,从idea，到产品原型及设计，再到code架构与编写。希望读者看完后能对独立开发有不同的认识，然后挥舞起手中的键盘，开发出很cool的个人产品。">
-<meta property="og:image" content="http://yoursite.com/uploads/app1.jpg">
-<meta property="og:image" content="http://yoursite.com/uploads/app2.jpg">
-<meta property="og:image" content="http://yoursite.com/uploads/app3.jpg">
-<meta property="og:updated_time" content="2015-10-27T03:53:16.000Z">
+<meta property="og:description" content="本文针对 对 web 开发有兴趣的同学进行 一些教学
+课程目录
+WEB 开发总览 - 学习路线，概念介绍等 （一课时）    
+
+Java 语言基础 （一课时）
+
+（SQL）Mysql以及市面上常用数据基础，介绍 Java JDBC 操作MYSQL（一课时）
+Java Web基础 - servlet, JSP（一至二课时）
+
+Web前端技术基础 HTML, CSS, JavaScript（一课时）">
+<meta property="og:updated_time" content="2015-10-28T08:51:16.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="动手开发一个安卓APP - 第三节 ：结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端 (一)">
-<meta name="twitter:description" content="一、简介实现一款具备cool属性的产品是众多独立开发者都渴望的。然而，很多独立开发者之所以迟迟无法下手，并非热情不够，而是对于整个开发流程的未知与畏惧。而本文就是介绍本人耗时一周左右完成的一款Android产品的开发流程,从idea，到产品原型及设计，再到code架构与编写。希望读者看完后能对独立开发有不同的认识，然后挥舞起手中的键盘，开发出很cool的个人产品。">
+<meta name="twitter:title" content="Java WEB 开发">
+<meta name="twitter:description" content="本文针对 对 web 开发有兴趣的同学进行 一些教学
+课程目录
+WEB 开发总览 - 学习路线，概念介绍等 （一课时）    
+
+Java 语言基础 （一课时）
+
+（SQL）Mysql以及市面上常用数据基础，介绍 Java JDBC 操作MYSQL（一课时）
+Java Web基础 - servlet, JSP（一至二课时）
+
+Web前端技术基础 HTML, CSS, JavaScript（一课时）">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -61,7 +85,7 @@
   };
 </script>
 
-  <title> 动手开发一个安卓APP - 第三节 ：结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端 (一) | Johnson Zhang </title>
+  <title> Java WEB 开发 | Johnson Zhang </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="">
@@ -194,7 +218,7 @@
           
           
             
-              动手开发一个安卓APP - 第三节 ：结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端 (一)
+              Java WEB 开发
             
           
         </h1>
@@ -203,8 +227,8 @@
       <div class="post-meta">
         <span class="post-time">
           發表於
-          <time itemprop="dateCreated" datetime="2015-10-27T11:53:16+08:00" content="2015-10-27">
-            2015-10-27
+          <time itemprop="dateCreated" datetime="2015-10-28T16:51:16+08:00" content="2015-10-28">
+            2015-10-28
           </time>
         </span>
 
@@ -213,8 +237,8 @@
             &nbsp; | &nbsp; 分類於
             
               <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/android/" itemprop="url" rel="index">
-                  <span itemprop="name">android</span>
+                <a href="/categories/java/" itemprop="url" rel="index">
+                  <span itemprop="name">java</span>
                 </a>
               </span>
 
@@ -229,8 +253,8 @@
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/10/27/android-app-1/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/27/android-app-1/" itemprop="commentsCount"></span>
+              <a href="/2015/10/28/java-web-learning/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/28/java-web-learning/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -244,71 +268,25 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="一、简介">一、简介</h1><p>实现一款具备cool属性的产品是众多独立开发者都渴望的。<br>然而，很多独立开发者之所以迟迟无法下手，并非热情不够，而是对于整个开发流程的未知与畏惧。而本文就是介绍本人耗时一周左右完成的一款Android产品的开发流程,从idea，到产品原型及设计，再到code架构与编写。<br>希望读者看完后能对独立开发有不同的认识，然后挥舞起手中的键盘，开发出很cool的个人产品。</p>
-<a id="more"></a>
-<h1 id="二、开发流程">二、开发流程</h1><h2 id="1-_idea">1. idea</h2><h2 id="2-_产品原型和设计稿">2. 产品原型和设计稿</h2><h2 id="3-_Android架构">3. Android架构</h2><p>不要急着啪啪啪敲键盘，先思考下这个app会涉及到哪些技术细节，以防后知后觉。</p>
-<blockquote>
-<p>a. 网络请求<br>b. 就是数据的爬虫及服务端的接口设计 (此文主要介绍安卓开发，此点可以省略)<br>c. 几个android组件的使用和交互（viewpage,listview,webview等）<br>d. 头部滑动tab自定义组件的实现<br>e. 图片的处理库<br>f. 上拉刷新 下拉刷新组件的使用, banner切换组件的使用</p>
-</blockquote>
-<h2 id="4-_Code实现">4. Code实现</h2><p>好了，下面就开始舞动键盘啦。</p>
+        <span itemprop="articleBody"><p>本文针对 对 web 开发有兴趣的同学进行 一些教学</p>
+<h1 id="课程目录">课程目录</h1><ul>
+<li><p>WEB 开发总览 - 学习路线，概念介绍等 （<code>一课时</code>）    </p>
+</li>
+<li><p>Java 语言基础 （<code>一课时</code>）</p>
+</li>
+<li>（SQL）Mysql以及市面上常用数据基础，介绍 Java JDBC 操作MYSQL（<code>一课时</code>）</li>
+<li><p>Java Web基础 - servlet, JSP（<code>一至二课时</code>）</p>
+</li>
+<li><p>Web前端技术基础 HTML, CSS, JavaScript（<code>一课时</code>）    </p>
+</li>
+<li>Web前端开发基础 使用jquery进行前端脚本快速开发（<code>一课时</code>）    </li>
+</ul>
 <ul>
-<li>想好产品的名字，本款产品直接命名为&lt;公众号头条&gt;。</li>
-<li>Android studio创建一个新工程</li>
-<li>创建需要的Activity。这里包含了SplashActivity[产品启动页], MainActivity[主页面], DetailActivity[浏览界面], ListActivity[数据列表界面]。这些是主要的，其它的后续再加。</li>
-<li>先完成视图层的实现。<ul>
-<li>SplashActivity[最初产品介绍页] 可以放一张简洁的介绍页面，用AlphaAnimation定时1秒钟跳转到主页面。</li>
-<li>MainActivity[主页面]，主要是包括顶部的分类tab加载， 中部的新闻列表内容，底部的相关页面切换。</li>
-<li>DetailActivity[浏览界面] 主要是使用webview 对内容进行呈现，包括了一些内容的JS交互的操作等</li>
+<li>Java Web - Spring 系列（<code>一至二课时</code>）</li>
 </ul>
-</li>
-<li>然后进行逻辑层的实现。<ul>
-<li>接口部分主要包含了 ：</li>
-<li><code>获取列表标签接口</code> </li>
-<li><code>获取文章列表接口</code> </li>
-<li><code>获取新闻内容接口</code></li>
-<li>内容呈现方面：</li>
-<li>对webview 中图片加载的处理方法</li>
-<li>对webview 中视频加载的处理方法</li>
-</ul>
-</li>
-</ul>
-<h1 id="三、DEMO">三、DEMO</h1><p><img src="/uploads/app1.jpg" alt="结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端" title="结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端"></p>
-<p><img src="/uploads/app2.jpg" alt="结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端" title="结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端"></p>
-<p><img src="/uploads/app3.jpg" alt="结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端" title="结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端"></p>
-<h1 id="四、后续">四、后续</h1><ul>
-<li>客户端主要还是针对用户交互和用户体验方面的增强<ul>
-<li>用户登录，用户中心，收藏，订阅等用户交互功能的实现</li>
-<li>用户阅读习惯进行数据显示等功能</li>
-</ul>
-</li>
-<li>服务端功能的增强<ul>
-<li>包括用户阅读习惯的收集（包括喜欢阅读的分类，关键词等）</li>
-<li>对数据的合理使用的关注</li>
-<li>接口统计功能的完善</li>
-</ul>
-</li>
-</ul>
-<h1 id="五、必备工具推荐">五、必备工具推荐</h1><ul>
-<li><p>产品原型制作</p>
 <ul>
-<li><a href="http://bohemiancoding.com/sketch/" target="_blank" rel="external">Sketch，最佳原型制作工具</a></li>
-<li><a href="https://dribbble.com/designers" target="_blank" rel="external">Dribbble，养成一双发现并懂得美的眼睛</a></li>
-<li><a href="http://www.calltoidea.com/" target="_blank" rel="external">新奇-Get quickly inspiration!</a></li>
-</ul>
-</li>
-<li><p>颜色搭配及icon制作</p>
-<ul>
-<li><a href="http://www.colorhunt.co/" target="_blank" rel="external">ColorHunt-色彩搭配</a></li>
-<li><a href="https://romannurik.github.io/AndroidAssetStudio/icons-launcher.html" target="_blank" rel="external">icon在线制作</a></li>
-</ul>
-</li>
-<li><p>移动应用分发</p>
-<ul>
-<li><a href="http://fir.im/" target="_blank" rel="external">Fir.im</a></li>
-<li><a href="http://developer.wandoujia.com/" target="_blank" rel="external">豌豆荚</a>    </li>
-<li><a href="http://developer.android.com/distribute/tools/launch-checklist.html" target="_blank" rel="external">play store</a>    </li>
-</ul>
-</li>
+<li>Java Web - Spring MVC 实战 简单的备课系统 前端（<code>一至二课时</code>）</li>
+<li>Java Web - Spring MVC 实战 简单的备课系统 后端（<code>一至二课时</code>）</li>
 </ul>
 </span>
       
@@ -318,9 +296,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/android/" rel="tag">#android</a>
+            <a href="/tags/java/" rel="tag">#java</a>
           
-            <a href="/tags/app/" rel="tag">#app</a>
+            <a href="/tags/学习/" rel="tag">#学习</a>
           
         </div>
       
@@ -329,13 +307,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/10/28/php-word-filter/" rel="prev">PHP实现敏感词过滤系统</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/10/16/android_recycler_view/" rel="next">RecyclerView使用介绍</a>
+              <a href="/2015/10/28/php-word-filter/" rel="next">PHP实现敏感词过滤系统</a>
             
           </div>
         </div>
@@ -383,8 +359,8 @@
         
           <div class="comments" id="comments">
             
-              <div class="ds-thread" data-thread-key="2015/10/27/android-app-1/"
-                   data-title="动手开发一个安卓APP - 第三节 ：结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端 (一)" data-url="http://yoursite.com/2015/10/27/android-app-1/">
+              <div class="ds-thread" data-thread-key="2015/10/28/java-web-learning/"
+                   data-title="Java WEB 开发" data-url="http://yoursite.com/2015/10/28/java-web-learning/">
               </div>
             
           </div>
@@ -472,7 +448,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、简介"><span class="nav-number">1.</span> <span class="nav-text">一、简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、开发流程"><span class="nav-number">2.</span> <span class="nav-text">二、开发流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-_idea"><span class="nav-number">2.1.</span> <span class="nav-text">1. idea</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-_产品原型和设计稿"><span class="nav-number">2.2.</span> <span class="nav-text">2. 产品原型和设计稿</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-_Android架构"><span class="nav-number">2.3.</span> <span class="nav-text">3. Android架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-_Code实现"><span class="nav-number">2.4.</span> <span class="nav-text">4. Code实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、DEMO"><span class="nav-number">3.</span> <span class="nav-text">三、DEMO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、后续"><span class="nav-number">4.</span> <span class="nav-text">四、后续</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、必备工具推荐"><span class="nav-number">5.</span> <span class="nav-text">五、必备工具推荐</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#课程目录"><span class="nav-number">1.</span> <span class="nav-text">课程目录</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

@@ -192,6 +192,187 @@
           
           
             
+              <a class="post-title-link" href="/2015/10/09/php-api/" itemprop="url">
+                用PHP编写一个APP的API
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-10-09T09:41:32+08:00" content="2015-10-09">
+            2015-10-09
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/php/" itemprop="url" rel="index">
+                  <span itemprop="name">php</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/10/09/php-api/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/09/php-api/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h1 id="第一部分，通信接口的实现">第一部分，通信接口的实现</h1><p>PHP开发API时，一般返回XML或JSON数据类型的数据，除了要返回从源数据（程序本身需要的数据）外还应附上状态码，以下是一段封装后的数据，它使用JSON格式展现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    code: <span class="number">200</span>,</span><br><span class="line">    message: <span class="string">"Success"</span>,</span><br><span class="line">    data: [</span><br><span class="line">        &#123;</span><br><span class="line">            username: <span class="string">"李四"</span>,</span><br><span class="line">            password: <span class="string">"123456"</span>,</span><br><span class="line">            level: <span class="string">"1"</span>,</span><br><span class="line">            gold: <span class="string">"0"</span>,</span><br><span class="line">            id: <span class="string">"6"</span>,</span><br><span class="line">            create_time: <span class="string">"2015-09-26 08:25:31"</span>,</span><br><span class="line">            is_active: <span class="string">"1"</span>,</span><br><span class="line">            is_admin: <span class="string">"0"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            username: <span class="string">"张三"</span>,</span><br><span class="line">            password: <span class="string">"12345"</span>,</span><br><span class="line">            level: <span class="string">"1"</span>,</span><br><span class="line">            gold: <span class="string">"0"</span>,</span><br><span class="line">            id: <span class="string">"8"</span>,</span><br><span class="line">            create_time: <span class="string">"0000-00-00 00:00:00"</span>,</span><br><span class="line">            is_active: <span class="string">"1"</span>,</span><br><span class="line">            is_admin: <span class="string">"0"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以下是XML格式数据的实例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">root</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">code</span>&gt;</span>200<span class="tag">&lt;/<span class="title">code</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">message</span>&gt;</span>Success<span class="tag">&lt;/<span class="title">message</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">data</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">item</span> <span class="attribute">id</span>=<span class="value">"0"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">username</span>&gt;</span>李四<span class="tag">&lt;/<span class="title">username</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">password</span>&gt;</span>123456<span class="tag">&lt;/<span class="title">password</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">level</span>&gt;</span>1<span class="tag">&lt;/<span class="title">level</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">gold</span>&gt;</span>0<span class="tag">&lt;/<span class="title">gold</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">id</span>&gt;</span>6<span class="tag">&lt;/<span class="title">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">create_time</span>&gt;</span>2015-09-26 08:25:31<span class="tag">&lt;/<span class="title">create_time</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">is_active</span>&gt;</span>1<span class="tag">&lt;/<span class="title">is_active</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">is_admin</span>&gt;</span>0<span class="tag">&lt;/<span class="title">is_admin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">item</span> <span class="attribute">id</span>=<span class="value">"1"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">username</span>&gt;</span>张三<span class="tag">&lt;/<span class="title">username</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">password</span>&gt;</span>12345<span class="tag">&lt;/<span class="title">password</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">level</span>&gt;</span>1<span class="tag">&lt;/<span class="title">level</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">gold</span>&gt;</span>0<span class="tag">&lt;/<span class="title">gold</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">id</span>&gt;</span>8<span class="tag">&lt;/<span class="title">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">create_time</span>&gt;</span>0000-00-00 00:00:00<span class="tag">&lt;/<span class="title">create_time</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">is_active</span>&gt;</span>1<span class="tag">&lt;/<span class="title">is_active</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">is_admin</span>&gt;</span>0<span class="tag">&lt;/<span class="title">is_admin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">data</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">root</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>此外，为了方便手机端开发人员的调试，还可直接返回带数据类型的数据：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">array</span>(<span class="number">3</span>) &#123;</span><br><span class="line">  [<span class="string">"code"</span>]=&gt;</span><br><span class="line">  int(<span class="number">200</span>)</span><br><span class="line">  [<span class="string">"message"</span>]=&gt;</span><br><span class="line">  string(<span class="number">7</span>) <span class="string">"Success"</span></span><br><span class="line">  [<span class="string">"data"</span>]=&gt;</span><br><span class="line">  <span class="keyword">array</span>(<span class="number">2</span>) &#123;</span><br><span class="line">    [<span class="number">0</span>]=&gt;</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">8</span>) &#123;</span><br><span class="line">      [<span class="string">"username"</span>]=&gt;</span><br><span class="line">      string(<span class="number">9</span>) <span class="string">"李四"</span></span><br><span class="line">      [<span class="string">"password"</span>]=&gt;</span><br><span class="line">      string(<span class="number">6</span>) <span class="string">"123456"</span></span><br><span class="line">      [<span class="string">"level"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"1"</span></span><br><span class="line">      [<span class="string">"gold"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"0"</span></span><br><span class="line">      [<span class="string">"id"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"6"</span></span><br><span class="line">      [<span class="string">"create_time"</span>]=&gt;</span><br><span class="line">      string(<span class="number">19</span>) <span class="string">"2015-09-26 08:25:31"</span></span><br><span class="line">      [<span class="string">"is_active"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"1"</span></span><br><span class="line">      [<span class="string">"is_admin"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"0"</span></span><br><span class="line">    &#125;</span><br><span class="line">    [<span class="number">1</span>]=&gt;</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">8</span>) &#123;</span><br><span class="line">      [<span class="string">"username"</span>]=&gt;</span><br><span class="line">      string(<span class="number">6</span>) <span class="string">"张三"</span></span><br><span class="line">      [<span class="string">"password"</span>]=&gt;</span><br><span class="line">      string(<span class="number">5</span>) <span class="string">"12345"</span></span><br><span class="line">      [<span class="string">"level"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"1"</span></span><br><span class="line">      [<span class="string">"gold"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"0"</span></span><br><span class="line">      [<span class="string">"id"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"8"</span></span><br><span class="line">      [<span class="string">"create_time"</span>]=&gt;</span><br><span class="line">      string(<span class="number">19</span>) <span class="string">"0000-00-00 00:00:00"</span></span><br><span class="line">      [<span class="string">"is_active"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"1"</span></span><br><span class="line">      [<span class="string">"is_admin"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"0"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/09/php-api/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/10/09/php-awesome/" itemprop="url">
+                收集整理一些常用的PHP类库, 资源以及技巧
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-10-09T08:11:20+08:00" content="2015-10-09">
+            2015-10-09
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/php/" itemprop="url" rel="index">
+                  <span itemprop="name">php</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/10/09/php-awesome/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/09/php-awesome/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h1 id="awesome-php">awesome-php</h1><p>收集整理一些常用的PHP类库, 资源以及技巧. 以便在工作中迅速的查找所需…</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/09/php-awesome/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/10/02/android-http-download/" itemprop="url">
                 带断点续传的多线程下载
               </a>
@@ -780,7 +961,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-count">18</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -794,7 +975,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
