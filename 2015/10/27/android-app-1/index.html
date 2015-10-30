@@ -272,6 +272,32 @@
 </ul>
 </li>
 </ul>
+<h3 id="Application类">Application类</h3><blockquote>
+<p>Application和Activity,Service一样是Android框架的一个系统组件，当Android程序启动时系统会创建一个Application对象，用来存储系统的一些信息。</p>
+<p>Android系统自动会为每个程序运行时创建一个Application类的对象且只创建一个，所以Application可以说是单例（singleton）模式的一个类。</p>
+<p>通常我们是不需要指定一个Application的，系统会自动帮我们创建，如果需要创建自己的Application，那也很简单！创建一个类继承Application并在AndroidManifest.xml文件中的application标签中进行注册（只需要给application标签增加name属性，并添加自己的 Application的名字即可）。</p>
+<p>启动Application时，系统会创建一个PID，即进程ID，所有的Activity都会在此进程上运行。那么我们在Application创建的时候初始化全局变量，同一个应用的所有Activity都可以取到这些全局变量的值，换句话说，我们在某一个Activity中改变了这些全局变量的值，那么在同一个应用的其他Activity中值就会改变。</p>
+<p>Application对象的生命周期是整个程序中最长的，它的生命周期就等于这个程序的生命周期。因为它是全局的单例的，所以在不同的Activity,Service中获得的对象都是同一个对象。所以可以通过Application来进行一些，如：数据传递、数据共享和数据缓存等操作。</p>
+</blockquote>
+<h4 id="Application类_应用场景">Application类 应用场景</h4><blockquote>
+<p>在Android中，可以通过继承Application类来实现应用程序级的全局变量，这种全局变量方法相对静态类更有保障，直到应用的所有Activity全部被destory掉之后才会被释放掉。</p>
+</blockquote>
+<ul>
+<li><p>1、继承Application</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomApplication</span> <span class="keyword">extends</span> <span class="title">Application</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String VALUE = <span class="string">"Harvey"</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> String value;</span><br><span class="line">    </span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate();</span><br><span class="line">        setValue(VALUE); <span class="comment">// 初始化全局变量</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setValue</span><span class="params">(String value)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getValue</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">`</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：继承Application类，主要重写里面的onCreate（）方法（android.app.Application包的onCreate（）才是真正的Android程序的入口点），就是创建的时候，初始化变量的值。然后在整个应用中的各个文件中就可以对该变量进行操作了。</p>
+</blockquote>
+</li>
+<li><p>2、在ApplicationManifest.xml文件中配置自定义的Application    </p>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">application</span></span><br><span class="line">        <span class="attribute">android:name</span>=<span class="value">"CustomApplication"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">application</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>  在Activity 中 获取</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FirstActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> CustomApplication app;</span><br><span class="line">    </span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.main);</span><br><span class="line">        </span><br><span class="line">        app = (CustomApplication) getApplication(); <span class="comment">// 获得CustomApplication对象</span></span><br><span class="line">        </span><br><span class="line">        Log.i(<span class="string">"FirstActivity"</span>, <span class="string">"初始值====="</span> + app.getValue()); <span class="comment">// 获取进程中的全局变量值，看是否是初始化值</span></span><br><span class="line">        </span><br><span class="line">        app.setValue(<span class="string">"Harvey Ren"</span>); <span class="comment">// 重新设置值</span></span><br><span class="line">        </span><br><span class="line">        Log.i(<span class="string">"FirstActivity"</span>, <span class="string">"修改后====="</span> + app.getValue()); <span class="comment">// 再次获取进程中的全局变量值，看是否被修改</span></span><br><span class="line">        </span><br><span class="line">        Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">        intent.setClass(<span class="keyword">this</span>, SecondActivity.class);</span><br><span class="line">        startActivity(intent);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：只需要调用Context的 getApplicationContext或者Activity的getApplication方法来获得一个Application对象，然后再得到相应的成员变量即可。它是代表我们的应用程序的类，使用它可以获得当前应用的主题和资源文件中的内容等，这个类更灵活的一个特性就是可以被我们继承，来添加我们自己的全局属性。</p>
+</blockquote>
+</li>
+</ul>
 <h1 id="三、DEMO">三、DEMO</h1><p><img src="/uploads/app1.jpg" alt="结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端" title="结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端"></p>
 <p><img src="/uploads/app2.jpg" alt="结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端" title="结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端"></p>
 <p><img src="/uploads/app3.jpg" alt="结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端" title="结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端"></p>
@@ -310,6 +336,17 @@
 </ul>
 </li>
 </ul>
+<h1 id="六、分配的模块功能">六、分配的模块功能</h1><ol>
+<li>启动页 使用 viewpage 页面 做个 滑动介绍APP 的启动跳转页 主要掌握 <code>主要掌握布局, 网络请求, 缓存 的使用</code></li>
+<li>首页 顶部的 toolbar，带左右滑动的 标签切换，  底部的 tab切换   <code>主要掌握listview，网络请求, 缓存 的使用</code></li>
+<li>内容列表页 <code>主要掌握listview，布局，网络请求的使用</code></li>
+<li>公众号呈现页 <code>主要掌握 gridview，布局，网络请求 的使用</code></li>
+<li>内容展示页面 <code>主要掌握 webview，布局，网络请求, 缓存 的使用</code></li>
+<li>设置页面 <code>主要掌握 布局，缓存, 配置文件 的使用</code></li>
+</ol>
+<blockquote>
+<p><a href="http://pan.baidu.com/s/1dDFen7N" target="_blank" rel="external">代码下载</a></p>
+</blockquote>
 </span>
       
     </div>
@@ -424,7 +461,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-count">19</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -472,7 +509,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、简介"><span class="nav-number">1.</span> <span class="nav-text">一、简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、开发流程"><span class="nav-number">2.</span> <span class="nav-text">二、开发流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-_idea"><span class="nav-number">2.1.</span> <span class="nav-text">1. idea</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-_产品原型和设计稿"><span class="nav-number">2.2.</span> <span class="nav-text">2. 产品原型和设计稿</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-_Android架构"><span class="nav-number">2.3.</span> <span class="nav-text">3. Android架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-_Code实现"><span class="nav-number">2.4.</span> <span class="nav-text">4. Code实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、DEMO"><span class="nav-number">3.</span> <span class="nav-text">三、DEMO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、后续"><span class="nav-number">4.</span> <span class="nav-text">四、后续</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、必备工具推荐"><span class="nav-number">5.</span> <span class="nav-text">五、必备工具推荐</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、简介"><span class="nav-number">1.</span> <span class="nav-text">一、简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、开发流程"><span class="nav-number">2.</span> <span class="nav-text">二、开发流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-_idea"><span class="nav-number">2.1.</span> <span class="nav-text">1. idea</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-_产品原型和设计稿"><span class="nav-number">2.2.</span> <span class="nav-text">2. 产品原型和设计稿</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-_Android架构"><span class="nav-number">2.3.</span> <span class="nav-text">3. Android架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-_Code实现"><span class="nav-number">2.4.</span> <span class="nav-text">4. Code实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Application类"><span class="nav-number">2.4.1.</span> <span class="nav-text">Application类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Application类_应用场景"><span class="nav-number">2.4.1.1.</span> <span class="nav-text">Application类 应用场景</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、DEMO"><span class="nav-number">3.</span> <span class="nav-text">三、DEMO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、后续"><span class="nav-number">4.</span> <span class="nav-text">四、后续</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、必备工具推荐"><span class="nav-number">5.</span> <span class="nav-text">五、必备工具推荐</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六、分配的模块功能"><span class="nav-number">6.</span> <span class="nav-text">六、分配的模块功能</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
