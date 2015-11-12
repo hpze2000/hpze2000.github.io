@@ -1,0 +1,724 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="android,gradle,打包," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="使用gradle打包apk已经成为当前主流趋势，我也在这个过程中经历了各种需求，并不断结合gradle新的支持，一一改进。在此，把这些相关的东西记录，做一总结。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android gradle 打包">
+<meta property="og:url" content="http://yoursite.com/2015/11/12/android_gradle_apk_package/index.html">
+<meta property="og:site_name" content="Johnson Zhang">
+<meta property="og:description" content="使用gradle打包apk已经成为当前主流趋势，我也在这个过程中经历了各种需求，并不断结合gradle新的支持，一一改进。在此，把这些相关的东西记录，做一总结。">
+<meta property="og:updated_time" content="2015-11-12T02:41:07.379Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android gradle 打包">
+<meta name="twitter:description" content="使用gradle打包apk已经成为当前主流趋势，我也在这个过程中经历了各种需求，并不断结合gradle新的支持，一一改进。在此，把这些相关的东西记录，做一总结。">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> Android gradle 打包 | Johnson Zhang </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?886f45b065a917294e24691553891b06";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Johnson Zhang</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon icon-next-commonweal"></i> <br />
+            公益404
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Android gradle 打包
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-11-12T10:20:06+08:00" content="2015-11-12">
+            2015-11-12
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/android/" itemprop="url" rel="index">
+                  <span itemprop="name">android</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/11/12/android_gradle_apk_package/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/12/android_gradle_apk_package/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>使用gradle打包apk已经成为当前主流趋势，我也在这个过程中经历了各种需求，并不断结合gradle新的支持，一一改进。在此，把这些相关的东西记录，做一总结。</p>
+<a id="more"></a>
+<h1 id="1-_替换AndroidManifest中的占位符">1. 替换AndroidManifest中的占位符</h1><p>我想把其中的${app_label}替换为@string/app_name</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">android&#123;</span><br><span class="line">    defaultConfig&#123;</span><br><span class="line">        manifestPlaceholders = [app_label:<span class="string">"@string/app_name"</span>]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果只想替换debug版本：<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">android&#123;</span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        debug &#123;</span><br><span class="line">	          manifestPlaceholders = [app_label:<span class="string">"@string/app_name_debug"</span>]</span><br><span class="line">        &#125;</span><br><span class="line">        release &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>更多的需求是替换渠道编号：<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">android&#123;</span><br><span class="line">    productFlavors &#123;</span><br><span class="line">        // 把dev产品型号的apk的AndroidManifest中的channel替换dev</span><br><span class="line">        <span class="string">"dev"</span>&#123;</span><br><span class="line">            manifestPlaceholders = [channel:<span class="string">"dev"</span>]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="2-_独立配置签名信息">2. 独立配置签名信息</h1><p>对于签名相关的信息,直接写在gradle当然不好,特别是一些开源项目，可以添加到gradle.properties:<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="setting">RELEASE_KEY_PASSWORD=<span class="value">xxxx</span></span></span><br><span class="line"><span class="setting">RELEASE_KEY_ALIAS=<span class="value">xxx</span></span></span><br><span class="line"><span class="setting">RELEASE_STORE_PASSWORD=<span class="value">xxx</span></span></span><br><span class="line"><span class="setting">RELEASE_STORE_FILE=<span class="value">../.keystore/xxx.jks</span></span></span><br></pre></td></tr></table></figure></p>
+<p>然后在build.gradle中引用即可：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">android</span> &#123;</span><br><span class="line">    <span class="title">signingConfigs</span> &#123;</span><br><span class="line">        <span class="title">release</span> &#123;</span><br><span class="line">            <span class="title">storeFile</span> file(RELEASE_STORE_FILE)</span><br><span class="line">            storePassword RELEASE_STORE_PASSWORD</span><br><span class="line">            keyAlias RELEASE_KEY_ALIAS</span><br><span class="line">            keyPassword RELEASE_KEY_PASSWORD</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果不想提交到版本库，可以添加到local.properties中，然后在build.gradle中读取。</p>
+<h1 id="3-_多渠道打包">3. 多渠道打包</h1><p>多渠道打包的关键之处在于，定义不同的product flavor, 并把AndroiManifest中的channel渠道编号替换为对应的flavor标识：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    productFlavors &#123;</span><br><span class="line">        dev&#123;</span><br><span class="line">            manifestPlaceholders = [<span class="string">channel:</span><span class="string">"dev"</span>]</span><br><span class="line">        &#125;</span><br><span class="line">        official&#123;</span><br><span class="line">            manifestPlaceholders = [<span class="string">channel:</span><span class="string">"official"</span>]</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// ... ...</span></span><br><span class="line">        wandoujia&#123;</span><br><span class="line">            manifestPlaceholders = [<span class="string">channel:</span><span class="string">"wandoujia"</span>]</span><br><span class="line">        &#125;</span><br><span class="line">        xiaomi&#123;</span><br><span class="line">            manifestPlaceholders = [<span class="string">channel:</span><span class="string">"xiaomi"</span>]</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="string">"360"</span>&#123;</span><br><span class="line">            manifestPlaceholders = [<span class="string">channel:</span><span class="string">"360"</span>]</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意一点，这里的flavor名如果是数字开头，必须用引号引起来。<br>构建一下，就能生成一系列的Build Variant了:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">devDebug</span><br><span class="line">devRelease</span><br><span class="line">officialDebug</span><br><span class="line">officialRelease</span><br><span class="line">wandoujiaDebug</span><br><span class="line">wandoujiaRelease</span><br><span class="line">xiaomiDebug</span><br><span class="line">xiaomiRelease</span><br><span class="line"><span class="number">360</span>Debug</span><br><span class="line"><span class="number">360</span>Release</span><br></pre></td></tr></table></figure></p>
+<p>其中debug, release是gradle默认自带的两个build type。<br>选择一个，就能编译出对应渠道的apk了。</p>
+<h1 id="4-_自定义Build_Type">4. 自定义Build Type</h1><p>前面说到默认的build type有两种debug和release，区别如下：<br><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// release版本生成的BuildConfig特性信息</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">BuildConfig</span> </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> DEBUG = <span class="keyword">false</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String BUILD_TYPE = <span class="string">"release"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// debug版本生成的BuildConfig特性信息</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">BuildConfig</span> </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> DEBUG = <span class="keyword">true</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String BUILD_TYPE = <span class="string">"debug"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>现在有一种需求，增加一种build type，介于debug和release之间，就是和release版本一样，但是要保留debug状态（如果做过rom开发的话，类似于user debug版本），我们称为preview版本吧。<br>其实很简单：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">android</span> &#123;</span><br><span class="line">    <span class="title">signingConfigs</span> &#123;</span><br><span class="line">        <span class="title">debug</span> &#123;</span><br><span class="line">            <span class="title">storeFile</span> file(RELEASE_STORE_FILE)</span><br><span class="line">            storePassword RELEASE_STORE_PASSWORD</span><br><span class="line">            keyAlias RELEASE_KEY_ALIAS</span><br><span class="line">            keyPassword RELEASE_KEY_PASSWORD</span><br><span class="line">        &#125;</span><br><span class="line">        preview &#123;</span><br><span class="line">            <span class="title">storeFile</span> file(RELEASE_STORE_FILE)</span><br><span class="line">            storePassword RELEASE_STORE_PASSWORD</span><br><span class="line">            keyAlias RELEASE_KEY_ALIAS</span><br><span class="line">            keyPassword RELEASE_KEY_PASSWORD</span><br><span class="line">        &#125;</span><br><span class="line">        release &#123;</span><br><span class="line">            <span class="title">storeFile</span> file(RELEASE_STORE_FILE)</span><br><span class="line">            storePassword RELEASE_STORE_PASSWORD</span><br><span class="line">            keyAlias RELEASE_KEY_ALIAS</span><br><span class="line">            keyPassword RELEASE_KEY_PASSWORD</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        <span class="title">debug</span> &#123;</span><br><span class="line">            <span class="title">manifestPlaceholders</span> = [app_label:<span class="string">"<span class="variable">@string</span>/app_name_debug"</span>]</span><br><span class="line">        &#125;</span><br><span class="line">        release &#123;</span><br><span class="line">            <span class="title">manifestPlaceholders</span> = [app_label:<span class="string">"<span class="variable">@string</span>/app_name"</span>]</span><br><span class="line">        &#125;</span><br><span class="line">        preview&#123;</span><br><span class="line">            <span class="title">manifestPlaceholders</span> = [app_label:<span class="string">"<span class="variable">@string</span>/app_name_preview"</span>]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>另外，build type还有一个好处，如果想要一次性生成所有的preview版本，执行assemblePreview即可，debug和releae版本同理。</p>
+<h1 id="5-_build_type中的定制参数">5. build type中的定制参数</h1><p>上面我们在不同的build type替换${app_label}为不同的字符串，这样安装到手机上就能明显的区分出不同build type的版本。<br>除此之外，可能还可以配置一些参数，我这里列几个我在工作中用到的：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">android</span> &#123;</span><br><span class="line">        <span class="title">debug</span> &#123;</span><br><span class="line">            <span class="title">manifestPlaceholders</span> = [app_label:<span class="string">"<span class="variable">@string</span>/app_name_debug"</span>]</span><br><span class="line">            applicationIdSuffix <span class="string">".debug"</span></span><br><span class="line">            minifyEnabled <span class="built_in">false</span></span><br><span class="line">            signingConfig signingConfigs.<span class="built_in">debug</span></span><br><span class="line">            proguardFiles getDefaultProguardFile(<span class="string">'proguard-android.txt'</span>), <span class="string">'proguard-rules.pro'</span></span><br><span class="line">        &#125;</span><br><span class="line">        release &#123;</span><br><span class="line">            <span class="title">manifestPlaceholders</span> = [app_label:<span class="string">"<span class="variable">@string</span>/app_name"</span>]</span><br><span class="line">            minifyEnabled <span class="built_in">true</span></span><br><span class="line">            shrinkResources <span class="built_in">true</span></span><br><span class="line">            signingConfig signingConfigs.release</span><br><span class="line">            proguardFiles getDefaultProguardFile(<span class="string">'proguard-android.txt'</span>), <span class="string">'proguard-rules.pro'</span></span><br><span class="line">        &#125;</span><br><span class="line">        preview&#123;</span><br><span class="line">            <span class="title">manifestPlaceholders</span> = [app_label:<span class="string">"<span class="variable">@string</span>/app_name_preview"</span>]</span><br><span class="line">            applicationIdSuffix <span class="string">".preview"</span></span><br><span class="line">            debuggable <span class="built_in">true</span> // 保留<span class="built_in">debug</span>信息</span><br><span class="line">            minifyEnabled <span class="built_in">true</span></span><br><span class="line">            shrinkResources <span class="built_in">true</span></span><br><span class="line">            signingConfig signingConfigs.preview</span><br><span class="line">            proguardFiles getDefaultProguardFile(<span class="string">'proguard-android.txt'</span>), <span class="string">'proguard-rules.pro'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这些都用的太多了，稍微解释一下：<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// minifyEnabled 混淆处理</span></span><br><span class="line"><span class="comment">// shrinkResources 去除无用资源</span></span><br><span class="line"><span class="comment">// signingConfig 签名</span></span><br><span class="line"><span class="comment">// proguardFiles 混淆配置</span></span><br><span class="line"><span class="comment">// applicationIdSuffix 增加APP ID的后缀</span></span><br><span class="line"><span class="comment">// debuggable 是否保留调试信息</span></span><br><span class="line"><span class="comment">// ... ...</span></span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>多工程全局配置</li>
+</ol>
+<p>随着产品渠道的铺开，往往一套代码需要支持多个产品形态，这就需要抽象出主要代码到一个Library，然后基于Library扩展几个App Module。<br>相信每个module的build.gradle都会有这个代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion <span class="number">22</span></span><br><span class="line">    buildToolsVersion <span class="string">"23.0.1"</span></span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        minSdkVersion <span class="number">10</span></span><br><span class="line">        targetSdkVersion <span class="number">22</span></span><br><span class="line">        versionCode <span class="number">34</span></span><br><span class="line">        versionName <span class="string">"v2.6.1"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当升级sdk、build tool、target sdk等，几个module都要更改，非常的麻烦。最重要的是，很容易忘记，最终导致app module之间的差异不统一，也不可控。<br>强大的gradle插件在1.1.0支持全局变量设定，一举解决了这个问题。<br>先在project的根目录下的build.gradle定义ext全局变量:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ext &#123;</span><br><span class="line">    compileSdkVersion = <span class="number">22</span></span><br><span class="line">    buildToolsVersion = <span class="string">"23.0.1"</span></span><br><span class="line">    minSdkVersion = <span class="number">10</span></span><br><span class="line">    targetSdkVersion = <span class="number">22</span></span><br><span class="line">    versionCode = <span class="number">34</span></span><br><span class="line">    versionName = <span class="string">"v2.6.1"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后在各module的build.gradle中引用如下：<br><figure class="highlight roboconf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="component">android &#123;</span><br><span class="line">    compileSdkVersion rootProject<span class="string">.ext.compileSdkVersion</span></span><br><span class="line">    buildToolsVersion rootProject<span class="string">.ext.buildToolsVersion</span></span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        applicationId "com<span class="string">.xxx.xxx"</span></span><br><span class="line">        minSdkVersion rootProject<span class="string">.ext.minSdkVersion</span></span><br><span class="line">        targetSdkVersion rootProject<span class="string">.ext.targetSdkVersion</span></span><br><span class="line">        versionCode rootProject<span class="string">.ext.versionCode</span></span><br><span class="line">        versionName rootProject<span class="string">.ext.versionName</span></span><br><span class="line">    &#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后每次修改project级别的build.gradle即可实现全局统一配置。</p>
+<h1 id="7-_自定义导出的APK名称">7. 自定义导出的APK名称</h1><p>默认android studio生成的apk名称为app-debug.apk或者app-release.apk，当有多个渠道的时候，需要同时编出50个渠道包的时候，就麻烦了，不知道谁是谁了。<br>这个时候，就需要自定义导出的APK名称了，不同的渠道编出的APK的文件名应该是不一样的。<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    <span class="comment">// rename the apk with the version name</span></span><br><span class="line">    applicationVariants<span class="built_in">.</span><span class="literal">all</span> &#123; variant <span class="subst">-&gt;</span><br><span class="line">        </span>variant<span class="built_in">.</span>outputs<span class="built_in">.</span>each &#123; output <span class="subst">-&gt;</span><br><span class="line">            </span>output<span class="built_in">.</span>outputFile = <span class="literal">new</span> File(</span><br><span class="line">                    output<span class="built_in">.</span>outputFile<span class="built_in">.</span><span class="keyword">parent</span>,</span><br><span class="line">                    <span class="string">"ganchai-$&#123;variant.buildType.name&#125;-$&#123;variant.versionName&#125;-$&#123;variant.productFlavors[0].name&#125;.apk"</span><span class="built_in">.</span>toLowerCase())</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当apk太多时，如果能把apk按debug，release，preview分一下类就更好了（事实上，对于我这样经常发版的人，一编往往就要编四五十个版本的人，debug和release版本全混在一起没法看，必须分类），简单：<br><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    <span class="regexp">//</span> <span class="keyword">rename</span> the apk with the version name</span><br><span class="line">    // add output file <span class="sub"><span class="keyword">sub</span> folder by build type</span><br><span class="line">    applicationVariants.all &#123;</span> variant -&gt;</span><br><span class="line">        variant.outputs.<span class="keyword">each</span> &#123; output -&gt;</span><br><span class="line">            output.outputFile = new File(</span><br><span class="line">                    output.outputFile.parent + <span class="string">"/<span class="subst">$&#123;variant.buildType.name&#125;</span>"</span>,</span><br><span class="line">                    <span class="string">"ganchai-<span class="subst">$&#123;variant.buildType.name&#125;</span>-<span class="subst">$&#123;variant.versionName&#125;</span>-<span class="subst">$&#123;variant.productFlavors[<span class="number">0</span>].name&#125;</span>.apk"</span>.toLowerCase())</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>现在生成了类似于ganchai-dev-preview-v2.4.0.0.apk这样格式的包了，preview的包自然就放在preview的文件夹下，清晰明了。</p>
+<h1 id="8-_混淆技巧">8. 混淆技巧</h1><p>混淆能让反编译的代码可读性变的很差，而且还能显著的减少APK包的大小。</p>
+<h2 id="1)-_第一个技巧">1). 第一个技巧</h2><p>相信很多朋友对混淆都觉得麻烦，甚至说，非常乱。因为添加混淆规则需要查询官方说明文档，甚至有的官方文档还没说明。当你引用了太多库后，添加混淆规则将使一场噩梦。<br>这里介绍一个技巧，不用查官方文档，不用逐个库考虑添加规则。<br>首先，除了默认的混淆配置(android-sdk/tools/proguard/proguard-android.txt), 自己的代码肯定是要自己配置的：<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 位于module下的proguard-rules.pro</span></span><br><span class="line"><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">#</span></span><br><span class="line"><span class="comment">######</span><span class="comment">### 主程序不能混淆的代码 ###</span><span class="comment">######</span></span><br><span class="line"><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">#</span></span><br><span class="line"></span><br><span class="line">-dontwarn xxx.model.**</span><br><span class="line">-keep <span class="class"><span class="keyword">class</span> <span class="title">xxx</span>.<span class="title">model</span>.** &#123; *; &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 等等，自己的代码自己清楚</span></span><br><span class="line"></span><br><span class="line"><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">#</span></span><br><span class="line"><span class="comment">######</span><span class="comment">##### 不优化泛型和反射 ###</span><span class="comment">######</span><span class="comment">#</span></span><br><span class="line"><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">#</span></span><br><span class="line"></span><br><span class="line">-keepattributes Signature</span><br></pre></td></tr></table></figure></p>
+<p>接下来是麻烦的第三方库，一般来说，如果是极光推的话，它的包名是cn.jpush, 添加如下代码即可：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-dontwarn cn.jpush.<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">-keep class cn.jpush.<span class="keyword">*</span><span class="keyword">*</span> &#123; <span class="keyword">*</span>; &#125;</span><br></pre></td></tr></table></figure></p>
+<p>其他的第三库也是如此，一个一个添加，太累！其实可以用第三方反编译工具（比如jadx：<code>https://github.com/skylot/jadx</code>），打开apk后，一眼就能看到引用的所有第三方库的包名，把所有不想混淆或者不确定能不能混淆的，直接都添加又有何不可：<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">#####################################</span><br><span class="line">######### 第三方库或者jar包 ###########</span><br><span class="line">#####################################</span><br><span class="line"></span><br><span class="line">-<span class="ruby">dontwarn cn.jpush.**</span><br><span class="line"></span>-<span class="ruby">keep <span class="class"><span class="keyword">class</span> <span class="title">cn</span>.<span class="title">jpush</span>.** &#123; *;</span> &#125;</span><br><span class="line"></span></span><br><span class="line">-<span class="ruby">dontwarn com.squareup.**</span><br><span class="line"></span>-<span class="ruby">keep <span class="class"><span class="keyword">class</span> <span class="title">com</span>.<span class="title">squareup</span>.** &#123; *;</span> &#125;</span><br><span class="line"></span></span><br><span class="line">-<span class="ruby">dontwarn com.octo.**</span><br><span class="line"></span>-<span class="ruby">keep <span class="class"><span class="keyword">class</span> <span class="title">com</span>.<span class="title">octo</span>.** &#123; *;</span> &#125;</span><br><span class="line"></span></span><br><span class="line">-<span class="ruby">dontwarn de.**</span><br><span class="line"></span>-<span class="ruby">keep <span class="class"><span class="keyword">class</span> <span class="title">de</span>.** &#123; *;</span> &#125;</span><br><span class="line"></span></span><br><span class="line">-<span class="ruby">dontwarn javax.**</span><br><span class="line"></span>-<span class="ruby">keep <span class="class"><span class="keyword">class</span> <span class="title">javax</span>.** &#123; *;</span> &#125;</span><br><span class="line"></span></span><br><span class="line">-<span class="ruby">dontwarn org.**</span><br><span class="line"></span>-<span class="ruby">keep <span class="class"><span class="keyword">class</span> <span class="title">org</span>.** &#123; *;</span> &#125;</span><br><span class="line"></span></span><br><span class="line">-<span class="ruby">dontwarn u.aly.**</span><br><span class="line"></span>-<span class="ruby">keep <span class="class"><span class="keyword">class</span> <span class="title">u</span>.<span class="title">aly</span>.** &#123; *;</span> &#125;</span><br><span class="line"></span></span><br><span class="line">-<span class="ruby">dontwarn uk.**</span><br><span class="line"></span>-<span class="ruby">keep <span class="class"><span class="keyword">class</span> <span class="title">uk</span>.** &#123; *;</span> &#125;</span><br><span class="line"></span></span><br><span class="line">-<span class="ruby">dontwarn com.baidu.**</span><br><span class="line"></span>-<span class="ruby">keep <span class="class"><span class="keyword">class</span> <span class="title">com</span>.<span class="title">baidu</span>.** &#123; *;</span> &#125;</span><br><span class="line"></span></span><br><span class="line">-<span class="ruby">dontwarn com.facebook.**</span><br><span class="line"></span>-<span class="ruby">keep <span class="class"><span class="keyword">class</span> <span class="title">com</span>.<span class="title">facebook</span>.** &#123; *;</span> &#125;</span><br><span class="line"></span></span><br><span class="line">-<span class="ruby">dontwarn com.google.**</span><br><span class="line"></span>-<span class="ruby">keep <span class="class"><span class="keyword">class</span> <span class="title">com</span>.<span class="title">google</span>.** &#123; *;</span> &#125;</span><br><span class="line"></span></span><br><span class="line">## ... ...</span><br></pre></td></tr></table></figure></p>
+<h2 id="2)-_第二个技巧">2). 第二个技巧</h2><p>一般release版本混淆之后，像友盟这样的统计系统如果有崩溃异常，会记录如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java<span class="class">.lang</span><span class="class">.NullPointerException</span>: java<span class="class">.lang</span><span class="class">.NullPointerException</span></span><br><span class="line">	at com<span class="class">.xxx</span><span class="class">.TabMessageFragment</span>$<span class="number">7</span>.<span class="function"><span class="title">run</span><span class="params">(Unknown Source)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>这个Unknown Source是很要命的，排除错误无法定位到具体行了，大大降低调试效率。<br>当然，友盟支持上传Mapping文件，可帮助定位，mapping文件的位置在：<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">project &gt; <span class="class"><span class="keyword">module</span></span></span><br><span class="line">        &gt; build &gt; outputs &gt; &#123;flavor name&#125; &gt; &#123;build <span class="keyword">type</span>&#125; &gt; mapping.txt</span><br></pre></td></tr></table></figure></p>
+<p>如果版本一多，mapping.txt每次都要重新生成，还要上传，终归还是麻烦。<br>其实，在proguard-rules.pro中添加如下代码即可：<br><figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="deletion">-keepattributes SourceFile,LineNumberTable</span></span><br></pre></td></tr></table></figure></p>
+<p>当然apk包会大那么一点点（我这里6M的包，大个200k吧），但是再也不用mapping.txt也能定位到行了，为了这种解脱，这个代价我个人觉得是值的，而且超值！</p>
+<h1 id="9-_动态设置一些额外信息">9. 动态设置一些额外信息</h1><p>假如想把当前的编译时间、编译的机器、最新的commit版本添加到apk，而这些信息又不好写在代码里，强大的gradle给了我创造可能的自信：<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        resValue <span class="string">"string"</span>, <span class="string">"build_time"</span>, buildTime()</span><br><span class="line">        resValue <span class="string">"string"</span>, <span class="string">"build_host"</span>, hostName()</span><br><span class="line">        resValue <span class="string">"string"</span>, <span class="string">"build_revision"</span>, revision()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">buildTime</span><span class="params">()</span> &#123;</span></span><br><span class="line">    <span class="keyword">return</span> new <span class="constant">Date</span>().format(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hostName</span><span class="params">()</span> &#123;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="constant">System</span>.getProperty(<span class="string">"user.name"</span>) + <span class="string">"@"</span> + <span class="constant">InetAddress</span>.localHost.hostName</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">revision</span><span class="params">()</span> &#123;</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">code</span> = <span class="title">new</span> <span class="title">ByteArrayOutputStream</span><span class="params">()</span></span></span><br><span class="line">    exec &#123;</span><br><span class="line">        commandLine <span class="string">'git'</span>, <span class="string">'rev-parse'</span>, <span class="string">'--short'</span>, <span class="string">'HEAD'</span></span><br><span class="line">        standardOutput = code</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> code.toString()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上述代码实现了动态的添加了3个字符串资源: build_time、build_host、build_revision, 然后在其他地方可像如引用字符串一样使用如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在Activity里调用</span></span><br><span class="line">getString(R.string.build_time)  <span class="comment">// 输出2015-11-07 17:01</span></span><br><span class="line">getString(R.string.build_host)  <span class="comment">// 输出jay@deepin，这是我的电脑的用户名和PC名</span></span><br><span class="line">getString(R.string.build_revision) <span class="comment">// 输出3dd5823, 这是最后一次commit的sha值</span></span><br></pre></td></tr></table></figure></p>
+<p>这个地方，如何从命令行读取返回结果，很有意思。<br>其实这段代码来自我学习VLC源码时偶然看到，深受启发，不敢独享，特摘抄在此。<br>vlc源码及编译地址：<code>https://wiki.videolan.org/AndroidCompile</code>， 有兴趣可以过去一观。</p>
+<h1 id="10-_给自己留个”后门”:_点七下">10. 给自己留个”后门”: 点七下</h1><p>为了调试方便，我们往往会在debug版本留一个显示我们想看的界面（记得之前微博的一个iOS版本就泄露了一个调试界面），如何进入到一个界面，我们可以仿照android开发者选项的方式，点七下才显示，我们来实现一个：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> clickCount = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">long</span> clickTime = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">sevenClickView.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (clickTime == <span class="number">0</span>) &#123;</span><br><span class="line">            clickTime = System.currentTimeMillis();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (System.currentTimeMillis() - clickTime &gt; <span class="number">500</span>) &#123;</span><br><span class="line">            clickCount = <span class="number">0</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            clickCount++;</span><br><span class="line">        &#125;</span><br><span class="line">        clickTime = System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (clickCount &gt; <span class="number">6</span>) &#123;</span><br><span class="line">            <span class="comment">// 点七下条件达到，跳到debug界面</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>release版本肯定是不能暴露这个界面的，也不能让人用am在命令行调起，如何防止呢，可以在release版本把这个debug界面的exported设为false。</p>
+<h1 id="小结">小结</h1><p>android打包因为groovy语言的强大，变的强大的同时必然也变的复杂，今天把我经历的这些门道拿出来说道一下，做一个小小的总结，后续有更新我还会添加。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag">#android</a>
+          
+            <a href="/tags/gradle/" rel="tag">#gradle</a>
+          
+            <a href="/tags/打包/" rel="tag">#打包</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/11/02/java-web-learning-2/" rel="next">Java WEB 开发 （二） - Java 语言基础</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/11/12/android_gradle_apk_package/"
+                   data-title="Android gradle 打包" data-url="http://yoursite.com/2015/11/12/android_gradle_apk_package/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar.jpg" alt="Johnson Zhang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Johnson Zhang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/hpze2000" target="_blank">github</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-_替换AndroidManifest中的占位符"><span class="nav-number">1.</span> <span class="nav-text">1. 替换AndroidManifest中的占位符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-_独立配置签名信息"><span class="nav-number">2.</span> <span class="nav-text">2. 独立配置签名信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-_多渠道打包"><span class="nav-number">3.</span> <span class="nav-text">3. 多渠道打包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-_自定义Build_Type"><span class="nav-number">4.</span> <span class="nav-text">4. 自定义Build Type</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-_build_type中的定制参数"><span class="nav-number">5.</span> <span class="nav-text">5. build type中的定制参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-_自定义导出的APK名称"><span class="nav-number">6.</span> <span class="nav-text">7. 自定义导出的APK名称</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-_混淆技巧"><span class="nav-number">7.</span> <span class="nav-text">8. 混淆技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1)-_第一个技巧"><span class="nav-number">7.1.</span> <span class="nav-text">1). 第一个技巧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2)-_第二个技巧"><span class="nav-number">7.2.</span> <span class="nav-text">2). 第二个技巧</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-_动态设置一些额外信息"><span class="nav-number">8.</span> <span class="nav-text">9. 动态设置一些额外信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-_给自己留个”后门”:_点七下"><span class="nav-number">9.</span> <span class="nav-text">10. 给自己留个”后门”: 点七下</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">10.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Johnson Zhang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hpze2000"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
