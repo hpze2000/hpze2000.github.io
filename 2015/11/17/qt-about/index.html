@@ -1,0 +1,818 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="QT," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="编译环境与开发流程开发QT有两种IDE可以使用，一种是使用 VS + Qt 的插件，另一种就是使用QtCreator工具。前一种是微软的工具，用的都比较多容易上手，缺点是信号槽的支持不太好，需要手写，不能自动生成，另外可能有中文编码的问题。后一种是Qt的官方IDE，智能提示与调试功能不如VS强大，但是是跨平台的IDE，其QtDesigner设计UI界面操作比较方便，并且由于是QT官方的IDE，对编">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于QT的系统总结">
+<meta property="og:url" content="http://yoursite.com/2015/11/17/qt-about/index.html">
+<meta property="og:site_name" content="Johnson Zhang">
+<meta property="og:description" content="编译环境与开发流程开发QT有两种IDE可以使用，一种是使用 VS + Qt 的插件，另一种就是使用QtCreator工具。前一种是微软的工具，用的都比较多容易上手，缺点是信号槽的支持不太好，需要手写，不能自动生成，另外可能有中文编码的问题。后一种是Qt的官方IDE，智能提示与调试功能不如VS强大，但是是跨平台的IDE，其QtDesigner设计UI界面操作比较方便，并且由于是QT官方的IDE，对编">
+<meta property="og:image" content="http://yoursite.com/uploads/o_1.1.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/o_1.2.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/o_2.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/o_4.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/o_5.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/o_6.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/o_7.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/o_8.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/o_9.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/o_10.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/o_11.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/o_12.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/o_13.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/o_14.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/o_15.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/o_16.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/o_18.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/o_19.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/o_20.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/o_21.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/o_22.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/o_23.jpg">
+<meta property="og:updated_time" content="2015-11-17T01:49:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于QT的系统总结">
+<meta name="twitter:description" content="编译环境与开发流程开发QT有两种IDE可以使用，一种是使用 VS + Qt 的插件，另一种就是使用QtCreator工具。前一种是微软的工具，用的都比较多容易上手，缺点是信号槽的支持不太好，需要手写，不能自动生成，另外可能有中文编码的问题。后一种是Qt的官方IDE，智能提示与调试功能不如VS强大，但是是跨平台的IDE，其QtDesigner设计UI界面操作比较方便，并且由于是QT官方的IDE，对编">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 关于QT的系统总结 | Johnson Zhang </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?886f45b065a917294e24691553891b06";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Johnson Zhang</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon icon-next-commonweal"></i> <br />
+            公益404
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              关于QT的系统总结
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-11-17T09:49:16+08:00" content="2015-11-17">
+            2015-11-17
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/QT/" itemprop="url" rel="index">
+                  <span itemprop="name">QT</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/11/17/qt-about/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/17/qt-about/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="编译环境与开发流程">编译环境与开发流程</h1><p>开发QT有两种IDE可以使用，一种是使用 VS + Qt 的插件，另一种就是使用QtCreator工具。前一种是微软的工具，用的都比较多容易上手，缺点是信号槽的支持不太好，需要手写，不能自动生成，另外可能有中文编码的问题。后一种是Qt的官方IDE，智能提示与调试功能不如VS强大，但是是跨平台的IDE，其QtDesigner设计UI界面操作比较方便，并且由于是QT官方的IDE，对编码等支持都比较好，里面集成了Qt的帮助文档。不得不说Qt的帮助文档做的是非常好的，集成进QtCreator环境之后更加方便。</p>
+<a id="more"></a>
+<p>我开发的时候使用的是QtCreator开发，目前除了调试功能比VS差以外，其他的用的比较顺手，QtCreator是跨平台的，ubuntu上也是可以使用，打开之后界面如下：</p>
+<p><img src="/uploads/o_1.1.jpg" alt="QtCreator" title="QtCreator"></p>
+<p>下面将对QtCreator的界面各个功能进行大致的介绍：</p>
+<p><img src="/uploads/o_1.2.jpg" alt="QtCreator" title="QtCreator"></p>
+<p>我们建立一个示例项目，选择“文件”—“新建文件或项目”—“应用程序”—“QT Widgets Application”选择之后都选择默认设置，根据提示，就得到了一个项目，我们的UI是一个基于QMainWindow的类，默认提供菜单栏，状态栏。如果不需要这些，可以建立一个基于QWidget的UI类，项目如图所示：</p>
+<p><img src="/uploads/o_2.jpg" alt="QtCreator" title="QtCreator"></p>
+<h1 id="QT项目的构成及原理">QT项目的构成及原理</h1><p>将项目切换到编辑模式，如下：</p>
+<p><img src="/uploads/o_4.jpg" alt="QT项目的构成及原理" title="QT项目的构成及原理"></p>
+<p>这个项目中一共有4个文件，入口文件main.cpp、mainwindow.ui文件、mainwindow.h和mainwindow.cpp后台源文件，在main函数中直接调用MainWindow类的show()方法显示主界面，那么我们切换到UI的设计视图(双击项目中的mainwindow.ui文件)，在主界面上添加两个控件：</p>
+<p><img src="/uploads/o_5.jpg" alt="QT项目的构成及原理" title="QT项目的构成及原理"></p>
+<p>我们看一下MainWindow.cpp的代码里面应该如何操作界面上的控件：</p>
+<p><img src="/uploads/o_6.jpg" alt="QT项目的构成及原理" title="QT项目的构成及原理"></p>
+<p>我们使用的是<code>ui-&gt;txtName-&gt;text();</code>这样的语句，也就是说并不是像在C#中一样在后台代码中直接可以通过类似<code>this-&gt;txtName-&gt;text()</code>的语句去访问界面上的控件对象，而<code>MainWindow</code>类中有一个成员变量是ui，其类型是<code>Ui::MainWindow</code>，通过这个ui成员去访问界面上的元素，那么这些界面控件是如何初始化的呢? 我们需要查看ui成员变量的类型<code>Ui::MainWindow</code>的实现，注意<code>Ui::Mainwindow</code>类与<code>MainWindow</code>类是不同的两个类，<code>Ui::MainWindow</code>类是在命名空间Ui下的类，而<code>MainWindow</code>是没有命名空间的，我们在<code>mainwindow.h</code>中可以看到：</p>
+<p><img src="/uploads/o_7.jpg" alt="QT项目的构成及原理" title="QT项目的构成及原理"></p>
+<p>MainWindow中的私有成员变量ui实际上是Ui::MainWindow类型的指针，那么Ui::MainWindow是如何定义的呢? 用鼠标点进去就看到了：</p>
+<p><img src="/uploads/o_8.jpg" alt="QT项目的构成及原理" title="QT项目的构成及原理"></p>
+<p>从这里就可以看出为什么我们的MainWindow类的构造函数中一进来就调用ui-&gt;setupUi(this)去初始化界面了</p>
+<h1 id="QT中的布局">QT中的布局</h1><p>QT中有四种布局方式，分别是：Vertical垂直布局、Horizontal水平布局、Grid布局、Form布局，效果如下：<br><img src="/uploads/o_9.jpg" alt="QT中的布局" title="QT中的布局"><br>其实Grid布局感觉跟HTML中的Table差不多，Form布局好像也是表格的效果，至于这两种布局的差异在哪里我也不是很清楚，项目中基本没有用过这两种布局方式，一般而言所有的效果都可以通过水平布局和垂直布局嵌套实现。结合水平布局和垂直布局，以及他们之间的相互嵌套，再结合使用自动伸缩调节的占位控件HorizontalSpacer和VerticalSpacer就可以实现非常复杂的布局效果。</p>
+<p>一般使用布局有两种方式，第一种即拖放这些布局控件到UI界面上，然后将希望布局的子控件拖放到这些布局控件中，但是这种方式个人认为不够灵活，特别是在控件之间希望嵌套的时候，工具箱中的布局控件如下：<br><img src="/uploads/o_10.jpg" alt="QT中的布局" title="QT中的布局"><br>另外一种使用方式，QT的容器控件(那些能够放子控件的控件)都可以为其指定一种布局方式，当为一个容器控件指定布局方式之后，该容器控件就会以这种布局方式来约束其所有子控件，直接在Qt设计器的容器控件中右键就可以设置：<br><img src="/uploads/o_11.jpg" alt="QT中的布局" title="QT中的布局"><br>我们在一个QFrame控件中放入两个子控件，一个文本框一个按钮，之后在QFrame的空白处右键单击，在其右键菜单“布局”的子菜单中就可以指定该控件的布局模式了。实际上在代码上的原理是一样的，我们在QtCreator生成的ui_mainwindow.h中可以看到关于frame以及子控件和其布局设置的代码：<br><img src="/uploads/o_12.jpg" alt="QT中的布局" title="QT中的布局"><br>可以看到是这么样的关系，QFrame的子控件QPushButton以及QLineEdit(文本框)在构造的时候指定的父对象就是frame，而布局对象QHBoxLayout指定的父控件对象也是frame，也就是说除了我们在界面上看到的按钮，文本框是frame的子控件以外，我们通过右键生成的布局对象(QtCreator自动生成的，其对象id也是自动生成的)，也是frame的子控件，QHBoxLayout通过addWidget函数将frame的所有直接子控件添加到布局中进行布局。而我们在工具箱中拖动布局控件到顶级窗口UI界面之后，实际上QtCreator自动生成了一个QWidget作为该布局控件的容器，并且自动生成的这个QWidget的父控件就是顶级的MainWindow窗口。也就是说我们每往UI界面上拖放一个布局控件，那么QtCreator会为该布局控件自动生成一个QWidget作为该布局控件的容器(也就是父控件)，并且该自动生成的QWidget的父控件就是布局控件被拖动到的位置所在的直接容器。例如：<br><img src="/uploads/o_13.jpg" alt="QT中的布局" title="QT中的布局"><br>当选定一个布局控件(如果该布局控件是从工具箱拖放到UI上的，则其在UI设计器上是可以看到的)，或者是选择一个容器控件的时候(如果该容器控件已经通过右键的方式指定了布局方式)。这两种情况下在QtCreator的属性栏上就可以看到布局的相关属性：<br><img src="/uploads/o_14.jpg" alt="QT中的布局" title="QT中的布局"><br>如果是从工具箱中拖放的布局控件，那么其属性中的Margin默认都是0 ，如果是通过右键为容器控件指定的布局，那么该布局的Margin默认是9，所以这种方式下可以看到如果此时相容器控件中添加子控件，那么子控件与容器控件之间是有间隙的，除非将这里的属性手工改为0，layoutSpacing参数对于这两种方式产生的布局默认值都是6，表示该布局中的子控件之间的间隔是6</p>
+<h1 id="QT中的通用控件">QT中的通用控件</h1><p>QT中最常用的控件QPushButton(按钮)、QLineEdit(文本框)、QRadioButton(单选框)、QCheckBox(复选框)、QFrame(一般用作容器控件，配合布局)、QProgressBar(进度条控件)这些控件的使用方法都非常简单，查一下帮助文档就可以搞定，下面的章节中，我们会讲解另外的一些控件的常用但是却不是很容易找到的功能。</p>
+<h1 id="QVariant_类型">QVariant 类型</h1><p>再讲解其他控件之前，我们需要先了解Qt中的QVariant类型，为什么呢，因为需要为控件绑定数据，就离不开对QVariant类型的了解，下面章节中我们要说到的一些控件，在绑定数据的时候就会使用QVariant类型。他除了可以包裹Qt中常见的QString，int等类型之外，还可以包裹自定义的类对象。该类型提供了一系列的构造函数以及转换函数来携带常见类型的数据，和转换到常见类型数据的方法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">QVariant(<span class="keyword">int</span> val)</span><br><span class="line">QVariant(uint val)</span><br><span class="line">QVariant(qlonglong val)</span><br><span class="line">QVariant(qulonglong val)</span><br><span class="line">QVariant(<span class="keyword">bool</span> val)</span><br><span class="line">QVariant(<span class="keyword">double</span> val)</span><br><span class="line">QVariant(<span class="keyword">float</span> val)</span><br><span class="line">QVariant(<span class="keyword">const</span> <span class="keyword">char</span> * val)</span><br><span class="line">QVariant(<span class="keyword">const</span> QString &amp; val)</span><br><span class="line">QVariant(<span class="keyword">const</span> QDate &amp; val)</span><br><span class="line">QVariant(<span class="keyword">const</span> QTime &amp; val)</span><br><span class="line">QVariant(<span class="keyword">const</span> QDateTime &amp; val)</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">bool</span>    <span class="title">toBool</span><span class="params">()</span> <span class="keyword">const</span></span><br><span class="line">QByteArray  <span class="title">toByteArray</span><span class="params">()</span> <span class="keyword">const</span></span><br><span class="line">QChar   <span class="title">toChar</span><span class="params">()</span> <span class="keyword">const</span></span><br><span class="line">QDate   <span class="title">toDate</span><span class="params">()</span> <span class="keyword">const</span></span><br><span class="line">QDateTime   <span class="title">toDateTime</span><span class="params">()</span> <span class="keyword">const</span></span><br><span class="line"><span class="keyword">double</span>  <span class="title">toDouble</span><span class="params">(<span class="keyword">bool</span> * ok = <span class="number">0</span>)</span> <span class="keyword">const</span></span><br><span class="line"><span class="keyword">float</span>   <span class="title">toFloat</span><span class="params">(<span class="keyword">bool</span> * ok = <span class="number">0</span>)</span> <span class="keyword">const</span></span><br><span class="line"><span class="keyword">int</span> <span class="title">toInt</span><span class="params">(<span class="keyword">bool</span> * ok = <span class="number">0</span>)</span> <span class="keyword">const</span></span><br><span class="line">QJsonArray  <span class="title">toJsonArray</span><span class="params">()</span> <span class="keyword">const</span></span><br><span class="line">qlonglong   <span class="title">toLongLong</span><span class="params">(<span class="keyword">bool</span> * ok = <span class="number">0</span>)</span> <span class="keyword">const</span></span><br><span class="line">QString <span class="title">toString</span><span class="params">()</span> <span class="keyword">const</span></span><br><span class="line">QTime   <span class="title">toTime</span><span class="params">()</span> <span class="keyword">const</span></span><br><span class="line">uint    <span class="title">toUInt</span><span class="params">(<span class="keyword">bool</span> * ok = <span class="number">0</span>)</span> <span class="keyword">const</span></span><br><span class="line">qulonglong  <span class="title">toULongLong</span><span class="params">(<span class="keyword">bool</span> * ok = <span class="number">0</span>)</span> <span class="keyword">const</span></span></span><br></pre></td></tr></table></figure>
+<p>这只是其中的一部分，其实还包括了一些画图相关的类型的封装，例如QPoint，QRect等，当然Qt提供的是使用频率很高的常见的类型，有时候我们需要绑定自己定义的类对象，例如实体类：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//设置</span></span><br><span class="line">MyClass myclass;</span><br><span class="line">QVariant courseModelVariant=QVariant::fromValue(myclass);</span><br><span class="line">     </span><br><span class="line"><span class="comment">//获取</span></span><br><span class="line">myclass = courseModelVariant.value&lt;MyClass&gt;();</span><br></pre></td></tr></table></figure>
+<p>这样我们就可以使用QVariant携带任意数据类型了</p>
+<h1 id="QComboBox控件">QComboBox控件</h1><p>下拉列表框控件最常见的功能需求就是为该控件添加下拉项目，并且为每个下拉项目添加对应的自定义隐藏数据，例如在下拉列表中每一项上面显示的文字描述是给用户看的，然而在程序中，我们可能需要该项目对应的隐藏数据，例如ID甚至是自定义的对象。</p>
+<p><code>QComboBox</code>类使用<code>QComboBox::addItem(const QString &amp;atext, const QVariant &amp;auserData)</code>成员函数为下拉列表添加项目，第一个参数text表示显示在下拉项中的文字，而第二个参数我们可以利用来为该项绑定自定义的数据，其类型为QVariant类型。我们可以通过QVariant类型方便的为该下拉项关联任意自定义的数据类型。</p>
+<p>在获取数据的时候，通过<code>QComboBox:: currentData(int role = Qt::UserRole)</code>函数获取当前选中下拉项关联的QVariant类型的数据，也可以通过<code>QComboBox:: itemData(int index, int role = Qt::UserRole)</code>获取指定下拉项的关联数据。通过<code>currentText()</code>、<code>itemText(int index)</code>可以获取下拉项上显示的文本。</p>
+<h1 id="QTableWidget控件">QTableWidget控件</h1><p><code>QTableWidget</code>是Qt中的表格显示控件，与C#中的Grid、GridView类似，主要是用来绑定数据。在UI设计界面中选中该控件之后可以在属性栏对控件的属性进行设置，最常用的属性有如下：</p>
+<p><code>focusPolicy</code> 焦点策略，如果设置为NoFocus可以去掉单击时候现实的单元格的虚线框<br><code>contextMenuPolicy</code> 可以设置右键菜单<br><code>frameShape</code> 设置外边框，一般设置为NoFrame去掉边框<br><code>editTriggers</code>触发单元格的编辑状态，值NoEditTriggers表示不触发编辑状态<br><code>selectionMode</code>选择模式，值ExtendedSelection表示多选<br><code>selectionBehavior</code>选择行为，值SelectRows按行选择<br><code>showGrid</code>是否显示网格线<br><code>rowCount</code>行数<br><code>columnCount</code>列数<br><code>horizontalHeaderVisible</code>是否显示水平表头<br><code>verticalHeaderVIsible</code>是否显示垂直表头<br><code>verticalScrollBarPolicy</code>设置垂直滚动条策略<br><code>horizontalScrollBarPolicy</code>设置水平滚动条策略</p>
+<p>另外的一些比较实用的功能代码：<br>在单元格中添加控件：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">QComboBox *comBox = <span class="keyword">new</span> QComboBox();</span><br><span class="line">comBox-&gt;addItem(<span class="string">"F"</span>);</span><br><span class="line">comBox-&gt;addItem(<span class="string">"M"</span>);</span><br><span class="line">ui-&gt;qtablewidget-&gt;setCellWidget(<span class="number">0</span>,<span class="number">3</span>,comBox);<span class="comment">//这里不是setItem而是setCellWidget</span></span><br></pre></td></tr></table></figure></p>
+<p>为单元格添加checkBox：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">QTableWidgetItem *item = <span class="keyword">new</span> QTableWidgetItem();</span><br><span class="line"><span class="comment">//设置item的check状态的时候，item会自动变成QCheckBox的样子,</span></span><br><span class="line"><span class="comment">//不必通过setCellWidget专门插入QCheckBox控件</span></span><br><span class="line"><span class="comment">//通过item-&gt;checkState()可以获取该item是否勾选</span></span><br><span class="line">item-&gt;setCheckState(Qt::Unchecked);</span><br><span class="line">ui-&gt;tableWidgetCourseList-&gt;setItem(rowIndex, columnIndex, item);</span><br></pre></td></tr></table></figure></p>
+<p>单元格中显示字符串：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">QTableWidgetItem *item = <span class="keyword">new</span> QTableWidgetItem(QString(<span class="string">"xx"</span>));</span><br><span class="line">ui-&gt;tableWidgetCourseList-&gt;setItem(rowIndex, columnIndex, item);</span><br></pre></td></tr></table></figure></p>
+<p>设置单元格关联的自定义数据：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">QTableWidgetItem *item = <span class="keyword">new</span> QTableWidgetItem(QString(<span class="string">""</span>));</span><br><span class="line">QVariant courseModelVariant=QVariant::fromValue(MyClass(<span class="string">"xx"</span>));</span><br><span class="line">item-&gt;setData(USER_DEFINE_ROLE,courseModelVariant);</span><br><span class="line"><span class="keyword">this</span>-&gt;ui-&gt;tableWidgetCourseList-&gt;setItem(rowIndex, columnIndex, item);</span><br></pre></td></tr></table></figure></p>
+<p>获取单元格关联的自定义数据：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">QTableWidgetItem * item = <span class="keyword">this</span>-&gt;ui-&gt;tableWidgetCourseList-&gt;item(row,col);</span><br><span class="line">Myclass model = item-&gt;data(USER_DEFINE_ROLE).value&lt;MyClass&gt;();</span><br></pre></td></tr></table></figure></p>
+<p>设置单元格中的文本对齐方式：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ui-&gt;tableWidgetCourseList-&gt;item(rowIndex, columnIndex)-&gt;setTextAlignment(Qt::AlignCenter);</span><br></pre></td></tr></table></figure></p>
+<p>通过x，y坐标获取所在的item对象：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">QModelIndex index = ui-&gt;tableWidgetCourseList-&gt;indexAt(QPoint(x,y));</span><br><span class="line"><span class="keyword">int</span> row = index.row();</span><br><span class="line"><span class="keyword">int</span> col = index.column();</span><br><span class="line">QTableWidgetItem * item = ui-&gt;tableWidgetCourseList-&gt;item(row,col);</span><br></pre></td></tr></table></figure></p>
+<p>设置表头的列宽：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ui-&gt;tableWidgetCourseList-&gt;horizontalHeader()-&gt;resizeSection(colIndex,<span class="number">20</span>);<span class="comment">//宽20</span></span><br></pre></td></tr></table></figure></p>
+<p>设置列宽自适应：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ui-&gt;tableWidgetCourseList-&gt;horizontalHeader()-&gt;setSectionResizeMode(colIndex,QHeaderView::Stretch);</span><br></pre></td></tr></table></figure></p>
+<p>初始化表头文本：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">QStringList headerText;</span><br><span class="line">headerText.append(<span class="string">"列1"</span>);</span><br><span class="line">headerText.append(<span class="string">"列2"</span>);</span><br><span class="line">headerText.append(<span class="string">"列3"</span>);</span><br><span class="line">ui-&gt;tableWidgetCourseList-&gt;setHorizontalHeaderLabels(headerText);</span><br></pre></td></tr></table></figure></p>
+<p>为表头添加复选框按钮：</p>
+<p>在表头上添加复选框不能通过在表头单元格中添加QCheckBox的方式实现，必须进行重绘，下面的代码是我们自定义的表头类<br>myqheaderview.h的内容：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//该类实现自定义的表头,主要是为了在表头中加入CheckBox控件</span></span><br><span class="line"><span class="keyword">class</span> MyQHeaderView : <span class="keyword">public</span> QHeaderView</span><br><span class="line">&#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">MyQHeaderView</span><span class="params">(Qt::Orientation orientation, QWidget *parent = <span class="number">0</span>)</span></span>;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setChecked</span><span class="params">(<span class="keyword">bool</span> checked)</span></span>;</span><br><span class="line"> </span><br><span class="line">signals:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">headCheckBoxToggled</span><span class="params">(<span class="keyword">bool</span> checked)</span></span>;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">paintSection</span><span class="params">(QPainter *painter, <span class="keyword">const</span> QRect &amp;rect, <span class="keyword">int</span> logicalIndex)</span> <span class="keyword">const</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">mousePressEvent</span><span class="params">(QMouseEvent *event)</span></span>;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function">QRect <span class="title">checkBoxRect</span><span class="params">(<span class="keyword">const</span> QRect &amp;sourceRect)</span> <span class="keyword">const</span></span>;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">bool</span> m_isOn;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>myqheadview.cpp的内容：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">MyQHeaderView::MyQHeaderView(Qt::Orientation orientation, QWidget *parent)</span><br><span class="line">    : QHeaderView(orientation, parent)</span><br><span class="line">    , m_isOn(false)</span><br><span class="line">&#123;</span><br><span class="line">    // set clickable by default</span><br><span class="line">    setChecked(false);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">void MyQHeaderView::setChecked(bool checked)</span><br><span class="line">&#123;</span><br><span class="line">    if (isEnabled() &amp;&amp; m_isOn != checked)</span><br><span class="line">    &#123;</span><br><span class="line">        m_isOn = checked;</span><br><span class="line">        updateSection(0);</span><br><span class="line">        emit headCheckBoxToggled(m_isOn);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">void MyQHeaderView::paintSection(QPainter *painter, const QRect &amp;rect, int logicalIndex) const</span><br><span class="line">&#123;</span><br><span class="line">    painter-&gt;save();</span><br><span class="line">    QHeaderView::paintSection(painter, rect, logicalIndex);</span><br><span class="line">    painter-&gt;restore();</span><br><span class="line">    if (logicalIndex == 0)</span><br><span class="line">    &#123;</span><br><span class="line">        QStyleOptionButton option;</span><br><span class="line">        if (isEnabled())</span><br><span class="line">            option.state |= QStyle::State_Enabled;</span><br><span class="line">        option.rect = checkBoxRect(rect);</span><br><span class="line">        if (m_isOn)</span><br><span class="line">            option.state |= QStyle::State_On;</span><br><span class="line">        else</span><br><span class="line">            option.state |= QStyle::State_Off;</span><br><span class="line">        style()-&gt;drawControl(QStyle::CE_CheckBox, &amp;option, painter);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">void MyQHeaderView::mousePressEvent(QMouseEvent *event)</span><br><span class="line">&#123;</span><br><span class="line">    if (isEnabled() &amp;&amp; logicalIndexAt(event-&gt;pos()) == 0)</span><br><span class="line">    &#123;</span><br><span class="line">        m_isOn = !m_isOn;</span><br><span class="line">        updateSection(0);</span><br><span class="line">        emit headCheckBoxToggled(m_isOn);</span><br><span class="line">    &#125;</span><br><span class="line">    else QHeaderView::mousePressEvent(event);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">QRect MyQHeaderView::checkBoxRect(const QRect &amp;sourceRect) const</span><br><span class="line">&#123;</span><br><span class="line">    QStyleOptionButton checkBoxStyleOption;</span><br><span class="line">    QRect checkBoxRect = style()-&gt;subElementRect(QStyle::SE_CheckBoxIndicator,</span><br><span class="line">                                                 &amp;checkBoxStyleOption);</span><br><span class="line">    QPoint checkBoxPoint(sourceRect.x()+5,</span><br><span class="line">                         sourceRect.y() +</span><br><span class="line">                         sourceRect.height() / 2 -</span><br><span class="line">                         checkBoxRect.height() / 2);</span><br><span class="line">    return QRect(checkBoxPoint, checkBoxRect.size());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用自定义表头：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MyQHeaderView*myHeader=<span class="keyword">new</span> MyQHeaderView(Qt::Horizontal, ui-&gt;tableWidgetCourseList);</span><br><span class="line">ui-&gt;tableWidgetCourseList-&gt;setHorizontalHeader(myHeader);</span><br></pre></td></tr></table></figure></p>
+<p>为QTableWidget添加一行数据实际上是根据行数和列数，循环QTableWidget的所有单元格，对每个单元格item设置数据来实现的。</p>
+<h1 id="QTabWidget控件">QTabWidget控件</h1><p>该控件类就是一个选项卡控件，有多个tab页，下面是一些实用的方法：<br>切换到tab：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ui-&gt;tabWidgetExportEdit-&gt;setCurrentIndex(tabIndex);</span><br></pre></td></tr></table></figure></p>
+<p>移除选项卡：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ui-&gt;tabWidgetExportEdit-&gt;removeTab(tabIndex);</span><br></pre></td></tr></table></figure></p>
+<p>关于选项卡控件的操作不多，重要的是怎么美化控件的显示，QSS将会作为单独的一篇文章来讲解如何美化Qt中的各种控件。</p>
+<h1 id="QWebview控件">QWebview控件</h1><p>该控件是用于在Qt中显示网页的控件，一般而言会将contextMenuPolicy属性设置为NoContextMenu隐藏系统为其提供的默认右键菜单</p>
+<p><1>. 加载网页：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ui-&gt;webViewCut-&gt;load(QUrl(<span class="string">"http://www.baidu.com"</span>));</span><br><span class="line"><span class="comment">//如果是本地网页，必须使用file:///的前缀作为网页地址</span></span><br><span class="line">ui-&gt;webViewCut-&gt;load(QUrl(<span class="string">"file:///c:/test.html "</span>));</span><br></pre></td></tr></table></figure></1></p>
+<p><2>. Qt代码中调用QWebview加载的网页中的js函数：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//先作如下设置</span></span><br><span class="line">ui-&gt;webViewCut-&gt;page()-&gt;setForwardUnsupportedContent(<span class="literal">true</span>);</span><br><span class="line">ui-&gt;webViewCut-&gt;page()-&gt;settings()-&gt;setAttribute(QWebSettings::JavascriptEnabled, <span class="literal">true</span>);</span><br><span class="line">ui-&gt;webViewCut-&gt;page()-&gt;settings()-&gt;setAttribute(QWebSettings::PluginsEnabled, <span class="literal">true</span>);</span><br><span class="line">ui-&gt;webViewCut-&gt;page()-&gt;settings()-&gt;setAttribute(QWebSettings::JavaEnabled, <span class="literal">true</span>);</span><br><span class="line">ui-&gt;webViewCut-&gt;page()-&gt;settings()-&gt;setAttribute(QWebSettings::AutoLoadImages, <span class="literal">true</span>);</span><br><span class="line"> </span><br><span class="line"><span class="comment">//然后在QWebview的loadFinished槽函数中调用js，该槽函数表示网页已经加载完毕</span></span><br><span class="line">QString js = QString(<span class="string">"alert(\'hello Qt!\')"</span>);</span><br><span class="line">ui-&gt;webViewCut-&gt;page()-&gt;mainFrame()-&gt;evaluateJavaScript(js);</span><br></pre></td></tr></table></figure></2></p>
+<p><3>. 在QWebview加载的html的js代码中调用Qt的函数：<br>默认情况下在QwebViewCut中的网页里面的js不能直接调用Qt中的相关功能，这涉及到安全性问题。要满足js中调用Qt的功能必须满足下面的条件：</3></p>
+<p>在Qt中暴露一个对象给js，然后js就可以在网页中直接使用这个对象以及该对象的[特定]函数，要求是被暴露Qt对象必须继承自QObject类，并且在js中调用这个暴露的对象的成员函数的定义是有要求的，该对象的满足下面的要求的成员函数都可以直接被js调用：</p>
+<p>1.必须是该对象的公共函数，并且在函数声明前面添加Q_INVOKABLE修饰，例如：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> :</span><br><span class="line">	<span class="function">Q_INVOKABLE <span class="keyword">int</span> <span class="title">TestQt</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>2.如果该函数被声明成一个public slot 也可以不添加Q_INVOKABLE修饰：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> slots:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">TestQt</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>个人认为第一种方法更好，因为可以设置返回值，而Qt的槽函数是没有返回值的，都是返回void，只需要调用<code>this-&gt;ui-&gt;webViewCut-&gt;page()-&gt;mainFrame()-&gt;addToJavaScriptWindowObject(&quot;QtObj&quot;, this);</code>就可以将一个Qt对象，也就是这里传递的this代表的对象，当然也可以直接传递其他对象指针，暴露给网页中的javascript，网页中的javascript在调用的时候可以直接使用 QtObj 去引用我们的Qt对象，以及通过QtObj去直接调用符合条件的Qt对象的成员函数。</p>
+<p>那么<code>this-&gt;ui-&gt;webViewCut-&gt;page()-&gt;mainFrame()-&gt;addToJavaScriptWindowObject(&quot;QtObj&quot;, this);</code>代码在什么时候执行呢？ 推荐是在<code>QWebFrame</code>的信号<code>javaScriptWindowObjectCleared</code>发出的时候执行，所以我们可以在当前UI界面类的构造函数中添加下面的代码：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">connect(ui-&gt;webViewCut-&gt;page()-&gt;mainFrame(), SIGNAL(javaScriptWindowObjectCleared()),</span><br><span class="line">    <span class="keyword">this</span>, SLOT(populateJavaScriptWindowObject()));</span><br></pre></td></tr></table></figure></p>
+<p>然后在处理<code>javaScriptWindowObjectCleared()</code>信号的槽函数中实现上述暴露功能：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> MainWindow::populateJavaScriptWindowObject()</span><br><span class="line">&#123;</span><br><span class="line">   ui-&gt;webViewCut-&gt;page()-&gt;mainFrame()-&gt;addToJavaScriptWindowObject(<span class="string">"QtObj"</span>, <span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>根据Qt文档上对该信号的描述javaScriptWindowObjectCleared()这个信号会在我们调用QwebViewCut::load()加载新的url之前就触发，我们在这个时候去处理这个信号，将我们需要暴露的Qt对象暴露给即将载入的网页</p>
+<p><4>. 将Qt的属性暴露出去供js调用，使用如下方法：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Q_PROPERTY(<span class="keyword">int</span> Qtvalue READ testValue WRITE setTestValue)</span><br></pre></td></tr></table></figure></4></p>
+<p>将上面的语句加入到类的声明中，在private块下面就可以，最后不需要以分号结尾，例如：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	Q_PROPERTY(<span class="keyword">int</span> Qtvalue READ testValue WRITE setTestValue)</span><br></pre></td></tr></table></figure></p>
+<p>这一行的作用是将属性 Qtvalue 注册到Qt的元对象系统中，在js中可以通过名字Qtvalue来访问该属性，但在js中访问该属性的时候假设Qt暴露给js的对象为QtObj，那么在js中可以这样访问该属性：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">QtObj.Qtvalue = <span class="number">10</span>; <span class="comment">//设置该属性的时候会调用void setTestValue(int)</span></span><br><span class="line">alert(QtObj.Qtvalue) <span class="comment">//获取该属性的时候会调用 int testValue()</span></span><br></pre></td></tr></table></figure></p>
+<p>Q_PROPERTY(int Qtvalue READ testValue WRITE setTestValue)的结构如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">Q_PROPERTY</span><span class="params">( 类型   属性名    READ     返回属性值的函数    WRITE     设置属性值的函数 )</span></span></span><br><span class="line">            int   Qtvalue           int <span class="function"><span class="title">testValue</span><span class="params">()</span></span>          void <span class="function"><span class="title">setTestValue</span><span class="params">(int)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>也就是说在js中我们可以直接使用Qtvalue，当获取Qtvalue的值的时候会自动调用暴露对象的 int testValue() 函数 ，Qt规定其返回值必须与Q_PROPERTY语句中指定的类型相同，并且必须没有参数。当我们为Qtvalue设置值的时候会调用暴露对象的void setTestValue(int)函数，该函数必须有一个int类型的参数(类型也必须与前面Q_PROPERTY语句中指定的类型相同)，并且不能有返回值。</p>
+<p>经过实验int testValue()与void setTestValue(int)函数的声明在private区域也可以，好像无所谓。其实这两个函数的名字是可以随意定的，对js暴露的属性名是Qtvalue，当访问Qtvalue属性的时候，会自动调用Q_PROPERTY声明中READ后面指定的函数去获取值，并且调用WRITE后面指定的函数去设置值，而不在乎这两个函数的名字。</p>
+<p>另外这两个函数获取的值或者设置的值从哪里得来呢，我们可以在Qt对象中定义一个私有变量来保存这个值，而这个私有变量的名字是无所谓的，甚至如果需要的话，我们也不必保存这个值，直接在函数testValue里面返回一个常量值，也就是说是否应该定义一个私有变量来保存Qtvalue相关联的属性值，这个也不是必须的。</p>
+<p>更多Qt QWidget与js的交互可以在Qt文档中搜索  The Qt WebKit Bridge关键字，其实Q_PROPERTY并不是专用于暴露属性给js的，Q_PROPERTY是Qt元对象系统的一部分。</p>
+<p><5>. 如果在QWebview加载的网页中有Flex应用程序，并且Qt中调用该QWebview加载的网页中的js函数中需要调用flex程序暴露给js的接口，那么还需要作如下设置：</5></p>
+<p>在”%appdata%\Macromedia\Flash Player#Security\FlashPlayerTrust\”路径下新建xxx.cfg文件，将当前flex应用程序所在位置(也就是swf文件所在的目录)填写到该文件中即可，该xxx.cfg的名字是无所谓的，随便什么名字，在xxx.cfg文件中指定的目录路径中的swf文件的运行是被信任的。xxx.cfg文件中可以指定多个目录，每行一个。实际上%appdata%\Macromedia\Flash Player#Security\FlashPlayerTrust\路径下也可以有多个文件名不同的cfg文件。xxx.cfg文件中指定的目录实际上可以直接指定为根目录，例如swf文件的路径是F:/xxx/yyy/zzz/test.swf，那么我们新建的xxx.cfg中的内容的第一行可以直接指定为F:/即可。</p>
+<p>其实FlexBuilder在建立项目的时候，其生成的swf所在的目录都被添加到了%appdata%\Macromedia\Flash Player#Security\FlashPlayerTrust\下面的flashbuilder.cfg中了，所以使用FlexBuilder调试项目的时候，运行的swf都是被信任的。</p>
+<h1 id="使用QSS">使用QSS</h1><p>QSS是Qt中的样式表，用来定义Qt中控件的外观，实际上QSS的语法与属性大量参考了CSS，如果你有web的CSS开发经验，几乎没有任何障碍就可以掌握QSS，QSS中的选择器基本上与CSS中的相同，但是QSS只有几种常用的选择器类型。</p>
+<p>QSS中选择器的类型：</p>
+<ul>
+<li><1>. 类型选择器，例如：<code>QPushButton{}</code> 设置所有类型是QPushButton或者继承自QPushButton的控件的样式。</1></li>
+<li><2>. 属性选择器，例如：<code>QPushButton[flat=&quot;false&quot;]{}</code> 设置所有flat属性是false的QPushButton控件的样式。</2></li>
+<li><3>. 类选择器，例如：<code>.QPushButton{}</code> 设置所有QPushButton的样式，但是不会设置继承自QPushButton类型的控件的样式，QSS中的类选择器与CSS中的含义不同，QSS中的类选择器点号后面指定的类的名称，而CSS中的类选择器中的点号后面指定的是HTML标签中的class属性的名称。</3></li>
+<li><4>. ID选择器，例如：<code>#okButton{}</code> 设置所有对象名(object name)为okButton的控件的样式。</4></li>
+<li><5>. 后代选择器，例如：<code>QDialog QPushButton{}</code> 设置所有QDialog中的QPushButton子控件的样式，只要是QDialog的子控件都会应用该样式，包括直接或非直接的子控件。</5></li>
+<li><6>. 直接子选择器：例如 <code>QDialog &gt; QPushButton{}</code> 设置所有是QDialog直接子控件的QPushButton的样式。</6></li>
+<li><7>. QSS支持选择器分组，支持选择器组合，例如：<code>QPushButton#okButton{}</code> 设置所有ID为okButton的QPushButton控件的样式。#okButton,#cancelButton{} 设置id为okButton、cancelButton的控件的样式。</7></li>
+</ul>
+<p>那么如何在Qt中使用这些QSS设置控件的外观呢，一般在代码中通过调用控件对象的setStyleSheet(QString)成员函数进行设置，参数即是QSS字符串。例如：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ui-&gt;btnTest-&gt;setStyleSheet(<span class="string">"border:1px solid red;"</span>);<span class="comment">//设置按钮的边框</span></span><br></pre></td></tr></table></figure></p>
+<p>另外我们可以将所有的QSS放到文件中，例如main.qss，然后将该文件添加到Qt的资源文件中，在主UI界面中加载该main.qss文件，并调用主UI界面类的成员函数设置其下控件的样式：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">QFile <span class="title">file</span><span class="params">(<span class="string">":/qss/main.qss"</span>)</span></span>;</span><br><span class="line">file.open(QFile::ReadOnly);</span><br><span class="line"><span class="function">QTextStream <span class="title">filetext</span><span class="params">(&amp;file)</span></span>;</span><br><span class="line">QString stylesheet = filetext.readAll();</span><br><span class="line"><span class="keyword">this</span>-&gt;setStyleSheet(stylesheet);</span><br><span class="line">file.close();</span><br></pre></td></tr></table></figure></p>
+<p>要注意的是main.qss中设置的样式应该是针对当前UI界面上的控件的，也就是这里调用的this-&gt;setStyleSheet(stylesheet);中的this就是当前UI界面的类的实例。</p>
+<p>有关QSS的细节很多，而且每个控件的美化技巧不同，同时QSS中还提供了伪类，子控件样式等功能，限于篇幅，本节只做一个大致的介绍，后面将会单独一篇文章详细讲解QSS的细节，以及如何美化Qt中的各种常见控件。</p>
+<h1 id="编码问题">编码问题</h1><p>之前在写Qt程序的时候，如果在原文件中的字符串直接写中文，例如有些地方需要弹出错误或者警告的对话框提示，那么提示内容就是中文信息，我发现有部分字符会出现乱码，并且有时候编译的时候会报错：error C2001: 常量中有换行符这一般是编码问题。我是这么解决的，在包含中文(即使是注释中有中文有时候也报错)的源文件的开头加入 #pragma execution_character_set(“utf-8”) 这一行指定文件的编码，同时使用UE编辑器打开该文件，另存为UTF-8的编码，在QtCreator中重新打开即可。遇到跟我同样问题的人也可以试一下这个办法。</p>
+<h1 id="QT的内存管理">QT的内存管理</h1><p>这一小节说题目命名为QT的内存管理，题目有点过大，其实我在写Qt程序的时候，包括Qt的例子程序，中经常出现类似如下的代码：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> MainWidget::on_btnClick()</span><br><span class="line">&#123;</span><br><span class="line">    QLabel * lblMessage = <span class="keyword">new</span> QLabel(“hello”,<span class="keyword">this</span>);</span><br><span class="line">    lblMessage-&gt;show();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>似乎Qt中new出来的控件类型都只负责new不用delete的，感到很奇怪，后来经过查资料发现很多人有同样的疑问，有人给出原因是因为Qt中的所有的控件类是继承自QObject类，如果在new的时候指定了父亲(在构造函数的参数中有parent这个参数)，那么它的清理是在其父亲被delete的时候被delete的。Qt不建议程序员在代码中手工delete一个QObject，如果一定要这么做，需要使用QObject的deleteLater()函数，否则可能出现Qt正在一级一级的从一个父亲类开始清理下面的所有子对象的时候，程序中手工调用delete也去清理其中的子对象，那么这个时候就可能出现问题，所以建议使用deleteLater()函数，它会让所有事件都发送完成之后再清理该片内存。</p>
+<h1 id="QT的信号槽">QT的信号槽</h1><p>在大多数Qt的编程中，我们通过Qt信号槽机制来对鼠标或键盘在界面上的操作进行响应处理，例如鼠标点击按钮的处理。Qt中的控件能够发出什么信号，在什么情况下发射信号，这在Qt的文档中有说明，每个不同的控件能够发射的信号种类和触发时机也是不同的。</p>
+<p>如何为控件发射的信号指定对应的处理槽函数呢，我们有两种方式，第一种是在UI设计界面上操作：</p>
+<p><img src="/uploads/o_15.jpg" alt="QT的信号槽" title="QT的信号槽"></p>
+<p>在按钮控件上点击右键，选择“转到槽”菜单之后弹出如下的对话框：<br><img src="/uploads/o_16.jpg" alt="QT的信号槽" title="QT的信号槽"></p>
+<p>可以看到按钮控件会发射很多信号，只要选择一个信号，点击OK之后就会生成对应的槽函数对按钮发出的该信号进行处理<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> MainWindow::on_btnTest_clicked()</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>选择clicked()信号之后生成的处理该信号的槽函数，除了通过UI界面自动生成槽函数的方式以外，我们还可以在代码中自己手写槽函数，并通过QObject::connect()函数将特定对象的信号与另外一个对象的槽函数进行连接，当该对象的信号发射之后，会被关联的对象的槽函数处理。例如我们可以用下面的一行代码完成上面的功能：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">connect(ui-&gt;btnTest,SIGNAL(clicked()),<span class="keyword">this</span>,SLOT(on_btnTest_clicked()));</span><br></pre></td></tr></table></figure></p>
+<p>使用代码的好处是，很多控件的信号在上面的对话框中并没有显示出来，也就是说上面的对话框中其实只列出了该控件对象的一部分信号，另外如果我们的对象是在程序中通过代码动态构建的，那么我们也就需要在代码中为该控件的信号指定处理的槽函数了。上面的connect代码是我们直接在UI界面类的构造函数中写的(当然在任何地方都可以，并不一定要在构造函数中)，由于UI界面类也是继承自QObject所以自然也继承了connect函数，通过connect函数我们可以将一个对象的信号与另一个对象的槽函数进行连接，当个该对象的信号发射的时候(信号的发射时机有可能在代码中调用对象的某个成员函数触发，也有可能在程序的UI界面上操作鼠标，键盘等触发)。</p>
+<p>另外信号与槽在通过connect函数连接的时候，其参数类型必须完全一致，否则是没有效果的。实际上信号槽的原理，是依赖于Qt的元对象系统，Qt的一系列的构建工具为程序员做了很多自动化的工作，自动生成了一些代码，所以使得我们看起来只需要用connect函数进行关联之后，在信号发射的时候(通过emit发射信号)，槽函数会被自动调用。在我们的Qt的项目的debug目录下，我们往往会看到很多以moc_为前缀的cpp文件，打开这些文件我们就可以看到该文件中的qt_meta<em>data</em>为前缀的静态数组里面描述了信号槽的关联信息，而在qt_static_metacall函数的实现中，我们可以大致看到通过一系列的case分支，对应的槽函数被调用。如果要详细研究Qt的信号槽的实现原理，可以研究QObject类的源码，以及Qt的元对象系统。</p>
+<p>槽函数被slots修饰，当然它可以是普通的成员函数。信号被signals修饰。一个信号可以关联多个槽函数，当信号被发射的时候，这些槽函数依次被执行，但是执行的顺序是未知的，一个槽函数可以被多个信号关联。一个信号也可以关联另外一个信号，当该信号被发射的时候，与它关联的信号也被发射。通过disconnect函数可以取消信号与槽函数之间的关联关系。在槽函数中直接调用sender()就可以获得触发该槽函数的信号源对象，该函数是QObject的成员函数，返回的也是一个QObject类型的指针。</p>
+<p>另外信号槽可以在不同的线程之间使用，但是使用的时候需要注意调用connect时候指定连接的方式，不同的线程之间Qt可以通过消息队列来实现信号与槽函数的关联，我经常在UI线程中关联另外一个工作线程的信号到UI界面类中的成员函数，以便在工作线程中通过发送信号的方式来调用UI主线程中的UI界面类的成员函数，来达到更新UI界面的效果。Qt中不能在工作线程中直接对UI界面控件进行操作。有关信号的连接方式可以参考这篇文章：对信号与事件的认识(<code>http://blog.chinaunix.net/uid-25147458-id-3706122.html</code>)</p>
+<h1 id="QT中绘图">QT中绘图</h1><p>我们可以在Qt中绘图，在Qt的控件上绘图，一般是需要重写该控件的重绘事件的，例如：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">void MovieImageWidget::paintEvent(QPaintEvent*p)</span><br><span class="line">&#123;</span><br><span class="line">    QPainter painter(this);</span><br><span class="line">    if(this-&gt;currentImagePath!="")</span><br><span class="line">    &#123;</span><br><span class="line">        QImage image(this-&gt;currentImagePath);</span><br><span class="line">        QRect rect(0,0,this-&gt;width(),this-&gt;height());</span><br><span class="line">        painter.drawImage(rect,image);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在重绘事件中，我们先建立一个基于控件的QPainter对象，然后在重绘事件函数中，我们就可以利用该painter对象的一系列的绘制函数进行绘图操作了，绘制的图形会在该Painter关联的控件上显示，其原点坐标是从该控件的左上角开始的。在需要的时候我们可以手工调用控件的update()函数，这样会直接触发重绘事件进行重绘。</p>
+<p><img src="/uploads/o_18.jpg" alt="QT中绘图" title="QT中绘图"></p>
+<p>QPainter类提供的一系列的draw函数可以帮助我们绘制各种各样的图形，这里就不再举例说明，可以自行查阅Qt的帮助文档。</p>
+<h1 id="QT的线程">QT的线程</h1><p>Qt的线程使用起来非常简单，我们首先要建立一个自定义的类(例如MyThread)，继承自QThread，并实现其run方法即可。在使用线程的时候直接得到MyThread的实例，调用其start()函数即可启动线程，线程启动之后会自动调用其实现的run方法，该方法就是线程的执行函数，我们的线程任务就写在这里，当run退出之后线程基本就结束了，QThread有一个started和finished信号，我们可以为这两个信号指定槽函数，在线程启动和结束的时候执行一段代码进行资源的初始化和资源的释放操作。</p>
+<h1 id="QT中使用第三方的dll">QT中使用第三方的dll</h1><p>通过QtCreator的向导可以非常方便的在Qt程序中使用第三方的dll，具体步骤如下：<br><img src="/uploads/o_19.jpg" alt="QT中使用第三方的dll" title="QT中使用第三方的dll"><br>在项目上点击右键，选择“添加库”菜单<br><img src="/uploads/o_20.jpg" alt="QT中使用第三方的dll" title="QT中使用第三方的dll"><br>选择外部库<br><img src="/uploads/o_21.jpg" alt="QT中使用第三方的dll" title="QT中使用第三方的dll"><br>指定对应的lib文件，以及头文件的包含路径，设置平台为windows，选择库的连接类型然后点击下一步<br><img src="/uploads/o_22.jpg" alt="QT中使用第三方的dll" title="QT中使用第三方的dll"></p>
+<p>最后点击完成既可，可以看到实际上在Qt的个工程文件中，也就是pro文件中添加了如下的代码：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">win32: LIBS += -L$$PWD/E:<span class="comment">//trans/ -lTransAPI</span></span><br><span class="line">INCLUDEPATH += $$PWD/E:/trans/include</span><br><span class="line">DEPENDPATH += $$PWD/E:/trans/include</span><br><span class="line">win32:!win32-g++: PRE_TARGETDEPS += $$PWD/E:/trans/TransAPI.lib</span><br><span class="line"><span class="keyword">else</span>:win32-g++: PRE_TARGETDEPS += $$PWD/E:/trans/libTransAPI.a</span><br></pre></td></tr></table></figure></p>
+<p>在需要使用的地方，包含头文件之后就可以就可以直接调用库里面的函数了，使用方式与VC中没有区别。</p>
+<h1 id="QT中为控件添加右键菜单的方法">QT中为控件添加右键菜单的方法</h1><p>在Qt中QWidget控件以及其子类都可以添加右键菜单，Qt中所有界面上显示的控件基本都继承自QWidget控件，所以基本上Qt中的控件都可以添加右键菜单，下面举例说明为按钮添加右键菜单的方法：</p>
+<ul>
+<li><1>. 在UI设计界面中选中按钮，在属性栏中设置其属性contextMenuPolicy的值为CustomContextMenu(如果控件是在代码中生成，可以通过控件对象的成员函数setContextMenuPolicy()在代码中设置)</1></li>
+<li><2>. 在UI设计界面的按钮上单击右键，转到槽，在弹出的对话框中选择customContextMenuRequested(const QPoint&amp;)，单击确定，为按钮的该信号指定槽函数，在代码中可以通过connect手工关联。</2></li>
+<li><3>. 在该槽函数中生成菜单代码如下：<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> MainWindow::on_menu_click(<span class="keyword">bool</span> checked)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//通过sender()得到信号的发送对象，也就是哪个菜单项被单击</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">void</span> MainWindow::on_btnTest_customContextMenuRequested(<span class="keyword">const</span> QPoint &amp;pos)</span><br><span class="line">&#123;</span><br><span class="line">    QMenu *cmenu = <span class="keyword">new</span> QMenu(ui-&gt;btnTest);</span><br><span class="line">    QAction *action1 = cmenu-&gt;addAction(<span class="string">"Menu 1"</span>);</span><br><span class="line">    QAction *action2 = cmenu-&gt;addAction(<span class="string">"Menu 2"</span>);</span><br><span class="line">    QAction *action3 = cmenu-&gt;addAction(<span class="string">"Menu 3"</span>);</span><br><span class="line">    connect(action1, SIGNAL(triggered(<span class="keyword">bool</span>)), <span class="keyword">this</span>, SLOT(on_menu_click(<span class="keyword">bool</span>)));</span><br><span class="line">    connect(action2, SIGNAL(triggered(<span class="keyword">bool</span>)), <span class="keyword">this</span>, SLOT(on_menu_click(<span class="keyword">bool</span>)));</span><br><span class="line">    connect(action3, SIGNAL(triggered(<span class="keyword">bool</span>)), <span class="keyword">this</span>, SLOT(on_menu_click(<span class="keyword">bool</span>)));</span><br><span class="line">    cmenu-&gt;exec(QCursor::pos());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</3></li>
+</ul>
+<p>当然这里仅仅是demo代码，每次点击右键的时候，我们都要重新new出菜单来，这样肯定会耗费资源，这些菜单创建的代码可以放在一个全局的函数中，只需要创建一次，但是<code>cmenu-&gt;exec(QCursor::pos());</code>这条语句是显示菜单用的，执行之后菜单才能显示出来，所以每次槽函数被执行的时候都需要调用一次来呼出菜单。</p>
+<p>最终显示效果如下：<br><img src="/uploads/o_23.jpg" alt="QT中为控件添加右键菜单的方法" title="QT中为控件添加右键菜单的方法"></p>
+<p>除了上面的方法之外，还可以通过重写<code>contextMenuEvent()</code>事件来实现右键菜单，这里就不细说了，可以自行百度。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/QT/" rel="tag">#QT</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/11/12/http-fail2ban/" rel="next">fail2ban防暴力破解介绍使用</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/11/17/qt-about/"
+                   data-title="关于QT的系统总结" data-url="http://yoursite.com/2015/11/17/qt-about/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar.jpg" alt="Johnson Zhang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Johnson Zhang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">34</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/hpze2000" target="_blank">github</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#编译环境与开发流程"><span class="nav-number">1.</span> <span class="nav-text">编译环境与开发流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QT项目的构成及原理"><span class="nav-number">2.</span> <span class="nav-text">QT项目的构成及原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QT中的布局"><span class="nav-number">3.</span> <span class="nav-text">QT中的布局</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QT中的通用控件"><span class="nav-number">4.</span> <span class="nav-text">QT中的通用控件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QVariant_类型"><span class="nav-number">5.</span> <span class="nav-text">QVariant 类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QComboBox控件"><span class="nav-number">6.</span> <span class="nav-text">QComboBox控件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QTableWidget控件"><span class="nav-number">7.</span> <span class="nav-text">QTableWidget控件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QTabWidget控件"><span class="nav-number">8.</span> <span class="nav-text">QTabWidget控件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QWebview控件"><span class="nav-number">9.</span> <span class="nav-text">QWebview控件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用QSS"><span class="nav-number">10.</span> <span class="nav-text">使用QSS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编码问题"><span class="nav-number">11.</span> <span class="nav-text">编码问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QT的内存管理"><span class="nav-number">12.</span> <span class="nav-text">QT的内存管理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QT的信号槽"><span class="nav-number">13.</span> <span class="nav-text">QT的信号槽</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QT中绘图"><span class="nav-number">14.</span> <span class="nav-text">QT中绘图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QT的线程"><span class="nav-number">15.</span> <span class="nav-text">QT的线程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QT中使用第三方的dll"><span class="nav-number">16.</span> <span class="nav-text">QT中使用第三方的dll</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QT中为控件添加右键菜单的方法"><span class="nav-number">17.</span> <span class="nav-text">QT中为控件添加右键菜单的方法</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Johnson Zhang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hpze2000"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

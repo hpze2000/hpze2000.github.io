@@ -41,13 +41,13 @@
 
 <meta name="description" content="使用gradle打包apk已经成为当前主流趋势，我也在这个过程中经历了各种需求，并不断结合gradle新的支持，一一改进。在此，把这些相关的东西记录，做一总结。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android gradle 打包">
+<meta property="og:title" content="动手开发一个安卓APP - Android gradle 打包">
 <meta property="og:url" content="http://yoursite.com/2015/11/12/android_gradle_apk_package/index.html">
 <meta property="og:site_name" content="Johnson Zhang">
 <meta property="og:description" content="使用gradle打包apk已经成为当前主流趋势，我也在这个过程中经历了各种需求，并不断结合gradle新的支持，一一改进。在此，把这些相关的东西记录，做一总结。">
-<meta property="og:updated_time" content="2015-11-12T02:41:07.379Z">
+<meta property="og:updated_time" content="2015-11-12T06:38:52.430Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android gradle 打包">
+<meta name="twitter:title" content="动手开发一个安卓APP - Android gradle 打包">
 <meta name="twitter:description" content="使用gradle打包apk已经成为当前主流趋势，我也在这个过程中经历了各种需求，并不断结合gradle新的支持，一一改进。在此，把这些相关的东西记录，做一总结。">
 
 
@@ -58,7 +58,7 @@
   };
 </script>
 
-  <title> Android gradle 打包 | Johnson Zhang </title>
+  <title> 动手开发一个安卓APP - Android gradle 打包 | Johnson Zhang </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="">
@@ -191,7 +191,7 @@
           
           
             
-              Android gradle 打包
+              动手开发一个安卓APP - Android gradle 打包
             
           
         </h1>
@@ -258,10 +258,7 @@
 <p>另外，build type还有一个好处，如果想要一次性生成所有的preview版本，执行assemblePreview即可，debug和releae版本同理。</p>
 <h1 id="5-_build_type中的定制参数">5. build type中的定制参数</h1><p>上面我们在不同的build type替换${app_label}为不同的字符串，这样安装到手机上就能明显的区分出不同build type的版本。<br>除此之外，可能还可以配置一些参数，我这里列几个我在工作中用到的：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">android</span> &#123;</span><br><span class="line">        <span class="title">debug</span> &#123;</span><br><span class="line">            <span class="title">manifestPlaceholders</span> = [app_label:<span class="string">"<span class="variable">@string</span>/app_name_debug"</span>]</span><br><span class="line">            applicationIdSuffix <span class="string">".debug"</span></span><br><span class="line">            minifyEnabled <span class="built_in">false</span></span><br><span class="line">            signingConfig signingConfigs.<span class="built_in">debug</span></span><br><span class="line">            proguardFiles getDefaultProguardFile(<span class="string">'proguard-android.txt'</span>), <span class="string">'proguard-rules.pro'</span></span><br><span class="line">        &#125;</span><br><span class="line">        release &#123;</span><br><span class="line">            <span class="title">manifestPlaceholders</span> = [app_label:<span class="string">"<span class="variable">@string</span>/app_name"</span>]</span><br><span class="line">            minifyEnabled <span class="built_in">true</span></span><br><span class="line">            shrinkResources <span class="built_in">true</span></span><br><span class="line">            signingConfig signingConfigs.release</span><br><span class="line">            proguardFiles getDefaultProguardFile(<span class="string">'proguard-android.txt'</span>), <span class="string">'proguard-rules.pro'</span></span><br><span class="line">        &#125;</span><br><span class="line">        preview&#123;</span><br><span class="line">            <span class="title">manifestPlaceholders</span> = [app_label:<span class="string">"<span class="variable">@string</span>/app_name_preview"</span>]</span><br><span class="line">            applicationIdSuffix <span class="string">".preview"</span></span><br><span class="line">            debuggable <span class="built_in">true</span> // 保留<span class="built_in">debug</span>信息</span><br><span class="line">            minifyEnabled <span class="built_in">true</span></span><br><span class="line">            shrinkResources <span class="built_in">true</span></span><br><span class="line">            signingConfig signingConfigs.preview</span><br><span class="line">            proguardFiles getDefaultProguardFile(<span class="string">'proguard-android.txt'</span>), <span class="string">'proguard-rules.pro'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>这些都用的太多了，稍微解释一下：<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// minifyEnabled 混淆处理</span></span><br><span class="line"><span class="comment">// shrinkResources 去除无用资源</span></span><br><span class="line"><span class="comment">// signingConfig 签名</span></span><br><span class="line"><span class="comment">// proguardFiles 混淆配置</span></span><br><span class="line"><span class="comment">// applicationIdSuffix 增加APP ID的后缀</span></span><br><span class="line"><span class="comment">// debuggable 是否保留调试信息</span></span><br><span class="line"><span class="comment">// ... ...</span></span><br></pre></td></tr></table></figure></p>
-<ol>
-<li>多工程全局配置</li>
-</ol>
-<p>随着产品渠道的铺开，往往一套代码需要支持多个产品形态，这就需要抽象出主要代码到一个Library，然后基于Library扩展几个App Module。<br>相信每个module的build.gradle都会有这个代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion <span class="number">22</span></span><br><span class="line">    buildToolsVersion <span class="string">"23.0.1"</span></span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        minSdkVersion <span class="number">10</span></span><br><span class="line">        targetSdkVersion <span class="number">22</span></span><br><span class="line">        versionCode <span class="number">34</span></span><br><span class="line">        versionName <span class="string">"v2.6.1"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="6-_多工程全局配置">6. 多工程全局配置</h1><p>随着产品渠道的铺开，往往一套代码需要支持多个产品形态，这就需要抽象出主要代码到一个Library，然后基于Library扩展几个App Module。<br>相信每个module的build.gradle都会有这个代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion <span class="number">22</span></span><br><span class="line">    buildToolsVersion <span class="string">"23.0.1"</span></span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        minSdkVersion <span class="number">10</span></span><br><span class="line">        targetSdkVersion <span class="number">22</span></span><br><span class="line">        versionCode <span class="number">34</span></span><br><span class="line">        versionName <span class="string">"v2.6.1"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>当升级sdk、build tool、target sdk等，几个module都要更改，非常的麻烦。最重要的是，很容易忘记，最终导致app module之间的差异不统一，也不可控。<br>强大的gradle插件在1.1.0支持全局变量设定，一举解决了这个问题。<br>先在project的根目录下的build.gradle定义ext全局变量:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ext &#123;</span><br><span class="line">    compileSdkVersion = <span class="number">22</span></span><br><span class="line">    buildToolsVersion = <span class="string">"23.0.1"</span></span><br><span class="line">    minSdkVersion = <span class="number">10</span></span><br><span class="line">    targetSdkVersion = <span class="number">22</span></span><br><span class="line">    versionCode = <span class="number">34</span></span><br><span class="line">    versionName = <span class="string">"v2.6.1"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>然后在各module的build.gradle中引用如下：<br><figure class="highlight roboconf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="component">android &#123;</span><br><span class="line">    compileSdkVersion rootProject<span class="string">.ext.compileSdkVersion</span></span><br><span class="line">    buildToolsVersion rootProject<span class="string">.ext.buildToolsVersion</span></span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        applicationId "com<span class="string">.xxx.xxx"</span></span><br><span class="line">        minSdkVersion rootProject<span class="string">.ext.minSdkVersion</span></span><br><span class="line">        targetSdkVersion rootProject<span class="string">.ext.targetSdkVersion</span></span><br><span class="line">        versionCode rootProject<span class="string">.ext.versionCode</span></span><br><span class="line">        versionName rootProject<span class="string">.ext.versionName</span></span><br><span class="line">    &#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>然后每次修改project级别的build.gradle即可实现全局统一配置。</p>
@@ -303,6 +300,8 @@
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/11/12/http-fail2ban/" rel="prev">fail2ban防暴力破解介绍使用</a>
             
           </div>
 
@@ -357,7 +356,7 @@
           <div class="comments" id="comments">
             
               <div class="ds-thread" data-thread-key="2015/11/12/android_gradle_apk_package/"
-                   data-title="Android gradle 打包" data-url="http://yoursite.com/2015/11/12/android_gradle_apk_package/">
+                   data-title="动手开发一个安卓APP - Android gradle 打包" data-url="http://yoursite.com/2015/11/12/android_gradle_apk_package/">
               </div>
             
           </div>
@@ -397,21 +396,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">23</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">分類</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-count">34</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -445,7 +444,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-_替换AndroidManifest中的占位符"><span class="nav-number">1.</span> <span class="nav-text">1. 替换AndroidManifest中的占位符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-_独立配置签名信息"><span class="nav-number">2.</span> <span class="nav-text">2. 独立配置签名信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-_多渠道打包"><span class="nav-number">3.</span> <span class="nav-text">3. 多渠道打包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-_自定义Build_Type"><span class="nav-number">4.</span> <span class="nav-text">4. 自定义Build Type</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-_build_type中的定制参数"><span class="nav-number">5.</span> <span class="nav-text">5. build type中的定制参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-_自定义导出的APK名称"><span class="nav-number">6.</span> <span class="nav-text">7. 自定义导出的APK名称</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-_混淆技巧"><span class="nav-number">7.</span> <span class="nav-text">8. 混淆技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1)-_第一个技巧"><span class="nav-number">7.1.</span> <span class="nav-text">1). 第一个技巧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2)-_第二个技巧"><span class="nav-number">7.2.</span> <span class="nav-text">2). 第二个技巧</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-_动态设置一些额外信息"><span class="nav-number">8.</span> <span class="nav-text">9. 动态设置一些额外信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-_给自己留个”后门”:_点七下"><span class="nav-number">9.</span> <span class="nav-text">10. 给自己留个”后门”: 点七下</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">10.</span> <span class="nav-text">小结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-_替换AndroidManifest中的占位符"><span class="nav-number">1.</span> <span class="nav-text">1. 替换AndroidManifest中的占位符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-_独立配置签名信息"><span class="nav-number">2.</span> <span class="nav-text">2. 独立配置签名信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-_多渠道打包"><span class="nav-number">3.</span> <span class="nav-text">3. 多渠道打包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-_自定义Build_Type"><span class="nav-number">4.</span> <span class="nav-text">4. 自定义Build Type</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-_build_type中的定制参数"><span class="nav-number">5.</span> <span class="nav-text">5. build type中的定制参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-_多工程全局配置"><span class="nav-number">6.</span> <span class="nav-text">6. 多工程全局配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-_自定义导出的APK名称"><span class="nav-number">7.</span> <span class="nav-text">7. 自定义导出的APK名称</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-_混淆技巧"><span class="nav-number">8.</span> <span class="nav-text">8. 混淆技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1)-_第一个技巧"><span class="nav-number">8.1.</span> <span class="nav-text">1). 第一个技巧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2)-_第二个技巧"><span class="nav-number">8.2.</span> <span class="nav-text">2). 第二个技巧</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-_动态设置一些额外信息"><span class="nav-number">9.</span> <span class="nav-text">9. 动态设置一些额外信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-_给自己留个”后门”:_点七下"><span class="nav-number">10.</span> <span class="nav-text">10. 给自己留个”后门”: 点七下</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">11.</span> <span class="nav-text">小结</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
