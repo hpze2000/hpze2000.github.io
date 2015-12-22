@@ -192,8 +192,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/10/01/spring-mvc-quickstart/" itemprop="url">
-                Spring MVC 系列 - Spring MVC快速入门
+              <a class="post-title-link" href="/2015/10/16/android_recycler_view/" itemprop="url">
+                动手开发一个安卓APP - RecyclerView使用介绍
               </a>
             
           
@@ -203,8 +203,8 @@
       <div class="post-meta">
         <span class="post-time">
           發表於
-          <time itemprop="dateCreated" datetime="2015-10-01T14:02:02+08:00" content="2015-10-01">
-            2015-10-01
+          <time itemprop="dateCreated" datetime="2015-10-16T15:20:02+08:00" content="2015-10-16">
+            2015-10-16
           </time>
         </span>
 
@@ -213,8 +213,8 @@
             &nbsp; | &nbsp; 分類於
             
               <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/java/" itemprop="url" rel="index">
-                  <span itemprop="name">java</span>
+                <a href="/categories/android/" itemprop="url" rel="index">
+                  <span itemprop="name">android</span>
                 </a>
               </span>
 
@@ -229,8 +229,8 @@
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/10/01/spring-mvc-quickstart/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/01/spring-mvc-quickstart/" itemprop="commentsCount"></span>
+              <a href="/2015/10/16/android_recycler_view/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/16/android_recycler_view/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -245,14 +245,14 @@
 
       
         
-          <p>今天给大家介绍一下Spring MVC，让我们学习一下如何利用Spring MVC快速的搭建一个简单的web应用。</p>
-<h1 id="环境准备">环境准备</h1><ul>
-<li>一个称手的文本编辑器（例如Vim、Emacs、Sublime Text）或者IDE（Eclipse、Idea Intellij）</li>
-<li>Java环境（JDK 1.7或以上版本）</li>
-<li>Maven 3.0+（Eclipse和Idea IntelliJ内置，如果使用IDE并且不使用命令行工具可以不安装）</li>
-</ul>
+          <p>RecyclerView 是Android L版本中新添加的一个用来取代ListView的SDK，它的灵活性与可替代性比listview更好。接下来通过一系列的文章讲解如何使用RecyclerView,彻底抛弃ListView.</p>
+<h1 id="介绍">介绍</h1><blockquote>
+<p>RecyclerView与ListView原理是类似的：都是仅仅维护少量的View并且可以展示大量的数据集。RecyclerView用以下两种方式简化了数据的展示和处理:</p>
+<p>使用LayoutManager来确定每一个item的排列方式。</p>
+<p>为增加和删除项目提供默认的动画效果。</p>
+</blockquote>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/10/01/spring-mvc-quickstart/#more" rel="contents">
+            <a class="btn" href="/2015/10/16/android_recycler_view/#more" rel="contents">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -285,8 +285,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/10/01/spring-boot-env-config/" itemprop="url">
-                Spring MVC 系列 - Spring Boot应用开发环境
+              <a class="post-title-link" href="/2015/10/16/android-custom-component/" itemprop="url">
+                动手开发一个安卓APP - Android  自定义View 实现下载进度的显示
               </a>
             
           
@@ -296,8 +296,8 @@
       <div class="post-meta">
         <span class="post-time">
           發表於
-          <time itemprop="dateCreated" datetime="2015-10-01T10:13:35+08:00" content="2015-10-01">
-            2015-10-01
+          <time itemprop="dateCreated" datetime="2015-10-16T09:38:11+08:00" content="2015-10-16">
+            2015-10-16
           </time>
         </span>
 
@@ -306,8 +306,8 @@
             &nbsp; | &nbsp; 分類於
             
               <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/java/" itemprop="url" rel="index">
-                  <span itemprop="name">java</span>
+                <a href="/categories/android/" itemprop="url" rel="index">
+                  <span itemprop="name">android</span>
                 </a>
               </span>
 
@@ -322,8 +322,8 @@
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/10/01/spring-boot-env-config/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/01/spring-boot-env-config/" itemprop="commentsCount"></span>
+              <a href="/2015/10/16/android-custom-component/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/16/android-custom-component/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -339,10 +339,196 @@
       
         
           <blockquote>
-<p>Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。我们来看看如何配置Spring Boot的开发环境，做一个最简单的Spring Boot应用。</p>
+<p>一般有下载功能的应用都会有这样一个场景，需要一个进度来标识不同的状态。</p>
+<p>一般下载都会有这么几种状态：未开始、等待、正在下载、下载结束，当然有时候会有下载出错的状态。等待状态是指用户点击开始下载，但是线程池中没有空闲的线程来处理该次下载，所以状态为等待。</p>
+</blockquote>
+<p><img src="/uploads/android_down.gif" alt="下载进度的显示" title="下载进度的显示"></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/16/android-custom-component/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/10/15/java_new_problem/" itemprop="url">
+                Java 新手问题集锦
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-10-15T13:51:16+08:00" content="2015-10-15">
+            2015-10-15
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/java/" itemprop="url" rel="index">
+                  <span itemprop="name">java</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/10/15/java_new_problem/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/15/java_new_problem/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>Java是目前最流行的编程语言之一——它可以用来编写Windows程序或者是Web应用，移动应用，网络程序，消费电子产品，机顶盒设备，它无处不在。</p>
+<p>有超过30亿的设备是运行在Java之上的。根据Oracle的统计数据，光是使用中的Java Card就有有50亿。</p>
+<p>超过900万程序员选择使用Java进行开发，它是最受开发人员欢迎的语言，同时也是最流行的开发平台。</p>
+</blockquote>
+<p>本文为那些准Java程序员们准备了一系列广为流传的Java最佳编程实践：</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/15/java_new_problem/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/10/13/android-gesture-detector/" itemprop="url">
+                动手开发一个安卓APP - Android 触摸手势检测GestureDetector使用详解
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-10-13T11:40:32+08:00" content="2015-10-13">
+            2015-10-13
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/android/" itemprop="url" rel="index">
+                  <span itemprop="name">android</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/10/13/android-gesture-detector/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/13/android-gesture-detector/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>在Android中，当用户触摸屏幕的时候，会产生许多手势，例如<code>down</code>，<code>up</code>，<code>scroll</code>，<code>filing</code>，<code>onSingleTapConfirmed(单击)</code>，<code>onDoubleTap(双击)</code>等等。<br>一般情况下，我们知道View类有个<code>View.OnTouchListener</code>内部接口，通过重写他的<code>onTouch(View v, MotionEvent event)</code>方法，我们可以处理一些在该控件中触发的touch事件，但是这个方法太过简单，如果需要处理一些复杂的手势，用这个接口就会很麻烦（因为我们要自己根据用户触摸的轨迹去判断是什么手势），所以我们常常需要在这个方法中用手势识别器中的<code>onTouchEvent(event)</code>方法去拦截到触摸事件至手势识别器中处理。</p>
+<h1 id="Android_sdk给我们提供了GestureDetector（Gesture：手势Detector：识别）类">Android sdk给我们提供了GestureDetector（Gesture：手势Detector：识别）类</h1><blockquote>
+<p>通过这个类我们可以识别很多的手势，主要是通过他自身的onTouchEvent(event)</p>
 </blockquote>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/10/01/spring-boot-env-config/#more" rel="contents">
+            <a class="btn" href="/2015/10/13/android-gesture-detector/#more" rel="contents">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -375,8 +561,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/09/29/android-component/" itemprop="url">
-                动手开发一个安卓APP - 常用组件/控件使用介绍
+              <a class="post-title-link" href="/2015/10/12/android_toolbar/" itemprop="url">
+                动手开发一个安卓APP - android ToolBar详解
               </a>
             
           
@@ -386,8 +572,8 @@
       <div class="post-meta">
         <span class="post-time">
           發表於
-          <time itemprop="dateCreated" datetime="2015-09-29T10:23:26+08:00" content="2015-09-29">
-            2015-09-29
+          <time itemprop="dateCreated" datetime="2015-10-12T13:36:32+08:00" content="2015-10-12">
+            2015-10-12
           </time>
         </span>
 
@@ -412,8 +598,8 @@
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/09/29/android-component/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/29/android-component/" itemprop="commentsCount"></span>
+              <a href="/2015/10/12/android_toolbar/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/12/android_toolbar/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -428,114 +614,13 @@
 
       
         
-          <h2 id="课程源码">课程源码</h2><ul>
-<li><a href="https://github.com/hpze2000/andoridBestDemo">源码 github 项目地址（有github账号的记得帮忙加星哦）</a></li>
-<li><a href="http://git.oschina.net/hpze2000/andoridBestDemo">源码 Git.oschina.net 项目地址</a></li>
-</ul>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/09/29/android-component/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/09/17/android-http/" itemprop="url">
-                动手开发一个安卓APP - HTTP 网络请求
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於
-          <time itemprop="dateCreated" datetime="2015-09-17T14:27:46+08:00" content="2015-09-17">
-            2015-09-17
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分類於
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/android/" itemprop="url" rel="index">
-                  <span itemprop="name">android</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/09/17/android-http/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/17/android-http/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="总共7_至_8个课程_包含以下内容">总共7 至 8个课程 包含以下内容</h2><blockquote>
-<ul>
-<li>第一节 ：android开发环境设置，android HTTP 请求，与服务端交互（图片请求，JSON 解析 缓存处理等） <a href="/2015/09/17/android-http/">链接</a></li>
-<li>第二节 ：android 常用组件/控件使用介绍（activity，fragment，actionBar，dialog，tabhost，listview，RecyclerView，WebView, view切换，侧滑菜单，下拉刷新组件 等（这里可能需要两节时间，视具体情况而定）</li>
-<li>第三节 ：结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端 (一)</li>
-<li>第四节 ：结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端 (二)</li>
-<li>第五节 ：结合实际（考虑做一个对测试有用的项目实战），针对开发完成的新闻类APP，做测试相关的一些工作</li>
-<li>第六节 ：Service，Broadcast，存储及数据操作，多线程及异步任务，动画等</li>
-<li>第七节 ：项目打包，签名，混淆，第三方组件的使用（广告平台，IM SDK，消息推送，自动更新，统计分析，渠道发布，日志监控，用户反馈，社会化分享，定位LBS，支付等）</li>
-</ul>
+          <blockquote>
+<p>2014 的 google i/o 发表令多数人为之一亮的 material design，而 google 也从「google i/o 2014」 开始，大家也陆陆续续地看到其更新的 android app 皆套用了这个设计介面。当然，这个设计介面著实让大家感到惊艳外，更让 android 开发者开始担心未来 app 的界面处理了。</p>
+<p>不过，所幸有着之前 actionbar 的经验后，android 也很快地在 support library 里面提供了相对应的 api 给开发者使用，本篇就为各位介绍 – toolbar，这是用来取代过去 actionbar 的控件，而现在于 material design 中也对之有一个统一名称：app bar，在未来的 android app 中，就以 toolbar 这个元件来实作之。</p>
 </blockquote>
-<h2 id="课程源码">课程源码</h2><ul>
-<li><a href="https://github.com/hpze2000/andoridBestDemo">源码 github 项目地址（有github账号的记得帮忙加星哦）</a></li>
-<li><a href="http://git.oschina.net/hpze2000/andoridBestDemo">源码 Git.oschina.net 项目地址</a></li>
-</ul>
+<p><img src="/uploads/android_toolbar.png" alt="android toolbar" title="android toolbar"></p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/09/17/android-http/#more" rel="contents">
+            <a class="btn" href="/2015/10/12/android_toolbar/#more" rel="contents">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -568,8 +653,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/09/17/https-protocol/" itemprop="url">
-                https协议了解，以及相关协议的解析
+              <a class="post-title-link" href="/2015/10/10/android-material-design-theme/" itemprop="url">
+                动手开发一个安卓APP - 创建Material Design风格的Android应用 -- 应用主题
               </a>
             
           
@@ -579,8 +664,8 @@
       <div class="post-meta">
         <span class="post-time">
           發表於
-          <time itemprop="dateCreated" datetime="2015-09-17T10:30:06+08:00" content="2015-09-17">
-            2015-09-17
+          <time itemprop="dateCreated" datetime="2015-10-10T15:36:06+08:00" content="2015-10-10">
+            2015-10-10
           </time>
         </span>
 
@@ -605,8 +690,8 @@
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/09/17/https-protocol/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/17/https-protocol/" itemprop="commentsCount"></span>
+              <a href="/2015/10/10/android-material-design-theme/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/10/android-material-design-theme/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -621,9 +706,388 @@
 
       
         
-          <p>HTTPS（全称：Hyper Text Transfer Protocol over Secure Socket Layer），是以安全为目标的HTTP通道，简单讲是HTTP的安全版。即HTTP下加入SSL层，HTTPS的安全基础是SSL，因此加密的详细内容就需要SSL。 它是一个URI scheme（抽象标识符体系），句法类同http:体系。用于安全的HTTP数据传输。https:URL表明它使用了HTTP，但HTTPS存在不同于HTTP的默认端口及一个加密/身份验证层（在HTTP与TCP之间）。这个系统的最初研发由网景公司(Netscape)进行，并内置于其浏览器Netscape Navigator中，提供了身份验证与加密通讯方法。现在它被广泛用于万维网上安全敏感的通讯，例如交易支付方面。</p>
+          <p>android 5使用Material Design风格</p>
+<p>android提供了三种Material Design风格Theme。<br>分别是：</p>
+<ol>
+<li>@android:style/Theme.Material (dark version)        </li>
+<li>@android:style/Theme.Material.Light (light version)        </li>
+<li>@android:style/Theme.Material.Light.DarkActionBar</li>
+</ol>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/09/17/https-protocol/#more" rel="contents">
+            <a class="btn" href="/2015/10/10/android-material-design-theme/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/10/09/react-native/" itemprop="url">
+                React Native for IOS/Android 中文教程
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-10-09T10:20:02+08:00" content="2015-10-09">
+            2015-10-09
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/android/" itemprop="url" rel="index">
+                  <span itemprop="name">android</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/10/09/react-native/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/09/react-native/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <big><big><a href="http://wiki.jikexueyuan.com/project/react-native/">React Native for IOS/Android 中文教程 (极客学院的奉献)</a></big></big>
+
+<hr>
+<blockquote>
+<p>Facebook 在  <a href="http://conf.reactjs.com/">React.js Conf 2015<sup>[1]<sup></a> 大会上推出了基于 JavaScript 的开源框架 <a href="http://facebook.github.io/react-native/">React Native<sup>[2]<sup></a>，本中文教程翻译自 <a href="http://facebook.github.io/react-native/docs/getting-started.html">React Native 官方文档<sup>[3]<sup></a>。</p>
+<p>React Native 结合了 Web 应用和 Native 应用的优势，可以使用 JavaScript 来开发 iOS 和 Android 原生应用。在 JavaScript 中用 React 抽象操作系统原生的 UI 组件，代替 DOM 元素来渲染等。</p>
+<p>React Native 使你能够使用基于 JavaScript 和 <a href="http://wiki.jikexueyuan.com/project/react/">React<sup>[4]<sup></a> 一致的开发体验在本地平台上构建世界一流的应用程序体验。React Native 把重点放在所有开发人员关心的平台的开发效率上——开发者只需学习一种语言就能轻易为任何平台高效地编写代码。Facebook 在多个应用程序产品中使用了 React Native，并将继续为 React Native 投资。</p>
+</blockquote>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/09/react-native/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/10/09/php-api/" itemprop="url">
+                用PHP编写一个APP的API
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-10-09T09:41:32+08:00" content="2015-10-09">
+            2015-10-09
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/php/" itemprop="url" rel="index">
+                  <span itemprop="name">php</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/10/09/php-api/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/09/php-api/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h1 id="第一部分，通信接口的实现">第一部分，通信接口的实现</h1><p>PHP开发API时，一般返回XML或JSON数据类型的数据，除了要返回从源数据（程序本身需要的数据）外还应附上状态码，以下是一段封装后的数据，它使用JSON格式展现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    code: <span class="number">200</span>,</span><br><span class="line">    message: <span class="string">"Success"</span>,</span><br><span class="line">    data: [</span><br><span class="line">        &#123;</span><br><span class="line">            username: <span class="string">"李四"</span>,</span><br><span class="line">            password: <span class="string">"123456"</span>,</span><br><span class="line">            level: <span class="string">"1"</span>,</span><br><span class="line">            gold: <span class="string">"0"</span>,</span><br><span class="line">            id: <span class="string">"6"</span>,</span><br><span class="line">            create_time: <span class="string">"2015-09-26 08:25:31"</span>,</span><br><span class="line">            is_active: <span class="string">"1"</span>,</span><br><span class="line">            is_admin: <span class="string">"0"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            username: <span class="string">"张三"</span>,</span><br><span class="line">            password: <span class="string">"12345"</span>,</span><br><span class="line">            level: <span class="string">"1"</span>,</span><br><span class="line">            gold: <span class="string">"0"</span>,</span><br><span class="line">            id: <span class="string">"8"</span>,</span><br><span class="line">            create_time: <span class="string">"0000-00-00 00:00:00"</span>,</span><br><span class="line">            is_active: <span class="string">"1"</span>,</span><br><span class="line">            is_admin: <span class="string">"0"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以下是XML格式数据的实例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">root</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">code</span>&gt;</span>200<span class="tag">&lt;/<span class="title">code</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">message</span>&gt;</span>Success<span class="tag">&lt;/<span class="title">message</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">data</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">item</span> <span class="attribute">id</span>=<span class="value">"0"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">username</span>&gt;</span>李四<span class="tag">&lt;/<span class="title">username</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">password</span>&gt;</span>123456<span class="tag">&lt;/<span class="title">password</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">level</span>&gt;</span>1<span class="tag">&lt;/<span class="title">level</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">gold</span>&gt;</span>0<span class="tag">&lt;/<span class="title">gold</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">id</span>&gt;</span>6<span class="tag">&lt;/<span class="title">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">create_time</span>&gt;</span>2015-09-26 08:25:31<span class="tag">&lt;/<span class="title">create_time</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">is_active</span>&gt;</span>1<span class="tag">&lt;/<span class="title">is_active</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">is_admin</span>&gt;</span>0<span class="tag">&lt;/<span class="title">is_admin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">item</span> <span class="attribute">id</span>=<span class="value">"1"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">username</span>&gt;</span>张三<span class="tag">&lt;/<span class="title">username</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">password</span>&gt;</span>12345<span class="tag">&lt;/<span class="title">password</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">level</span>&gt;</span>1<span class="tag">&lt;/<span class="title">level</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">gold</span>&gt;</span>0<span class="tag">&lt;/<span class="title">gold</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">id</span>&gt;</span>8<span class="tag">&lt;/<span class="title">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">create_time</span>&gt;</span>0000-00-00 00:00:00<span class="tag">&lt;/<span class="title">create_time</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">is_active</span>&gt;</span>1<span class="tag">&lt;/<span class="title">is_active</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">is_admin</span>&gt;</span>0<span class="tag">&lt;/<span class="title">is_admin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">data</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">root</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>此外，为了方便手机端开发人员的调试，还可直接返回带数据类型的数据：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">array</span>(<span class="number">3</span>) &#123;</span><br><span class="line">  [<span class="string">"code"</span>]=&gt;</span><br><span class="line">  int(<span class="number">200</span>)</span><br><span class="line">  [<span class="string">"message"</span>]=&gt;</span><br><span class="line">  string(<span class="number">7</span>) <span class="string">"Success"</span></span><br><span class="line">  [<span class="string">"data"</span>]=&gt;</span><br><span class="line">  <span class="keyword">array</span>(<span class="number">2</span>) &#123;</span><br><span class="line">    [<span class="number">0</span>]=&gt;</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">8</span>) &#123;</span><br><span class="line">      [<span class="string">"username"</span>]=&gt;</span><br><span class="line">      string(<span class="number">9</span>) <span class="string">"李四"</span></span><br><span class="line">      [<span class="string">"password"</span>]=&gt;</span><br><span class="line">      string(<span class="number">6</span>) <span class="string">"123456"</span></span><br><span class="line">      [<span class="string">"level"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"1"</span></span><br><span class="line">      [<span class="string">"gold"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"0"</span></span><br><span class="line">      [<span class="string">"id"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"6"</span></span><br><span class="line">      [<span class="string">"create_time"</span>]=&gt;</span><br><span class="line">      string(<span class="number">19</span>) <span class="string">"2015-09-26 08:25:31"</span></span><br><span class="line">      [<span class="string">"is_active"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"1"</span></span><br><span class="line">      [<span class="string">"is_admin"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"0"</span></span><br><span class="line">    &#125;</span><br><span class="line">    [<span class="number">1</span>]=&gt;</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">8</span>) &#123;</span><br><span class="line">      [<span class="string">"username"</span>]=&gt;</span><br><span class="line">      string(<span class="number">6</span>) <span class="string">"张三"</span></span><br><span class="line">      [<span class="string">"password"</span>]=&gt;</span><br><span class="line">      string(<span class="number">5</span>) <span class="string">"12345"</span></span><br><span class="line">      [<span class="string">"level"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"1"</span></span><br><span class="line">      [<span class="string">"gold"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"0"</span></span><br><span class="line">      [<span class="string">"id"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"8"</span></span><br><span class="line">      [<span class="string">"create_time"</span>]=&gt;</span><br><span class="line">      string(<span class="number">19</span>) <span class="string">"0000-00-00 00:00:00"</span></span><br><span class="line">      [<span class="string">"is_active"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"1"</span></span><br><span class="line">      [<span class="string">"is_admin"</span>]=&gt;</span><br><span class="line">      string(<span class="number">1</span>) <span class="string">"0"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/09/php-api/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/10/09/php-awesome/" itemprop="url">
+                收集整理一些常用的PHP类库, 资源以及技巧
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-10-09T08:11:20+08:00" content="2015-10-09">
+            2015-10-09
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/php/" itemprop="url" rel="index">
+                  <span itemprop="name">php</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/10/09/php-awesome/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/09/php-awesome/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h1 id="awesome-php">awesome-php</h1><p>收集整理一些常用的PHP类库, 资源以及技巧. 以便在工作中迅速的查找所需…</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/09/php-awesome/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/10/02/android-http-download/" itemprop="url">
+                动手开发一个安卓APP - 带断点续传的多线程下载
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-10-02T11:13:46+08:00" content="2015-10-02">
+            2015-10-02
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/android/" itemprop="url" rel="index">
+                  <span itemprop="name">android</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/10/02/android-http-download/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/02/android-http-download/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h1 id="多线程下载">多线程下载</h1><blockquote>
+<p>多线程下载就是抢占服务器资源<br>原理：服务器CPU 分配给每条线程的时间片相同，服务器带宽平均分配给每条线程，所以客户端开启的线程越多，就能抢占到更多的服务器资源。</p>
+</blockquote>
+<ol>
+<li>设置开启线程数，发送http请求到下载地址，获取下载文件的总长度<br>然后创建一个长度一致的临时文件，避免下载到一半存储空间不够了，并计算每个线程下载多少数据 </li>
+<li>计算每个线程下载数据的开始和结束位置<br>再次发送请求，用 Range 头请求开始位置和结束位置的数据</li>
+<li>将下载到的数据，存放至临时文件中</li>
+<li>带断点续传的多线程下载<br>定义一个int变量，记录每条线程下载的数据总长度，然后加上该线程的下载开始位置，得到的结果就是下次下载时，该线程的开始位置，把得到的结果存入缓存文件，当文件下载完成，删除临时进度文件。</li>
+</ol>
+<p><code>参考代码</code></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/02/android-http-download/#more" rel="contents">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -649,7 +1113,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">&raquo;</a>
   </nav>
 
  </div>
@@ -683,21 +1147,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">35</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">7</span>
               <span class="site-state-item-name">分類</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">35</span>
+              <span class="site-state-item-count">39</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

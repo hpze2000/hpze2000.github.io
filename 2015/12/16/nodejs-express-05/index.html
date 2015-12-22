@@ -1,0 +1,727 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="express,nodejs,web," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="Response  响应对象res.status(code)设置http响应码，比如 res.status(404)
+res.set(field, [value])  它的别名是 ｀res.header(field, [value])｀设置响应头信息。 有两种写法：1res.set(&apos;Content-Type&apos;, &apos;text/plain&apos;);
+和json写法：12345res.set(&amp;#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Express Response 对象讲解">
+<meta property="og:url" content="http://yoursite.com/2015/12/16/nodejs-express-05/index.html">
+<meta property="og:site_name" content="Johnson Zhang">
+<meta property="og:description" content="Response  响应对象res.status(code)设置http响应码，比如 res.status(404)
+res.set(field, [value])  它的别名是 ｀res.header(field, [value])｀设置响应头信息。 有两种写法：1res.set(&apos;Content-Type&apos;, &apos;text/plain&apos;);
+和json写法：12345res.set(&amp;#123;">
+<meta property="og:updated_time" content="2015-12-16T07:53:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Express Response 对象讲解">
+<meta name="twitter:description" content="Response  响应对象res.status(code)设置http响应码，比如 res.status(404)
+res.set(field, [value])  它的别名是 ｀res.header(field, [value])｀设置响应头信息。 有两种写法：1res.set(&apos;Content-Type&apos;, &apos;text/plain&apos;);
+和json写法：12345res.set(&amp;#123;">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> Express Response 对象讲解 | Johnson Zhang </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?886f45b065a917294e24691553891b06";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Johnson Zhang</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon icon-next-commonweal"></i> <br />
+            公益404
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Express Response 对象讲解
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-12-16T15:53:16+08:00" content="2015-12-16">
+            2015-12-16
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/web/" itemprop="url" rel="index">
+                  <span itemprop="name">web</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/12/16/nodejs-express-05/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/16/nodejs-express-05/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="Response_响应对象">Response  响应对象</h1><h2 id="res-status(code)">res.status(code)</h2><p>设置http响应码，比如 res.status(404)</p>
+<h2 id="res-set(field,_[value])_它的别名是_｀res-header(field,_[value])｀">res.set(field, [value])  它的别名是 ｀res.header(field, [value])｀</h2><p>设置响应头信息。 有两种写法：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.set(<span class="string">'Content-Type'</span>, <span class="string">'text/plain'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>和json写法：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">res.set(&#123;</span><br><span class="line">  <span class="string">'Content-Type'</span>: <span class="string">'text/plain'</span>,</span><br><span class="line">  <span class="string">'Content-Length'</span>: <span class="string">'123'</span>,</span><br><span class="line">  <span class="string">'ETag'</span>: <span class="string">'12345'</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h2 id="res-get(field)">res.get(field)</h2><p>得到响应头信息</p>
+<h2 id="res-cookie(name,_value,_[options])">res.cookie(name, value, [options])</h2><p>设置cookie name 值为value, 接受字符串参数或者JSON对象。 path 属性默认为 “/“. res.cookie(‘name’, ‘tobi’, { domain: ‘.example.com’, path: ‘/admin’, secure: true }); res.cookie(‘rememberme’, ‘1’, { expires: new Date(Date.now() + 900000), httpOnly: true });</p>
+<p>maxAge 属性是一个便利的设置”expires”,它是一个从当前时间算起的毫秒。 下面的代码和上一个例子中的第二行是同样的作用。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">res.cookie(<span class="string">'rememberme'</span>, <span class="string">'1'</span>, &#123; maxAge: <span class="number">900000</span>, httpOnly: <span class="literal">true</span> &#125;)</span><br><span class="line"><span class="string">``</span><span class="string">`x</span><br><span class="line">可以传一个序列化的JSON对象作为参数， 它会自动被bodyParser() 中间件解析。</span><br><span class="line">`</span><span class="string">``</span> js</span><br><span class="line">res.cookie(<span class="string">'cart'</span>, &#123; items: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>] &#125;);</span><br><span class="line">res.cookie(<span class="string">'cart'</span>, &#123; items: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>] &#125;, &#123; maxAge: <span class="number">900000</span> &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>这个方法也支持签名的cookies。 只需要简单的传递signed 参数。 res.cookie()会使用通过 express.cookieParser(secret) 传入的secret来签名这个值<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.cookie(<span class="string">'name'</span>, <span class="string">'tobi'</span>, &#123; signed: <span class="literal">true</span> &#125;);</span><br></pre></td></tr></table></figure></p>
+<h2 id="res-clearCookie">res.clearCookie</h2><p>把name的cookie清除. path参数默认为 “/“. res.cookie(‘name’, ‘tobi’, { path: ‘/admin’ }); res.clearCookie(‘name’, { path: ‘/admin’ });</p>
+<h2 id="res-redirect([status],_url)">res.redirect([status], url)</h2><p>使用可选的状态码跳转到url 状态码status默认为302 “Found”.<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">res.redirect(<span class="string">'/foo/bar'</span>);</span><br><span class="line">res.redirect(<span class="string">'http://example.com'</span>);</span><br><span class="line">res.redirect(<span class="number">301</span>, <span class="string">'http://example.com'</span>);</span><br><span class="line">res.redirect(<span class="string">'../login'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>Express支持几种跳转，第一种便是使用一个完整的URI跳转到一个完全不同的网站。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.redirect(<span class="string">'http://google.com'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>第二种是相对根域路径跳转，比如你现在在 <code>http://example.com/admin/post/new</code>, 下面的代码跳转到 <code>/admin</code> 将会把你带到<code>http://example.com/admin</code>:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.redirect(<span class="string">'/admin'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>这是一种相对于应用程序挂载点的跳转。 比如把一个blog程序挂在 <code>/blog</code>, 事实上它无法知道它被挂载，所以当你使用跳转 <code>/admin/post/new</code> 时，将跳到<code>http://example.com/admin/post/new</code>, 下面的代码，会把你带到<code>http://example.com/blog/admin/post/new</code><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.redirect(<span class="string">'admin/post/new'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>googog路径名.跳转同样也是支持的。 比如你在<code>http://example.com/admin/post/new</code>, 下面的跳转会把你带到 <code>http//example.com/admin/post</code>:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.redirect(<span class="string">'..'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>最后也是最特别的跳转是 back 跳转, 它会把你带回Referer（也有可能是Referrer）的地址 当Referer丢失的时候默认为 /<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.redirect(<span class="string">'back'</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="res-location">res.location</h2><p>设置location 请求头.<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">res.location(<span class="string">'/foo/bar'</span>);</span><br><span class="line">res.location(<span class="string">'foo/bar'</span>);</span><br><span class="line">res.location(<span class="string">'http://example.com'</span>);</span><br><span class="line">res.location(<span class="string">'../login'</span>);</span><br><span class="line">res.location(<span class="string">'back'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>可以使用与 res.redirect()里相同的urls。 举个例子，如果你的程序根地址是/blog, 下面的代码会把 location 请求头设置为/blog/admin:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.location(<span class="string">'admin'</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="res-charset">res.charset</h2><p>设置字符集。默认为”utf-8”。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">res.charset = <span class="string">'value'</span>;</span><br><span class="line">res.send(<span class="string">'some html'</span>);</span><br><span class="line"><span class="comment">// =&gt; Content-Type: text/html; charset=value</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="res-send([body|status],_[body])">res.send([body|status], [body])</h2><p>发送一个响应。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">res.send(<span class="keyword">new</span> Buffer(<span class="string">'whoop'</span>));</span><br><span class="line">res.send(&#123; some: <span class="string">'json'</span> &#125;);</span><br><span class="line">res.send(<span class="string">'some html'</span>);</span><br><span class="line">res.send(<span class="number">404</span>, <span class="string">'Sorry, we cannot find that!'</span>);</span><br><span class="line">res.send(<span class="number">500</span>, &#123; error: <span class="string">'something blew up'</span> &#125;);</span><br><span class="line">res.send(<span class="number">200</span>);</span><br></pre></td></tr></table></figure></p>
+<p>这个方法在输出non-streaming响应的时候自动完成了大量有用的任务 ，比如在它前面没有定义Content-Length, 它会自动设置; 比如加一些自动的 HEAD; 比如对HTTP缓存的支持 . 当参数为一个 Buffer时 Content-Type 会被设置为 “application/octet-stream” 除非它之前有像下面的代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">res.set(<span class="string">'Content-Type'</span>, <span class="string">'text/html'</span>);</span><br><span class="line">res.send(<span class="keyword">new</span> Buffer(<span class="string">'some html'</span>));</span><br></pre></td></tr></table></figure></p>
+<p>当参数为一个String时 Content-Type 默认设置为”text/html”:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.send(<span class="string">'some html'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>当参数为 Array 或者 Object 时 Express 会返回一个 JSON :<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">res.send(&#123; user: <span class="string">'tobi'</span> &#125;)</span><br><span class="line">res.send([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br></pre></td></tr></table></figure></p>
+<p>最后一条当一个Number 作为参数， 并且没有上面提到的任何一条在响应体里， Express会帮你设置一个响应体，比如200 会返回字符”OK”, 404会返回”Not Found”等等.<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">res.send(<span class="number">200</span>)</span><br><span class="line">res.send(<span class="number">204</span>)</span><br><span class="line">res.send(<span class="number">500</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="res-json([status|body],_[body])">res.json([status|body], [body])</h2><p>返回一个 JSON 响应。 当res.send() 的参数是一个对象或者数组的时候， 会调用这个方法。 当然它也在复杂的空值(null, undefined, etc)JSON转换的时候很有用， 因为规范上这些对象不是合法的JSON。</p>
+<h2 id="res-jsonp([status|body],_[body])">res.jsonp([status|body], [body])</h2><p>返回一个支持JSONP的JSON响应。 Send a JSON response with JSONP support. 这个方法同样使用了res.json(), 只是加了一个可以自定义的 JSONP 回调支持。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">res.jsonp(<span class="literal">null</span>)</span><br><span class="line"><span class="comment">// =&gt; null</span></span><br><span class="line"></span><br><span class="line">res.jsonp(&#123; user: <span class="string">'tobi'</span> &#125;)</span><br><span class="line"><span class="comment">// =&gt; &#123; "user": "tobi" &#125;</span></span><br><span class="line"></span><br><span class="line">res.jsonp(<span class="number">500</span>, &#123; error: <span class="string">'message'</span> &#125;)</span><br><span class="line"><span class="comment">// =&gt; &#123; "error": "message" &#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>默认情况下JSONP 回调的函数名就是callback。 你可以通过jsonp callback name来修改这个值。 下面是一些使用JSONP的例子。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ?callback=foo</span></span><br><span class="line">res.jsonp(&#123; user: <span class="string">'tobi'</span> &#125;)</span><br><span class="line"><span class="comment">// =&gt; foo(&#123; "user": "tobi" &#125;)</span></span><br><span class="line"></span><br><span class="line">app.set(<span class="string">'jsonp callback name'</span>, <span class="string">'cb'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ?cb=foo</span></span><br><span class="line">res.jsonp(<span class="number">500</span>, &#123; error: <span class="string">'message'</span> &#125;)</span><br><span class="line"><span class="comment">// =&gt; foo(&#123; "error": "message" &#125;)</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="res-type(type)_（它是res-contentType(type)方法的别名。）">res.type(type) （它是res.contentType(type)方法的别名。）</h2><p>设置响应内容类型，也就是响应头的Content-Type值，而这个方法无需我们写全，即可被成功设置，意思是res.type(“json”)，等价于 res.type(‘application/json’)。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">res.type(<span class="string">'.html'</span>);</span><br><span class="line">res.type(<span class="string">'html'</span>);</span><br><span class="line">res.type(<span class="string">'json'</span>);</span><br><span class="line">res.type(<span class="string">'application/json'</span>);</span><br><span class="line">res.type(<span class="string">'png'</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="res-format(object)">res.format(object)</h2><p>设置特定请求头的响应。 这个方法使用 req.accepted， 这是一个通过质量值作为优先级顺序的数组， 第一个回调会被执行。 当没有匹配时，服务器返回一个 406 “Not Acceptable”, 或者执行default 回调 Content-Type 在callback 被选中执行的时候会被设置好, 如果你想改变它，可以在callback内使用res.set()或者 res.type() 等 下面的例子展示了在请求头设置为”application/json” 或者 “/json”的时候 会返回{ “message”: “hey” } 如果设置的是”/*” 那么所有的返回都将是”hey”<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">res.format(&#123;</span><br><span class="line">  <span class="string">'text/plain'</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">'hey'</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="string">'text/html'</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">'hey'</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="string">'application/json'</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    res.send(&#123; message: <span class="string">'hey'</span> &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>除了使用标准的MIME 类型，你也可以使用扩展名来映射这些类型，下面是一个不太完整的实现：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">res.format(&#123;</span><br><span class="line">  text: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">'hey'</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  html: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">'hey'</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  json: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    res.send(&#123; message: <span class="string">'hey'</span> &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h2 id="res-attachment([filename])">res.attachment([filename])</h2><p>设置响应头的Content-Disposition 字段值为 “attachment”. 如果有filename 参数，Content-Type 将会依据文件扩展名通过res.type()自动设置, 并且Content-Disposition的”filename=”参数将会被设置<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">res.attachment();</span><br><span class="line"><span class="comment">// Content-Disposition: attachment</span></span><br><span class="line"></span><br><span class="line">res.attachment(<span class="string">'path/to/logo.png'</span>);</span><br><span class="line"><span class="comment">// Content-Disposition: attachment; filename="logo.png"</span></span><br><span class="line"><span class="comment">// Content-Type: image/png</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="res-sendfile(path,_[options],_[fn]])">res.sendfile(path, [options], [fn]])</h2><p>path所传输附件的路径。 它会根据文件的扩展名自动设置响应头里的Content-Type字段。 回调函数fn(err)在传输完成或者发生错误时会被调用执行。 Options:</p>
+<p>maxAge 毫秒，默认为0</p>
+<p>root 文件相对的路径 这个方法可以非常良好的支持有缩略图的文件服务。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/user/:uid/photos/:file'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</span><br><span class="line"><span class="keyword">var</span> uid = req.params.uid</span><br><span class="line">  , file = req.params.file;</span><br><span class="line"></span><br><span class="line">req.user.mayViewFilesFrom(uid, <span class="function"><span class="keyword">function</span>(<span class="params">yes</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (yes) &#123;</span><br><span class="line">    res.sendfile(<span class="string">'/uploads/'</span> + uid + <span class="string">'/'</span> + file);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    res.send(<span class="number">403</span>, <span class="string">'Sorry! you cant see that.'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h2 id="res-download(path,_[filename],_[fn])">res.download(path, [filename], [fn])</h2><p>path所需传输附件的路径， 通常情况下浏览器会弹出一个下载文件的窗口。 浏览器弹出框里的文件名和响应头里的Disposition “filename=” 参数是一致的, 你也可以通过传入filename来自由设置。 当在传输的过程中发生一个错误时，可选的回调函数fn会被调用执行。 这个方法使用res.sendfile()传输文件。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">res.download(<span class="string">'/report-12345.pdf'</span>);</span><br><span class="line"></span><br><span class="line">res.download(<span class="string">'/report-12345.pdf'</span>, <span class="string">'report.pdf'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (err) &#123;</span><br><span class="line">    <span class="comment">// 处理错误，请牢记可能只有部分内容被传输，所以</span></span><br><span class="line">    <span class="comment">// 检查一下res.headerSent</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 减少下载的积分值之类逻辑处理</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h2 id="res-links(links)">res.links(links)</h2><p>合并给定的links, 并且设置给响应头里的”Link” 字段.<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">res.links(&#123;</span><br><span class="line">  next: <span class="string">'http://api.example.com/users?page=2'</span>,</span><br><span class="line">  last: <span class="string">'http://api.example.com/users?page=5'</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>转换后:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Link: <span class="xml"><span class="tag">&lt;<span class="title">http:</span>//<span class="attribute">api.example.com</span>/<span class="attribute">users</span>?<span class="attribute">page</span>=<span class="value">2</span>&gt;</span>;</span> rel=<span class="string">"next"</span>, </span><br><span class="line">      <span class="xml"><span class="tag">&lt;<span class="title">http:</span>//<span class="attribute">api.example.com</span>/<span class="attribute">users</span>?<span class="attribute">page</span>=<span class="value">5</span>&gt;</span>;</span> rel=<span class="string">"last"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="res-locals">res.locals</h2><p>在某一次请求范围下的响应体的本地变量，只对此次请求期间的views可见。 另外这个API其实和 app.locals是一样的. 这个对象在放置请求级信息时非常有用，比如放置请求的路径名，验证过的用户，用户设置等等<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">app.use(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>)</span>&#123;</span><br><span class="line">  res.locals.user = req.user;</span><br><span class="line">  res.locals.authenticated = !req.user.anonymous;</span><br><span class="line">  next();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h2 id="res-render(view,_[locals],_callback)">res.render(view, [locals], callback)</h2><p>渲染view, 同时向callback 传入渲染后的字符串。 callback如果不传的话，直接会把渲染后的字符串输出至请求方， 如果不需要再对渲染后的模板作操作，就不用传callback。 当有错误发生时next(err)会被执行. 如果提供了callback参数，可能发生的错误和渲染的字符串都会被当作参数传入, 并且没有默认响应。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">res.render(<span class="string">'index'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, html</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">res.render(<span class="string">'user'</span>, &#123; name: <span class="string">'Tobi'</span> &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err, html</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/express/" rel="tag">#express</a>
+          
+            <a href="/tags/nodejs/" rel="tag">#nodejs</a>
+          
+            <a href="/tags/web/" rel="tag">#web</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/12/16/nodejs-express-06/" rel="prev">Express 路由权限控制技巧</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/12/16/nodejs-express-04/" rel="next">Express Request 对象讲解</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/12/16/nodejs-express-05/"
+                   data-title="Express Response 对象讲解" data-url="http://yoursite.com/2015/12/16/nodejs-express-05/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar.jpg" alt="Johnson Zhang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Johnson Zhang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">35</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">39</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/hpze2000" target="_blank">github</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Response_响应对象"><span class="nav-number">1.</span> <span class="nav-text">Response  响应对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#res-status(code)"><span class="nav-number">1.1.</span> <span class="nav-text">res.status(code)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#res-set(field,_[value])_它的别名是_｀res-header(field,_[value])｀"><span class="nav-number">1.2.</span> <span class="nav-text">res.set(field, [value])  它的别名是 ｀res.header(field, [value])｀</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#res-get(field)"><span class="nav-number">1.3.</span> <span class="nav-text">res.get(field)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#res-cookie(name,_value,_[options])"><span class="nav-number">1.4.</span> <span class="nav-text">res.cookie(name, value, [options])</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#res-clearCookie"><span class="nav-number">1.5.</span> <span class="nav-text">res.clearCookie</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#res-redirect([status],_url)"><span class="nav-number">1.6.</span> <span class="nav-text">res.redirect([status], url)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#res-location"><span class="nav-number">1.7.</span> <span class="nav-text">res.location</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#res-charset"><span class="nav-number">1.8.</span> <span class="nav-text">res.charset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#res-send([body|status],_[body])"><span class="nav-number">1.9.</span> <span class="nav-text">res.send([body|status], [body])</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#res-json([status|body],_[body])"><span class="nav-number">1.10.</span> <span class="nav-text">res.json([status|body], [body])</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#res-jsonp([status|body],_[body])"><span class="nav-number">1.11.</span> <span class="nav-text">res.jsonp([status|body], [body])</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#res-type(type)_（它是res-contentType(type)方法的别名。）"><span class="nav-number">1.12.</span> <span class="nav-text">res.type(type) （它是res.contentType(type)方法的别名。）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#res-format(object)"><span class="nav-number">1.13.</span> <span class="nav-text">res.format(object)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#res-attachment([filename])"><span class="nav-number">1.14.</span> <span class="nav-text">res.attachment([filename])</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#res-sendfile(path,_[options],_[fn]])"><span class="nav-number">1.15.</span> <span class="nav-text">res.sendfile(path, [options], [fn]])</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#res-download(path,_[filename],_[fn])"><span class="nav-number">1.16.</span> <span class="nav-text">res.download(path, [filename], [fn])</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#res-links(links)"><span class="nav-number">1.17.</span> <span class="nav-text">res.links(links)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#res-locals"><span class="nav-number">1.18.</span> <span class="nav-text">res.locals</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#res-render(view,_[locals],_callback)"><span class="nav-number">1.19.</span> <span class="nav-text">res.render(view, [locals], callback)</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Johnson Zhang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hpze2000"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
