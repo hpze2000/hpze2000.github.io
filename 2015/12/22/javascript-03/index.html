@@ -1,0 +1,793 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="javascript,js,web," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="标准对象在JavaScript的世界里，一切都是对象。但是某些对象还是和其他对象不太一样。为了区分对象的类型，我们用typeof操作符获取对象的类型，它总是返回一个字符串：123456789typeof 123; // &apos;number&apos;typeof NaN; // &apos;number&apos;typeof &apos;str&apos;; // &apos;string&apos;typeof true; // &apos;boolean&apos;typeof un">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 标准对象">
+<meta property="og:url" content="http://yoursite.com/2015/12/22/javascript-03/index.html">
+<meta property="og:site_name" content="Johnson Zhang">
+<meta property="og:description" content="标准对象在JavaScript的世界里，一切都是对象。但是某些对象还是和其他对象不太一样。为了区分对象的类型，我们用typeof操作符获取对象的类型，它总是返回一个字符串：123456789typeof 123; // &apos;number&apos;typeof NaN; // &apos;number&apos;typeof &apos;str&apos;; // &apos;string&apos;typeof true; // &apos;boolean&apos;typeof un">
+<meta property="og:updated_time" content="2015-12-22T07:11:26.018Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript 标准对象">
+<meta name="twitter:description" content="标准对象在JavaScript的世界里，一切都是对象。但是某些对象还是和其他对象不太一样。为了区分对象的类型，我们用typeof操作符获取对象的类型，它总是返回一个字符串：123456789typeof 123; // &apos;number&apos;typeof NaN; // &apos;number&apos;typeof &apos;str&apos;; // &apos;string&apos;typeof true; // &apos;boolean&apos;typeof un">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> JavaScript 标准对象 | Johnson Zhang </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?886f45b065a917294e24691553891b06";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Johnson Zhang</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon icon-next-commonweal"></i> <br />
+            公益404
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              JavaScript 标准对象
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-12-22T14:38:20+08:00" content="2015-12-22">
+            2015-12-22
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/javascript/" itemprop="url" rel="index">
+                  <span itemprop="name">javascript</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/12/22/javascript-03/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/22/javascript-03/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="标准对象">标准对象</h1><p>在JavaScript的世界里，一切都是对象。<br>但是某些对象还是和其他对象不太一样。为了区分对象的类型，我们用<code>typeof</code>操作符获取对象的类型，它总是返回一个字符串：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="number">123</span>; <span class="comment">// 'number'</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">NaN</span>; <span class="comment">// 'number'</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="string">'str'</span>; <span class="comment">// 'string'</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">true</span>; <span class="comment">// 'boolean'</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">undefined</span>; <span class="comment">// 'undefined'</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">Math</span>.abs; <span class="comment">// 'function'</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">null</span>; <span class="comment">// 'object'</span></span><br><span class="line"><span class="keyword">typeof</span> []; <span class="comment">// 'object'</span></span><br><span class="line"><span class="keyword">typeof</span> &#123;&#125;; <span class="comment">// 'object'</span></span><br></pre></td></tr></table></figure></p>
+<p>可见，<code>number</code>、<code>string</code>、<code>boolean</code>、<code>function</code>和<code>undefined</code>有别于其他类型。特别注意<code>null</code>的类型是<code>object</code>，<code>Array</code>的类型也是<code>object</code>，如果我们用<code>typeof</code>将无法区分出<code>null</code>、<code>Array</code>和通常意义上的object——{}。</p>
+<h2 id="包装对象">包装对象</h2><p>除了这些类型外，JavaScript还提供了包装对象，熟悉Java的小伙伴肯定很清楚int和Integer这种暧昧关系。<br><code>number</code>、<code>boolean</code>和<code>string</code>都有包装对象。没错，在JavaScript中，字符串也区分<code>string</code>类型和它的包装类型。包装对象用<code>new</code>创建：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> n = <span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">123</span>); <span class="comment">// 123,生成了新的包装类型</span></span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> <span class="built_in">Boolean</span>(<span class="literal">true</span>); <span class="comment">// true,生成了新的包装类型</span></span><br><span class="line"><span class="keyword">var</span> s = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">'str'</span>); <span class="comment">// 'str',生成了新的包装类型</span></span><br></pre></td></tr></table></figure></p>
+<p>虽然包装对象看上去和原来的值一模一样，显示出来也是一模一样，但他们的类型已经变为object了！所以，包装对象和原始值用===比较会返回false：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">123</span>); <span class="comment">// 'object'</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">123</span>) === <span class="number">123</span>; <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">Boolean</span>(<span class="literal">true</span>); <span class="comment">// 'object'</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Boolean</span>(<span class="literal">true</span>) === <span class="literal">true</span>; <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">'str'</span>); <span class="comment">// 'object'</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">'str'</span>) === <span class="string">'str'</span>; <span class="comment">// false</span></span><br></pre></td></tr></table></figure></p>
+<p>所以闲的蛋疼也不要使用包装对象！尤其是针对<code>string</code>类型！！！</p>
+<p>如果我们在使用<code>Number</code>、<code>Boolean</code>和<code>String</code>时，没有写<code>new</code>会发生什么情况？<br>此时，<code>Number()</code>、<code>Boolean()</code>和<code>String()</code>被当做普通函数，把任何类型的数据转换为<code>number</code>、<code>boolean</code>和<code>string</code>类型（注意不是其包装类型）：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> n = <span class="built_in">Number</span>(<span class="string">'123'</span>); <span class="comment">// 123，相当于parseInt()或parseFloat()</span></span><br><span class="line"><span class="keyword">typeof</span> n; <span class="comment">// 'number'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="built_in">Boolean</span>(<span class="string">'true'</span>); <span class="comment">// true</span></span><br><span class="line"><span class="keyword">typeof</span> b; <span class="comment">// 'boolean'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b2 = <span class="built_in">Boolean</span>(<span class="string">'false'</span>); <span class="comment">// true! 'false'字符串转换结果为true！因为它是非空字符串！</span></span><br><span class="line"><span class="keyword">var</span> b3 = <span class="built_in">Boolean</span>(<span class="string">''</span>); <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> s = <span class="built_in">String</span>(<span class="number">123.45</span>); <span class="comment">// '123.45'</span></span><br><span class="line"><span class="keyword">typeof</span> s; <span class="comment">// 'string'</span></span><br></pre></td></tr></table></figure></p>
+<p>是不是感觉头大了？这就是JavaScript特有的催眠魅力！<br>总结一下，有这么几条规则需要遵守：</p>
+<ul>
+<li>不要使用<code>new Number()</code>、<code>new Boolean()</code>、<code>new String()</code>创建包装对象；</li>
+<li>用<code>parseInt()</code>或<code>parseFloat()</code>来转换任意类型到number；</li>
+<li>用<code>String()</code>来转换任意类型到<code>string</code>，或者直接调用某个对象的<code>toString()</code>方法；</li>
+<li>通常不必把任意类型转换为<code>boolean</code>再判断，因为可以直接写<code>if (myVar) {...}</code>；</li>
+<li><code>typeof</code>操作符可以判断出<code>number</code>、<code>boolean</code>、<code>string</code>、<code>function</code>和<code>undefined</code>；</li>
+<li>判断<code>Array</code>要使用<code>Array.isArray(arr)</code>；</li>
+<li>判断<code>null</code>请使用<code>myVar === null</code>；</li>
+<li>判断某个全局变量是否存在用<code>typeof window.myVar === &#39;undefined&#39;</code>；</li>
+<li>函数内部判断某个变量是否存在用<code>typeof myVar === &#39;undefined&#39;</code>。</li>
+</ul>
+<blockquote>
+<p>任何对象都有<code>toString()</code>方法吗？<code>null</code>和<code>undefined</code>就没有！确实如此，这两个特殊值要除外，虽然<code>null</code>还伪装成了<code>object</code>类型。<br><code>number</code>对象调用<code>toString()</code>报SyntaxError：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">123.</span>toString(); <span class="comment">// SyntaxError</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>遇到这种情况，要特殊处理一下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">123.</span>.toString(); <span class="comment">// '123', 注意是两个点！</span></span><br><span class="line">(<span class="number">123</span>).toString(); <span class="comment">// '123'</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="Date">Date</h3><p>在JavaScript中，Date对象用来表示日期和时间。<br>要获取系统当前时间，用：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> now = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">now; <span class="comment">// Wed Jun 24 2015 19:49:22 GMT+0800 (CST)</span></span><br><span class="line">now.getFullYear(); <span class="comment">// 2015, 年份</span></span><br><span class="line">now.getMonth(); <span class="comment">// 5, 月份，注意月份范围是0~11，5表示六月</span></span><br><span class="line">now.getDate(); <span class="comment">// 24, 表示24号</span></span><br><span class="line">now.getDay(); <span class="comment">// 3, 表示星期三</span></span><br><span class="line">now.getHours(); <span class="comment">// 19, 24小时制</span></span><br><span class="line">now.getMinutes(); <span class="comment">// 49, 分钟</span></span><br><span class="line">now.getSeconds(); <span class="comment">// 22, 秒</span></span><br><span class="line">now.getMilliseconds(); <span class="comment">// 875, 毫秒数</span></span><br><span class="line">now.getTime(); <span class="comment">// 1435146562875, 以number形式表示的时间戳</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注意，当前时间是浏览器从本机操作系统获取的时间，所以不一定准确，因为用户可以把当前时间设定为任何值。</p>
+</blockquote>
+<p>如果要创建一个指定日期和时间的Date对象，可以用：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> d = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">2015</span>, <span class="number">5</span>, <span class="number">19</span>, <span class="number">20</span>, <span class="number">15</span>, <span class="number">30</span>, <span class="number">123</span>);</span><br><span class="line">d; <span class="comment">// Fri Jun 19 2015 20:15:30 GMT+0800 (CST)</span></span><br></pre></td></tr></table></figure></p>
+<p>一个非常非常坑爹的地方，就是JavaScript的月份范围用整数表示是0~11，0表示一月，1表示二月……，所以要表示6月，我们传入的是5！这绝对是JavaScript的设计者当时脑抽了一下，但是现在要修复已经不可能了。</p>
+<p>第二种创建一个指定日期和时间的方法是解析一个符合ISO 8601格式的字符串：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> d = <span class="built_in">Date</span>.parse(<span class="string">'2015-06-24T19:49:22.875+08:00'</span>);</span><br><span class="line">d; <span class="comment">// 1435146562875</span></span><br></pre></td></tr></table></figure></p>
+<p>但它返回的不是<code>Date</code>对象，而是一个时间戳。不过有时间戳就可以很容易地把它转换为一个<code>Date</code>：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> d = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">1435146562875</span>);</span><br><span class="line">d; <span class="comment">// Wed Jun 24 2015 19:49:22 GMT+0800 (CST)</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="时区">时区</h4><p><code>Date</code>对象表示的时间总是按浏览器所在时区显示的，不过我们既可以显示本地时间，也可以显示调整后的UTC时间：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> d = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">1435146562875</span>);</span><br><span class="line">d.toLocaleString(); <span class="comment">// '2015/6/24 下午7:49:22'，本地时间（北京时区+8:00），显示的字符串与操作系统设定的格式有关</span></span><br><span class="line">d.toUTCString(); <span class="comment">// 'Wed, 24 Jun 2015 11:49:22 GMT'，UTC时间，与本地时间相差8小时</span></span><br></pre></td></tr></table></figure></p>
+<p>那么在JavaScript中如何进行时区转换呢？实际上，只要我们传递的是一个<code>number</code>类型的时间戳，我们就不用关心时区转换。任何浏览器都可以把一个时间戳正确转换为本地时间。</p>
+<blockquote>
+<p>时间戳是个什么东西？时间戳是一个自增的整数，它表示从1970年1月1日零时整的GMT时区开始的那一刻，到现在的毫秒数。假设浏览器所在电脑的时间是准确的，那么世界上无论哪个时区的电脑，它们此刻产生的时间戳数字都是一样的，所以，时间戳可以精确地表示一个时刻，并且与时区无关。</p>
+</blockquote>
+<p>所以，我们只需要传递时间戳，或者把时间戳从数据库里读出来，再让JavaScript自动转换为当地时间就可以了。<br>要获取当前时间戳，可以用：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="built_in">Date</span>.now) &#123;</span><br><span class="line">    alert(<span class="built_in">Date</span>.now()); <span class="comment">// 老版本IE没有now()方法</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    alert(<span class="keyword">new</span> <span class="built_in">Date</span>().getTime());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="RegExp">RegExp</h3><blockquote>
+<p>字符串是编程时涉及到的最多的一种数据结构，对字符串进行操作的需求几乎无处不在。比如判断一个字符串是否是合法的Email地址，虽然可以编程提取@前后的子串，再分别判断是否是单词和域名，但这样做不但麻烦，而且代码难以复用。</p>
+</blockquote>
+<p>正则表达式是一种用来匹配字符串的强有力的武器。它的设计思想是用一种描述性的语言来给字符串定义一个规则，凡是符合规则的字符串，我们就认为它“匹配”了，否则，该字符串就是不合法的。</p>
+<p>所以我们判断一个字符串是否是合法的Email的方法是：</p>
+<ol>
+<li>创建一个匹配Email的正则表达式；</li>
+<li>用该正则表达式去匹配用户的输入来判断是否合法。</li>
+</ol>
+<p>因为正则表达式也是用字符串表示的，所以，我们要首先了解如何用字符来描述字符。<br>在正则表达式中，如果直接给出字符，就是精确匹配。用<code>\d</code>可以匹配一个数字，<code>\w</code>可以匹配一个字母或数字，所以：</p>
+<ul>
+<li><code>&#39;00\d&#39;</code>可以匹配<code>&#39;007&#39;</code>，但无法匹配<code>&#39;00A&#39;</code>；</li>
+<li><code>&#39;\d\d\d&#39;</code>可以匹配<code>&#39;010&#39;</code>；</li>
+<li><code>&#39;\w\w&#39;</code>可以匹配<code>&#39;js&#39;</code>；</li>
+<li><code>.</code> 可以匹配任意字符，所以：<code>&#39;js.&#39;</code>可以匹配<code>&#39;jsp&#39;</code>、<code>&#39;jss&#39;</code>、<code>&#39;js!&#39;</code>等等。</li>
+</ul>
+<p>要匹配变长的字符，在正则表达式中，用<code>*</code>表示任意个字符（包括0个），用<code>+</code>表示至少一个字符，用<code>?</code>表示0个或1个字符，用<code>{n}</code>表示n个字符，用<code>{n,m}</code>表示n-m个字符：<br>来看一个复杂的例子：<code>\d{3}\s+\d{3,8}</code>。<br>我们来从左到右解读一下：</p>
+<ol>
+<li><code>\d{3}</code>表示匹配3个数字，例如<code>&#39;010&#39;</code>；</li>
+<li><code>\s</code>可以匹配一个空格（也包括Tab等空白符），所以<code>\s+</code>表示至少有一个空格，例如匹配<code>&#39; &#39;</code>，<code>&#39;\t\t&#39;</code>等；</li>
+<li><code>\d{3,8}</code>表示3-8个数字，例如<code>&#39;1234567&#39;</code>。<br>综合起来，上面的正则表达式可以匹配以任意个空格隔开的带区号的电话号码。<br>如果要匹配<code>&#39;010-12345&#39;</code>这样的号码呢？由于<code>&#39;-&#39;</code>是特殊字符，在正则表达式中，要用<code>&#39;\&#39;</code>转义，所以，上面的正则是<code>\d{3}\-\d{3,8}</code>。<br>但是，仍然无法匹配<code>&#39;010 - 12345&#39;</code>，因为带有空格。所以我们需要更复杂的匹配方式。</li>
+</ol>
+<h4 id="正则进阶">正则进阶</h4><p>要做更精确地匹配，可以用<code>[]</code>表示范围，比如：</p>
+<ul>
+<li><code>[0-9a-zA-Z\_]</code>可以匹配一个数字、字母或者下划线；</li>
+<li><code>[0-9a-zA-Z\_]+</code>可以匹配至少由一个数字、字母或者下划线组成的字符串，比如<code>&#39;a100&#39;</code>，<code>&#39;0_Z&#39;</code>，<code>&#39;js2015&#39;</code>等等；</li>
+<li><code>[a-zA-Z\_\$][0-9a-zA-Z\_\$]*</code>可以匹配由字母或下划线、$开头，后接任意个由一个数字、字母或者下划线、$组成的字符串，也就是JavaScript允许的变量名；</li>
+<li><code>[a-zA-Z\_\$][0-9a-zA-Z\_\$]{0, 19}</code>更精确地限制了变量的长度是1-20个字符（前面1个字符+后面最多19个字符）。</li>
+<li><code>A|B</code>可以匹配A或B，所以<code>[J|j]ava[S|s]cript</code>可以匹配<code>&#39;JavaScript&#39;</code>、<code>&#39;Javascript&#39;</code>、<code>&#39;javaScript&#39;</code>或者<code>&#39;javascript&#39;</code>。</li>
+<li><code>^</code>表示行的开头，<code>^\d</code>表示必须以数字开头。</li>
+<li><code>$</code>表示行的结束，<code>\d$</code>表示必须以数字结束。<br>你可能注意到了，<code>js</code>也可以匹配<code>&#39;jsp&#39;</code>，但是加上<code>^js$</code>就变成了整行匹配，就只能匹配<code>&#39;js&#39;</code>了。</li>
+</ul>
+<h4 id="RegExp-1">RegExp</h4><h5 id="JS_创建正则表达式">JS 创建正则表达式</h5><p>JavaScript有两种方式创建一个正则表达式：<br>第一种方式是直接通过<code>/正则表达式/</code>写出来，第二种方式是通过<code>new RegExp(&#39;正则表达式&#39;)</code>创建一个RegExp对象。<br>两种写法是一样的：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> re1 = <span class="regexp">/ABC\-001/</span>;</span><br><span class="line"><span class="keyword">var</span> re2 = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'ABC\\-001'</span>);</span><br><span class="line"></span><br><span class="line">re1; <span class="comment">// /ABC\-001/</span></span><br><span class="line">re2; <span class="comment">// /ABC\-001/</span></span><br></pre></td></tr></table></figure></p>
+<p>注意，如果使用第二种写法，因为字符串的转义问题，字符串的两个\实际上是一个\。<br>先看看如何判断正则表达式是否匹配：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> re = <span class="regexp">/^\d&#123;3&#125;\-\d&#123;3,8&#125;$/</span>;</span><br><span class="line">re.test(<span class="string">'010-12345'</span>); <span class="comment">// true</span></span><br><span class="line">re.test(<span class="string">'010-1234x'</span>); <span class="comment">// false</span></span><br><span class="line">re.test(<span class="string">'010 12345'</span>); <span class="comment">// false</span></span><br></pre></td></tr></table></figure></p>
+<p>RegExp对象的<code>test()</code>方法用于测试给定的字符串是否符合条件。</p>
+<h5 id="切分字符串">切分字符串</h5><p>用正则表达式切分字符串比用固定的字符更灵活，请看正常的切分代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'a b   c'</span>.split(<span class="string">' '</span>); <span class="comment">// ['a', 'b', '', '', 'c']</span></span><br></pre></td></tr></table></figure></p>
+<p>嗯，无法识别连续的空格，用正则表达式试试：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'a b   c'</span>.split(<span class="regexp">/\s+/</span>); <span class="comment">// ['a', 'b', 'c']</span></span><br></pre></td></tr></table></figure></p>
+<p>无论多少个空格都可以正常分割。加入,试试：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'a,b, c  d'</span>.split(<span class="regexp">/[\s\,]+/</span>); <span class="comment">// ['a', 'b', 'c', 'd']</span></span><br></pre></td></tr></table></figure></p>
+<p>再加入;试试：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'a,b;; c  d'</span>.split(<span class="regexp">/[\s\,\;]+/</span>); <span class="comment">// ['a', 'b', 'c', 'd']</span></span><br></pre></td></tr></table></figure></p>
+<p>如果用户输入了一组标签，下次记得用正则表达式来把不规范的输入转化成正确的数组。</p>
+<h5 id="分组">分组</h5><p>除了简单地判断是否匹配之外，正则表达式还有提取子串的强大功能。用()表示的就是要提取的分组（Group）。比如：<br><code>^(\d{3})-(\d{3,8})$</code>分别定义了两个组，可以直接从匹配的字符串中提取出区号和本地号码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> re = <span class="regexp">/^(\d&#123;3&#125;)-(\d&#123;3,8&#125;)$/</span>;</span><br><span class="line">re.exec(<span class="string">'010-12345'</span>); <span class="comment">// ['010-12345', '010', '12345']</span></span><br><span class="line">re.exec(<span class="string">'010 12345'</span>); <span class="comment">// null</span></span><br></pre></td></tr></table></figure></p>
+<p>如果正则表达式中定义了组，就可以在<code>RegExp</code>对象上用<code>exec()</code>方法提取出子串来。<br><code>exec()</code>方法在匹配成功后，会返回一个<code>Array</code>，第一个元素始终是原始字符串本身，后面的字符串表示匹配成功的子串。<br><code>exec()</code>方法在匹配失败时返回<code>null</code>。<br>提取子串非常有用。来看一个更凶残的例子：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> re = <span class="regexp">/^(0[0-9]|1[0-9]|2[0-3]|[0-9])\:(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|[0-9])\:(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|[0-9])$/</span>;</span><br><span class="line">re.exec(<span class="string">'19:05:30'</span>); <span class="comment">// ['19:05:30', '19', '05', '30']</span></span><br></pre></td></tr></table></figure></p>
+<p>这个正则表达式可以直接识别合法的时间。但是有些时候，用正则表达式也无法做到完全验证，比如识别日期：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> re = <span class="regexp">/^(0[1-9]|1[0-2]|[0-9])-(0[1-9]|1[0-9]|2[0-9]|3[0-1]|[0-9])$/</span>;</span><br></pre></td></tr></table></figure></p>
+<p>对于<code>&#39;2-30&#39;</code>，<code>&#39;4-31&#39;</code>这样的非法日期，用正则还是识别不了，或者说写出来非常困难，这时就需要程序配合识别了。</p>
+<h5 id="贪婪匹配">贪婪匹配</h5><p>需要特别指出的是，正则匹配默认是贪婪匹配，也就是匹配尽可能多的字符。举例如下，匹配出数字后面的<code>0</code>：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> re = <span class="regexp">/^(\d+)(0*)$/</span>;</span><br><span class="line">re.exec(<span class="string">'102300'</span>); <span class="comment">// ['102300', '102300', '']</span></span><br></pre></td></tr></table></figure></p>
+<p>由于<code>\d+</code>采用贪婪匹配，直接把后面的<code>0</code>全部匹配了，结果<code>0*</code>只能匹配空字符串了。<br>必须让<code>\d+</code>采用非贪婪匹配（也就是尽可能少匹配），才能把后面的<code>0</code>匹配出来，加个<code>?</code>就可以让<code>\d+</code>采用非贪婪匹配：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> re = <span class="regexp">/^(\d+?)(0*)$/</span>;</span><br><span class="line">re.exec(<span class="string">'102300'</span>); <span class="comment">// ['102300', '1023', '00']</span></span><br></pre></td></tr></table></figure></p>
+<h5 id="全局搜索">全局搜索</h5><p>JavaScript的正则表达式还有几个特殊的标志，最常用的是<code>g</code>，表示全局匹配：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> r1 = <span class="regexp">/test/g</span>;</span><br><span class="line"><span class="comment">// 等价于:</span></span><br><span class="line"><span class="keyword">var</span> r2 = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'test'</span>, <span class="string">'g'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>全局匹配可以多次执行<code>exec()</code>方法来搜索一个匹配的字符串。当我们指定<code>g</code>标志后，每次运行<code>exec()</code>，正则表达式本身会更新<code>lastIndex</code>属性，表示上次匹配到的最后索引：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s = <span class="string">'JavaScript, VBScript, JScript and ECMAScript'</span>;</span><br><span class="line"><span class="keyword">var</span> re=<span class="regexp">/[a-zA-Z]+Script/g</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用全局匹配:</span></span><br><span class="line">re.exec(s); <span class="comment">// ['JavaScript']</span></span><br><span class="line">re.lastIndex; <span class="comment">// 10</span></span><br><span class="line"></span><br><span class="line">re.exec(s); <span class="comment">// ['VBScript']</span></span><br><span class="line">re.lastIndex; <span class="comment">// 20</span></span><br><span class="line"></span><br><span class="line">re.exec(s); <span class="comment">// ['JScript']</span></span><br><span class="line">re.lastIndex; <span class="comment">// 29</span></span><br><span class="line"></span><br><span class="line">re.exec(s); <span class="comment">// ['ECMAScript']</span></span><br><span class="line">re.lastIndex; <span class="comment">// 44</span></span><br><span class="line"></span><br><span class="line">re.exec(s); <span class="comment">// null，直到结束仍没有匹配到</span></span><br></pre></td></tr></table></figure></p>
+<p>全局匹配类似搜索，因此不能使用<code>/^...$/</code>，那样只会最多匹配一次。</p>
+<p>正则表达式还可以指定<code>i</code>标志，表示忽略大小写，<code>m</code>标志，表示执行多行匹配。</p>
+<h2 id="JSON">JSON</h2><blockquote>
+<p>JSON是JavaScript Object Notation的缩写，它是一种数据交换格式。</p>
+</blockquote>
+<p>JSON实际上是JavaScript的一个子集。在JSON中，一共就这么几种数据类型：</p>
+<ul>
+<li>number：和JavaScript的<code>number</code>完全一致；</li>
+<li>boolean：就是JavaScript的<code>true</code>或<code>false</code>；</li>
+<li>string：就是JavaScript的<code>string</code>；</li>
+<li>null：就是JavaScript的<code>null</code>；</li>
+<li>array：就是JavaScript的<code>Array</code>表示方式——<code>[]</code>；</li>
+<li>object：就是JavaScript的<code>{ ... }</code>表示方式。<br>JSON还定死了字符集必须是UTF-8，表示多语言就没有问题了。为了统一解析，JSON的字符串规定必须用双引号<code>&quot;&quot;</code>，Object的键也必须用双引号<code>&quot;&quot;</code>。</li>
+</ul>
+<h3 id="序列化">序列化</h3><p>把小明这个对象序列化成JSON格式的字符串：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> xiaoming = &#123;</span><br><span class="line">    name: <span class="string">'小明'</span>,</span><br><span class="line">    age: <span class="number">14</span>,</span><br><span class="line">    gender: <span class="literal">true</span>,</span><br><span class="line">    height: <span class="number">1.65</span>,</span><br><span class="line">    grade: <span class="literal">null</span>,</span><br><span class="line">    <span class="string">'middle-school'</span>: <span class="string">'\"W3C\" Middle School'</span>,</span><br><span class="line">    skills: [<span class="string">'JavaScript'</span>, <span class="string">'Java'</span>, <span class="string">'Python'</span>, <span class="string">'Lisp'</span>]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">JSON</span>.stringify(xiaoming); <span class="comment">// '&#123;"name":"小明","age":14,"gender":true,"height":1.65,"grade":null,"middle-school":"\"W3C\" Middle School","skills":["JavaScript","Java","Python","Lisp"]&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>要输出得好看一些，可以加上参数，按缩进输出：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">JSON</span>.stringify(xiaoming, <span class="literal">null</span>, <span class="string">'  '</span>);</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "<span class="attribute">name</span>": <span class="value"><span class="string">"小明"</span></span>,</span><br><span class="line">  "<span class="attribute">age</span>": <span class="value"><span class="number">14</span></span>,</span><br><span class="line">  "<span class="attribute">gender</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">  "<span class="attribute">height</span>": <span class="value"><span class="number">1.65</span></span>,</span><br><span class="line">  "<span class="attribute">grade</span>": <span class="value"><span class="literal">null</span></span>,</span><br><span class="line">  "<span class="attribute">middle-school</span>": <span class="value"><span class="string">"\"W3C\" Middle School"</span></span>,</span><br><span class="line">  "<span class="attribute">skills</span>": <span class="value">[</span><br><span class="line">    <span class="string">"JavaScript"</span>,</span><br><span class="line">    <span class="string">"Java"</span>,</span><br><span class="line">    <span class="string">"Python"</span>,</span><br><span class="line">    <span class="string">"Lisp"</span></span><br><span class="line">  ]</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+<p>第二个参数用于控制如何筛选对象的键值，如果我们只想输出指定的属性，可以传入<code>Array</code>：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">JSON</span>.stringify(xiaoming, [<span class="string">'name'</span>, <span class="string">'skills'</span>], <span class="string">'  '</span>);</span><br></pre></td></tr></table></figure></p>
+<p>结果：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "<span class="attribute">name</span>": <span class="value"><span class="string">"小明"</span></span>,</span><br><span class="line">  "<span class="attribute">skills</span>": <span class="value">[</span><br><span class="line">    <span class="string">"JavaScript"</span>,</span><br><span class="line">    <span class="string">"Java"</span>,</span><br><span class="line">    <span class="string">"Python"</span>,</span><br><span class="line">    <span class="string">"Lisp"</span></span><br><span class="line">  ]</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>还可以传入一个函数，这样对象的每个键值对都会被函数先处理：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">convert</span>(<span class="params">key, value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> value === <span class="string">'string'</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> value.toUpperCase();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">JSON</span>.stringify(xiaoming, convert, <span class="string">'  '</span>);</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码把所有属性值都变成大写：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"小明"</span>,</span><br><span class="line">  <span class="string">"age"</span>: <span class="number">14</span>,</span><br><span class="line">  <span class="string">"gender"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="string">"height"</span>: <span class="number">1.65</span>,</span><br><span class="line">  <span class="string">"grade"</span>: <span class="literal">null</span>,</span><br><span class="line">  <span class="string">"middle-school"</span>: <span class="string">"\"W3C\" MIDDLE SCHOOL"</span>,</span><br><span class="line">  <span class="string">"skills"</span>: [</span><br><span class="line">    <span class="string">"JAVASCRIPT"</span>,</span><br><span class="line">    <span class="string">"JAVA"</span>,</span><br><span class="line">    <span class="string">"PYTHON"</span>,</span><br><span class="line">    <span class="string">"LISP"</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果我们还想要精确控制如何序列化小明，可以给<code>xiaoming</code>定义一个<code>toJSON()</code>的方法，直接返回JSON应该序列化的数据：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> xiaoming = &#123;</span><br><span class="line">    name: <span class="string">'小明'</span>,</span><br><span class="line">    age: <span class="number">14</span>,</span><br><span class="line">    gender: <span class="literal">true</span>,</span><br><span class="line">    height: <span class="number">1.65</span>,</span><br><span class="line">    grade: <span class="literal">null</span>,</span><br><span class="line">    <span class="string">'middle-school'</span>: <span class="string">'\"W3C\" Middle School'</span>,</span><br><span class="line">    skills: [<span class="string">'JavaScript'</span>, <span class="string">'Java'</span>, <span class="string">'Python'</span>, <span class="string">'Lisp'</span>],</span><br><span class="line">    toJSON: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123; <span class="comment">// 只输出name和age，并且改变了key：</span></span><br><span class="line">            <span class="string">'Name'</span>: <span class="keyword">this</span>.name,</span><br><span class="line">            <span class="string">'Age'</span>: <span class="keyword">this</span>.age</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">JSON</span>.stringify(xiaoming); <span class="comment">// '&#123;"Name":"小明","Age":14&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="反序列化">反序列化</h3><p>拿到一个JSON格式的字符串，我们直接用JSON.parse()把它变成一个JavaScript对象：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">JSON</span>.parse(<span class="string">'[1,2,3,true]'</span>); <span class="comment">// [1, 2, 3, true]</span></span><br><span class="line"><span class="built_in">JSON</span>.parse(<span class="string">'&#123;"name":"小明","age":14&#125;'</span>); <span class="comment">// Object &#123;name: '小明', age: 14&#125;</span></span><br><span class="line"><span class="built_in">JSON</span>.parse(<span class="string">'true'</span>); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">JSON</span>.parse(<span class="string">'123.45'</span>); <span class="comment">// 123.45</span></span><br></pre></td></tr></table></figure></p>
+<p>JSON.parse()还可以接收一个函数，用来转换解析出的属性：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">JSON</span>.parse(<span class="string">'&#123;"name":"小明","age":14&#125;'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">key, value</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 把number * 2:</span></span><br><span class="line">    <span class="keyword">if</span> (key === <span class="string">'name'</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> value + <span class="string">'同学'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;); <span class="comment">// Object &#123;name: '小明同学', age: 14&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>在JavaScript中使用JSON，就是这么简单！</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag">#javascript</a>
+          
+            <a href="/tags/js/" rel="tag">#js</a>
+          
+            <a href="/tags/web/" rel="tag">#web</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/12/22/javascript-04/" rel="prev">JavaScript 面向对象编程</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/12/22/javascript-02/" rel="next">JavaScript 函数</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/12/22/javascript-03/"
+                   data-title="JavaScript 标准对象" data-url="http://yoursite.com/2015/12/22/javascript-03/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar.jpg" alt="Johnson Zhang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Johnson Zhang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/hpze2000" target="_blank">github</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#标准对象"><span class="nav-number">1.</span> <span class="nav-text">标准对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#包装对象"><span class="nav-number">1.1.</span> <span class="nav-text">包装对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Date"><span class="nav-number">1.1.1.</span> <span class="nav-text">Date</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#时区"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">时区</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RegExp"><span class="nav-number">1.1.2.</span> <span class="nav-text">RegExp</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#正则进阶"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">正则进阶</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RegExp-1"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">RegExp</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#JS_创建正则表达式"><span class="nav-number">1.1.2.2.1.</span> <span class="nav-text">JS 创建正则表达式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#切分字符串"><span class="nav-number">1.1.2.2.2.</span> <span class="nav-text">切分字符串</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#分组"><span class="nav-number">1.1.2.2.3.</span> <span class="nav-text">分组</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#贪婪匹配"><span class="nav-number">1.1.2.2.4.</span> <span class="nav-text">贪婪匹配</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#全局搜索"><span class="nav-number">1.1.2.2.5.</span> <span class="nav-text">全局搜索</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JSON"><span class="nav-number">1.2.</span> <span class="nav-text">JSON</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#序列化"><span class="nav-number">1.2.1.</span> <span class="nav-text">序列化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反序列化"><span class="nav-number">1.2.2.</span> <span class="nav-text">反序列化</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Johnson Zhang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hpze2000"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

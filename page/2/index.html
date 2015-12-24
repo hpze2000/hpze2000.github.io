@@ -192,6 +192,565 @@
           
           
             
+              <a class="post-title-link" href="/2015/12/16/nodejs-express-05/" itemprop="url">
+                Express Response 对象讲解
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-12-16T15:53:16+08:00" content="2015-12-16">
+            2015-12-16
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/web/" itemprop="url" rel="index">
+                  <span itemprop="name">web</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/12/16/nodejs-express-05/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/16/nodejs-express-05/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h1 id="Response_响应对象">Response  响应对象</h1><h2 id="res-status(code)">res.status(code)</h2><p>设置http响应码，比如 res.status(404)</p>
+<h2 id="res-set(field,_[value])_它的别名是_｀res-header(field,_[value])｀">res.set(field, [value])  它的别名是 ｀res.header(field, [value])｀</h2><p>设置响应头信息。 有两种写法：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.set(<span class="string">'Content-Type'</span>, <span class="string">'text/plain'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>和json写法：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">res.set(&#123;</span><br><span class="line">  <span class="string">'Content-Type'</span>: <span class="string">'text/plain'</span>,</span><br><span class="line">  <span class="string">'Content-Length'</span>: <span class="string">'123'</span>,</span><br><span class="line">  <span class="string">'ETag'</span>: <span class="string">'12345'</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h2 id="res-get(field)">res.get(field)</h2><p>得到响应头信息</p>
+<h2 id="res-cookie(name,_value,_[options])">res.cookie(name, value, [options])</h2><p>设置cookie name 值为value, 接受字符串参数或者JSON对象。 path 属性默认为 “/“. res.cookie(‘name’, ‘tobi’, { domain: ‘.example.com’, path: ‘/admin’, secure: true }); res.cookie(‘rememberme’, ‘1’, { expires: new Date(Date.now() + 900000), httpOnly: true });</p>
+<p>maxAge 属性是一个便利的设置”expires”,它是一个从当前时间算起的毫秒。 下面的代码和上一个例子中的第二行是同样的作用。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">res.cookie(<span class="string">'rememberme'</span>, <span class="string">'1'</span>, &#123; maxAge: <span class="number">900000</span>, httpOnly: <span class="literal">true</span> &#125;)</span><br><span class="line"><span class="string">``</span><span class="string">`x</span><br><span class="line">可以传一个序列化的JSON对象作为参数， 它会自动被bodyParser() 中间件解析。</span><br><span class="line">`</span><span class="string">``</span> js</span><br><span class="line">res.cookie(<span class="string">'cart'</span>, &#123; items: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>] &#125;);</span><br><span class="line">res.cookie(<span class="string">'cart'</span>, &#123; items: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>] &#125;, &#123; maxAge: <span class="number">900000</span> &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>这个方法也支持签名的cookies。 只需要简单的传递signed 参数。 res.cookie()会使用通过 express.cookieParser(secret) 传入的secret来签名这个值<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.cookie(<span class="string">'name'</span>, <span class="string">'tobi'</span>, &#123; signed: <span class="literal">true</span> &#125;);</span><br></pre></td></tr></table></figure></p>
+<h2 id="res-clearCookie">res.clearCookie</h2><p>把name的cookie清除. path参数默认为 “/“. res.cookie(‘name’, ‘tobi’, { path: ‘/admin’ }); res.clearCookie(‘name’, { path: ‘/admin’ });</p>
+<h2 id="res-redirect([status],_url)">res.redirect([status], url)</h2><p>使用可选的状态码跳转到url 状态码status默认为302 “Found”.<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">res.redirect(<span class="string">'/foo/bar'</span>);</span><br><span class="line">res.redirect(<span class="string">'http://example.com'</span>);</span><br><span class="line">res.redirect(<span class="number">301</span>, <span class="string">'http://example.com'</span>);</span><br><span class="line">res.redirect(<span class="string">'../login'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>Express支持几种跳转，第一种便是使用一个完整的URI跳转到一个完全不同的网站。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.redirect(<span class="string">'http://google.com'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>第二种是相对根域路径跳转，比如你现在在 <code>http://example.com/admin/post/new</code>, 下面的代码跳转到 <code>/admin</code> 将会把你带到<code>http://example.com/admin</code>:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.redirect(<span class="string">'/admin'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>这是一种相对于应用程序挂载点的跳转。 比如把一个blog程序挂在 <code>/blog</code>, 事实上它无法知道它被挂载，所以当你使用跳转 <code>/admin/post/new</code> 时，将跳到<code>http://example.com/admin/post/new</code>, 下面的代码，会把你带到<code>http://example.com/blog/admin/post/new</code><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.redirect(<span class="string">'admin/post/new'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>googog路径名.跳转同样也是支持的。 比如你在<code>http://example.com/admin/post/new</code>, 下面的跳转会把你带到 <code>http//example.com/admin/post</code>:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.redirect(<span class="string">'..'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>最后也是最特别的跳转是 back 跳转, 它会把你带回Referer（也有可能是Referrer）的地址 当Referer丢失的时候默认为 /<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.redirect(<span class="string">'back'</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="res-location">res.location</h2><p>设置location 请求头.<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">res.location(<span class="string">'/foo/bar'</span>);</span><br><span class="line">res.location(<span class="string">'foo/bar'</span>);</span><br><span class="line">res.location(<span class="string">'http://example.com'</span>);</span><br><span class="line">res.location(<span class="string">'../login'</span>);</span><br><span class="line">res.location(<span class="string">'back'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>可以使用与 res.redirect()里相同的urls。 举个例子，如果你的程序根地址是/blog, 下面的代码会把 location 请求头设置为/blog/admin:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.location(<span class="string">'admin'</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="res-charset">res.charset</h2><p>设置字符集。默认为”utf-8”。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">res.charset = <span class="string">'value'</span>;</span><br><span class="line">res.send(<span class="string">'some html'</span>);</span><br><span class="line"><span class="comment">// =&gt; Content-Type: text/html; charset=value</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="res-send([body|status],_[body])">res.send([body|status], [body])</h2><p>发送一个响应。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">res.send(<span class="keyword">new</span> Buffer(<span class="string">'whoop'</span>));</span><br><span class="line">res.send(&#123; some: <span class="string">'json'</span> &#125;);</span><br><span class="line">res.send(<span class="string">'some html'</span>);</span><br><span class="line">res.send(<span class="number">404</span>, <span class="string">'Sorry, we cannot find that!'</span>);</span><br><span class="line">res.send(<span class="number">500</span>, &#123; error: <span class="string">'something blew up'</span> &#125;);</span><br><span class="line">res.send(<span class="number">200</span>);</span><br></pre></td></tr></table></figure></p>
+<p>这个方法在输出non-streaming响应的时候自动完成了大量有用的任务 ，比如在它前面没有定义Content-Length, 它会自动设置; 比如加一些自动的 HEAD; 比如对HTTP缓存的支持 . 当参数为一个 Buffer时 Content-Type 会被设置为 “application/octet-stream” 除非它之前有像下面的代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">res.set(<span class="string">'Content-Type'</span>, <span class="string">'text/html'</span>);</span><br><span class="line">res.send(<span class="keyword">new</span> Buffer(<span class="string">'some html'</span>));</span><br></pre></td></tr></table></figure></p>
+<p>当参数为一个String时 Content-Type 默认设置为”text/html”:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.send(<span class="string">'some html'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>当参数为 Array 或者 Object 时 Express 会返回一个 JSON :<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">res.send(&#123; user: <span class="string">'tobi'</span> &#125;)</span><br><span class="line">res.send([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br></pre></td></tr></table></figure></p>
+<p>最后一条当一个Number 作为参数， 并且没有上面提到的任何一条在响应体里， Express会帮你设置一个响应体，比如200 会返回字符”OK”, 404会返回”Not Found”等等.<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">res.send(<span class="number">200</span>)</span><br><span class="line">res.send(<span class="number">204</span>)</span><br><span class="line">res.send(<span class="number">500</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="res-json([status|body],_[body])">res.json([status|body], [body])</h2><p>返回一个 JSON 响应。 当res.send() 的参数是一个对象或者数组的时候， 会调用这个方法。 当然它也在复杂的空值(null, undefined, etc)JSON转换的时候很有用， 因为规范上这些对象不是合法的JSON。</p>
+<h2 id="res-jsonp([status|body],_[body])">res.jsonp([status|body], [body])</h2><p>返回一个支持JSONP的JSON响应。 Send a JSON response with JSONP support. 这个方法同样使用了res.json(), 只是加了一个可以自定义的 JSONP 回调支持。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">res.jsonp(<span class="literal">null</span>)</span><br><span class="line"><span class="comment">// =&gt; null</span></span><br><span class="line"></span><br><span class="line">res.jsonp(&#123; user: <span class="string">'tobi'</span> &#125;)</span><br><span class="line"><span class="comment">// =&gt; &#123; "user": "tobi" &#125;</span></span><br><span class="line"></span><br><span class="line">res.jsonp(<span class="number">500</span>, &#123; error: <span class="string">'message'</span> &#125;)</span><br><span class="line"><span class="comment">// =&gt; &#123; "error": "message" &#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>默认情况下JSONP 回调的函数名就是callback。 你可以通过jsonp callback name来修改这个值。 下面是一些使用JSONP的例子。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ?callback=foo</span></span><br><span class="line">res.jsonp(&#123; user: <span class="string">'tobi'</span> &#125;)</span><br><span class="line"><span class="comment">// =&gt; foo(&#123; "user": "tobi" &#125;)</span></span><br><span class="line"></span><br><span class="line">app.set(<span class="string">'jsonp callback name'</span>, <span class="string">'cb'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ?cb=foo</span></span><br><span class="line">res.jsonp(<span class="number">500</span>, &#123; error: <span class="string">'message'</span> &#125;)</span><br><span class="line"><span class="comment">// =&gt; foo(&#123; "error": "message" &#125;)</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="res-type(type)_（它是res-contentType(type)方法的别名。）">res.type(type) （它是res.contentType(type)方法的别名。）</h2><p>设置响应内容类型，也就是响应头的Content-Type值，而这个方法无需我们写全，即可被成功设置，意思是res.type(“json”)，等价于 res.type(‘application/json’)。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">res.type(<span class="string">'.html'</span>);</span><br><span class="line">res.type(<span class="string">'html'</span>);</span><br><span class="line">res.type(<span class="string">'json'</span>);</span><br><span class="line">res.type(<span class="string">'application/json'</span>);</span><br><span class="line">res.type(<span class="string">'png'</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="res-format(object)">res.format(object)</h2><p>设置特定请求头的响应。 这个方法使用 req.accepted， 这是一个通过质量值作为优先级顺序的数组， 第一个回调会被执行。 当没有匹配时，服务器返回一个 406 “Not Acceptable”, 或者执行default 回调 Content-Type 在callback 被选中执行的时候会被设置好, 如果你想改变它，可以在callback内使用res.set()或者 res.type() 等 下面的例子展示了在请求头设置为”application/json” 或者 “/json”的时候 会返回{ “message”: “hey” } 如果设置的是”/*” 那么所有的返回都将是”hey”<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">res.format(&#123;</span><br><span class="line">  <span class="string">'text/plain'</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">'hey'</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="string">'text/html'</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">'hey'</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="string">'application/json'</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    res.send(&#123; message: <span class="string">'hey'</span> &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>除了使用标准的MIME 类型，你也可以使用扩展名来映射这些类型，下面是一个不太完整的实现：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">res.format(&#123;</span><br><span class="line">  text: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">'hey'</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  html: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">'hey'</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  json: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    res.send(&#123; message: <span class="string">'hey'</span> &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h2 id="res-attachment([filename])">res.attachment([filename])</h2><p>设置响应头的Content-Disposition 字段值为 “attachment”. 如果有filename 参数，Content-Type 将会依据文件扩展名通过res.type()自动设置, 并且Content-Disposition的”filename=”参数将会被设置<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">res.attachment();</span><br><span class="line"><span class="comment">// Content-Disposition: attachment</span></span><br><span class="line"></span><br><span class="line">res.attachment(<span class="string">'path/to/logo.png'</span>);</span><br><span class="line"><span class="comment">// Content-Disposition: attachment; filename="logo.png"</span></span><br><span class="line"><span class="comment">// Content-Type: image/png</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="res-sendfile(path,_[options],_[fn]])">res.sendfile(path, [options], [fn]])</h2><p>path所传输附件的路径。 它会根据文件的扩展名自动设置响应头里的Content-Type字段。 回调函数fn(err)在传输完成或者发生错误时会被调用执行。 Options:</p>
+<p>maxAge 毫秒，默认为0</p>
+<p>root 文件相对的路径 这个方法可以非常良好的支持有缩略图的文件服务。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/user/:uid/photos/:file'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</span><br><span class="line"><span class="keyword">var</span> uid = req.params.uid</span><br><span class="line">  , file = req.params.file;</span><br><span class="line"></span><br><span class="line">req.user.mayViewFilesFrom(uid, <span class="function"><span class="keyword">function</span>(<span class="params">yes</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (yes) &#123;</span><br><span class="line">    res.sendfile(<span class="string">'/uploads/'</span> + uid + <span class="string">'/'</span> + file);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    res.send(<span class="number">403</span>, <span class="string">'Sorry! you cant see that.'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h2 id="res-download(path,_[filename],_[fn])">res.download(path, [filename], [fn])</h2><p>path所需传输附件的路径， 通常情况下浏览器会弹出一个下载文件的窗口。 浏览器弹出框里的文件名和响应头里的Disposition “filename=” 参数是一致的, 你也可以通过传入filename来自由设置。 当在传输的过程中发生一个错误时，可选的回调函数fn会被调用执行。 这个方法使用res.sendfile()传输文件。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">res.download(<span class="string">'/report-12345.pdf'</span>);</span><br><span class="line"></span><br><span class="line">res.download(<span class="string">'/report-12345.pdf'</span>, <span class="string">'report.pdf'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (err) &#123;</span><br><span class="line">    <span class="comment">// 处理错误，请牢记可能只有部分内容被传输，所以</span></span><br><span class="line">    <span class="comment">// 检查一下res.headerSent</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 减少下载的积分值之类逻辑处理</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h2 id="res-links(links)">res.links(links)</h2><p>合并给定的links, 并且设置给响应头里的”Link” 字段.<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">res.links(&#123;</span><br><span class="line">  next: <span class="string">'http://api.example.com/users?page=2'</span>,</span><br><span class="line">  last: <span class="string">'http://api.example.com/users?page=5'</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>转换后:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Link: <span class="xml"><span class="tag">&lt;<span class="title">http:</span>//<span class="attribute">api.example.com</span>/<span class="attribute">users</span>?<span class="attribute">page</span>=<span class="value">2</span>&gt;</span>;</span> rel=<span class="string">"next"</span>, </span><br><span class="line">      <span class="xml"><span class="tag">&lt;<span class="title">http:</span>//<span class="attribute">api.example.com</span>/<span class="attribute">users</span>?<span class="attribute">page</span>=<span class="value">5</span>&gt;</span>;</span> rel=<span class="string">"last"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="res-locals">res.locals</h2><p>在某一次请求范围下的响应体的本地变量，只对此次请求期间的views可见。 另外这个API其实和 app.locals是一样的. 这个对象在放置请求级信息时非常有用，比如放置请求的路径名，验证过的用户，用户设置等等<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">app.use(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>)</span>&#123;</span><br><span class="line">  res.locals.user = req.user;</span><br><span class="line">  res.locals.authenticated = !req.user.anonymous;</span><br><span class="line">  next();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h2 id="res-render(view,_[locals],_callback)">res.render(view, [locals], callback)</h2><p>渲染view, 同时向callback 传入渲染后的字符串。 callback如果不传的话，直接会把渲染后的字符串输出至请求方， 如果不需要再对渲染后的模板作操作，就不用传callback。 当有错误发生时next(err)会被执行. 如果提供了callback参数，可能发生的错误和渲染的字符串都会被当作参数传入, 并且没有默认响应。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">res.render(<span class="string">'index'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, html</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">res.render(<span class="string">'user'</span>, &#123; name: <span class="string">'Tobi'</span> &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err, html</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/12/16/nodejs-express-04/" itemprop="url">
+                Express Request 对象讲解
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-12-16T15:23:16+08:00" content="2015-12-16">
+            2015-12-16
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/web/" itemprop="url" rel="index">
+                  <span itemprop="name">web</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/12/16/nodejs-express-04/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/16/nodejs-express-04/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h1 id="Request_对象实例讲解">Request 对象实例讲解</h1><blockquote>
+<p>request是客户请求的抽象，这个对象是只读的，包含了客户请求的信息。由于API很简单，以下内容基本上是Express官网API的中文翻译，特殊的地方会做解释说明。</p>
+</blockquote>
+<h2 id="req-params">req.params</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  /user/id001</span></span><br><span class="line">router.get(<span class="string">'/user/:id'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> userId = req.params.id; <span class="comment">// id001</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 也可通过req.params[0] 获得id参数。</span></span><br></pre></td></tr></table></figure>
+<h2 id="req-query">req.query</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  /user?id=id001&amp;name=leo</span></span><br><span class="line">router.get(<span class="string">'/user'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> userId = req.query.id; <span class="comment">// id001</span></span><br><span class="line">    <span class="keyword">var</span> name = req.query.name  <span class="comment">// leo</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="req-param(name)">req.param(name)</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这是个方法，和params作用一样。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//  /user/id001</span></span><br><span class="line">router.get(<span class="string">'/user/:id'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// var userId = req.params.id; // id001</span></span><br><span class="line">  	<span class="keyword">var</span> userId = req.param(<span class="string">'id'</span>); <span class="comment">// id001        </span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="req-route_获得路由信息">req.route <code>获得路由信息</code></h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/user/:id?'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(req.route);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>通过 /user/12 输出结果为：（这些信息在特定时，会很有用途。）<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123; </span><br><span class="line">	path: '/user/:id?',</span><br><span class="line">  	keys: [ &#123; name: 'id', optional: true &#125; ],</span><br><span class="line">  	regexp: /^\/user(?:\/([^\/]+?))?\/?$/i,</span><br><span class="line">  	params: [ id: '12' ] </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="req-cookies">req.cookies</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">req.cookies.name <span class="comment">// 访问cookies信息</span></span><br></pre></td></tr></table></figure>
+<h2 id="req-signedCookies">req.signedCookies</h2><p>获得签名cookies信息，当我们在 <code>cookieParser(secret)</code>  插件应用 secret 时，cookie是经过签名的。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 真实cookie值是 user=leo.CP7AWaXDfAKIRfH49dQzKJx7sKzzSoPq7/AcBBRVwlI3</span></span><br><span class="line">req.signedCookies.user <span class="comment">// 可以得到抛弃签名后的cookie值。</span></span><br><span class="line"><span class="comment">// =&gt; "leo"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="req-get(field)_得到请求头部信息，field不区分大小写。（它的别名是_req-header(field)）">req.get(field)  得到请求头部信息，field不区分大小写。（它的别名是  req.header(field)）</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">req.get(<span class="string">'Content-Type'</span>);</span><br><span class="line"><span class="comment">// =&gt; "text/plain"</span></span><br><span class="line"></span><br><span class="line">req.get(<span class="string">'content-type'</span>);</span><br><span class="line"><span class="comment">// =&gt; "text/plain"</span></span><br></pre></td></tr></table></figure>
+<h2 id="req-accepts(types)_检查给定的类型是可以接受的。">req.accepts(types) 检查给定的类型是可以接受的。</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Accept: text/html</span></span><br><span class="line">req.accepts(<span class="string">'html'</span>);</span><br><span class="line"><span class="comment">// =&gt; "html"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Accept: text/*, application/json</span></span><br><span class="line">req.accepts(<span class="string">'html'</span>);</span><br><span class="line"><span class="comment">// =&gt; "html"</span></span><br><span class="line">req.accepts(<span class="string">'text/html'</span>);</span><br><span class="line"><span class="comment">// =&gt; "text/html"</span></span><br><span class="line">req.accepts(<span class="string">'json, text'</span>);</span><br><span class="line"><span class="comment">// =&gt; "json"</span></span><br><span class="line">req.accepts(<span class="string">'application/json'</span>);</span><br><span class="line"><span class="comment">// =&gt; "application/json"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Accept: text/*, application/json</span></span><br><span class="line">req.accepts(<span class="string">'image/png'</span>);</span><br><span class="line">req.accepts(<span class="string">'png'</span>);</span><br><span class="line"><span class="comment">// =&gt; undefined 不允许的类型，将返回undefined</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Accept: text/*;q=.5, application/json</span></span><br><span class="line">req.accepts([<span class="string">'html'</span>, <span class="string">'json'</span>]);</span><br><span class="line">req.accepts(<span class="string">'html, json'</span>);</span><br><span class="line"><span class="comment">// =&gt; "json"</span></span><br></pre></td></tr></table></figure>
+<h2 id="req-acceptsCharset(charset)">req.acceptsCharset(charset)</h2><p>检查给定的字符集是可以接受的。</p>
+<h2 id="req-acceptsLanguage(lang)">req.acceptsLanguage(lang)</h2><p>检查给定语言是可以接受的。</p>
+<h2 id="req-is(type)">req.is(type)</h2><p>检查请求对象的内容类型，内部根据Context-Type判断。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果请求头部信息是   Content-Type: text/html; charset=utf-8</span></span><br><span class="line">req.is(<span class="string">'html'</span>);</span><br><span class="line">req.is(<span class="string">'text/html'</span>);</span><br><span class="line">req.is(<span class="string">'text/*'</span>);</span><br><span class="line"><span class="comment">// =&gt; true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果请求头部信息是 Content-Type is application/json</span></span><br><span class="line">req.is(<span class="string">'json'</span>);</span><br><span class="line">req.is(<span class="string">'application/json'</span>);</span><br><span class="line">req.is(<span class="string">'application/*'</span>);</span><br><span class="line"><span class="comment">// =&gt; true</span></span><br><span class="line">req.is(<span class="string">'html'</span>);</span><br><span class="line"><span class="comment">// =&gt; false</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="req-ip">req.ip</h2><p>客户ip地址</p>
+<h2 id="req-ips">req.ips</h2><p>返回代理ip和客户端ip，[“客户ip”,”代理ip2“,”代理ip1”]</p>
+<h2 id="req-path">req.path</h2><p>返回请求路径。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// /users?sort=desc</span></span><br><span class="line">req.path</span><br><span class="line"><span class="comment">// =&gt; "/users"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="req-host">req.host</h2><p>返回主机名<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Host: "localhost:3000"</span></span><br><span class="line">req.host</span><br><span class="line"><span class="comment">// =&gt; "localhost"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Host: "127.0.0.1:3000"</span></span><br><span class="line">req.host</span><br><span class="line"><span class="comment">// =&gt; "127.0.0.1"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="req-fresh">req.fresh</h2><p>测试请求req是否新鲜，true／false ，如果客户端没有这个资源的缓冲，那么就表示这个请求的新鲜的。 如果  fresh = false，这时我们可调用 res.status(304) ，这样客户端会直接应用缓冲内容，节省服务器开销。</p>
+<h2 id="req-stale">req.stale</h2><p>与req.fresh相反，测试请求req是否是陈旧的，true／false</p>
+<h2 id="req-xhr">req.xhr</h2><p>请求是否是ajax方式，true／false</p>
+<h2 id="req-protocol">req.protocol</h2><p>请求协议，http / https</p>
+<h2 id="req-secure">req.secure</h2><p>是否为安全协议 req.protocol === “https”</p>
+<h2 id="req-subdomains">req.subdomains</h2><p>得到子域名数组。 // Host: “a.book.jsera.net” req.subdomains // =&gt; [“book”, “a”]</p>
+<h2 id="req-originalUrl">req.originalUrl</h2><p>得到完整请求地址 <code>/user/leo/id001</code></p>
+<h2 id="req-url">req.url</h2><p>这里的url是路由本身域内的，看下面例子：<br>访问 /user/leo/id001<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> router = express.Router();</span><br><span class="line">router.get(<span class="string">"/:name/:id"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(req.originalUrl);   <span class="comment">// /user/leo/id001</span></span><br><span class="line">    <span class="built_in">console</span>.log(req.url);    <span class="comment">// /leo/id001</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">"/user"</span>,router);</span><br></pre></td></tr></table></figure></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/12/16/nodejs-express-03/" itemprop="url">
+                路由详解
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-12-16T14:53:16+08:00" content="2015-12-16">
+            2015-12-16
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/web/" itemprop="url" rel="index">
+                  <span itemprop="name">web</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/12/16/nodejs-express-03/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/16/nodejs-express-03/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h2 id="路由处理器执行顺序">路由处理器执行顺序</h2><p>编码的顺序决定了路由处理器执行顺序。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">"/test"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"router A"</span>);</span><br><span class="line">    next();</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">"/test"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"router B"</span>);</span><br><span class="line">    next();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这个顺序编码，浏览器访问/test 时，终端会打印出:</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">router <span class="literal">A</span></span><br><span class="line">router B</span><br></pre></td></tr></table></figure>
+<p>无论调用 <code>app.use</code> 、<code>app.all</code>、<code>app.get</code>、<code>app.post</code> 都是一样的，按编码顺序执行。还需强调一点，这个顺序执行的前提是，一致的路由；这个路由的一致，体现在相同的方法和相同的路径。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/test'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'router A'</span>);</span><br><span class="line">    next();</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/test'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'router B'</span>);</span><br><span class="line">    next();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这样就没有顺序可言，因为顺序的前提必须要是一致的路由。next 这个方法调用之前，不会调用之后的路由处理器。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/test'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'router A'</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/test'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'router B'</span>);</span><br><span class="line">    next();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>这个只会打印出 router A ，因为第一个路由处理器没有调用next() 方法。</p>
+<p>始终我们在浏览器都没看到响应，是因为从来没调用过响应方法，比如  res.send 或 res.render 方法。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/test'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'router A'</span>);</span><br><span class="line">    next()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/test'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'router B'</span>);</span><br><span class="line">    res.send(<span class="string">'router B'</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>这样浏览器会显示出 router B 字符串，我们发现第二个路由处理器没有调用next ，因为调用next() 的目的是执行之后的路由处理器，如果后面没有就无需调用。另外要注意一点，调用了任何响应方法，都表示响应的任务完成。比如下面代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/test'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'router A'</span>);</span><br><span class="line">  	res.send(<span class="string">'router A'</span>)</span><br><span class="line">    next();</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/test'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'router B'</span>);</span><br><span class="line">    res.send(<span class="string">'router B'</span>);</span><br><span class="line">    next();</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/test'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'router C'</span>);</span><br><span class="line">    res.send(<span class="string">'router C'</span>);</span><br><span class="line">    next();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>调用后浏览器只会显示出router A，因为 ‘ 调用了任何响应方法，都表示响应的任务完成。 ‘ ，当然第二个路由响应器还是会执行，只不过所有的响应方法都不再起作用。</p>
+<p>而其他代码还会起作用，终端会打印出：<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">router</span> A</span><br><span class="line"><span class="label">router</span> <span class="keyword">B</span><br><span class="line"></span><span class="label">router</span> C</span><br></pre></td></tr></table></figure></p>
+<h2 id="app-all">app.all</h2><p><code>app.all</code> 表示响应所有http方法。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">app.all(<span class="string">'/test'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'app.all method'</span>);</span><br><span class="line">    next();</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">"/test"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">"app.get method"</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">"/test"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">"app.post method"</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>无论我们通过 get 或 post http方法访问，终端都会打印app.all method。 用 app.use 代替 app.all 效果也一样，但use不支持多路由处理器，比如下面代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">app.all(<span class="string">"/test"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"app.all method"</span>);</span><br><span class="line">    next();</span><br><span class="line">&#125;,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"app 2"</span>);</span><br><span class="line">    next();</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">"/test"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">"app.get method"</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">"/test"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">"app.post method"</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>终端会打印出<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">app.all <span class="keyword">method</span></span><br><span class="line">app <span class="number">2</span></span><br></pre></td></tr></table></figure></p>
+<p>但用use代替all方法，只打印出<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.all <span class="keyword">method</span></span><br></pre></td></tr></table></figure></p>
+<p><code>app.all</code> / <code>app.get</code> / <code>app.post</code> 方法支持多路由处理器链, <code>app.use</code> 方法不支持，但它支持express.Router的实例，下面就来探讨 express.Router 类。</p>
+<h2 id="express-Router">express.Router</h2><blockquote>
+<p>一个express.Router 对象，可以理解为是一个独立的 mini app，它也可以调用use方法加入中间件，但只作用于自身。<br>通过 var router  = express.Router([可选参数]) 创建一个路由器对象。<br>可选参数对象有两个可选值，caseSensitive 区分大小写，例如/Foo 和 /foo ，默认false关闭。strict 严格路由，例如 /foo 和 /foo/ ，默认false关闭。</p>
+</blockquote>
+<p>它是个mini app，所以它的行为方式和app一致，下面是个例子：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> router = express.Router();</span><br><span class="line">router.get(<span class="string">"/abc"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">"abc abc"</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">"/user"</span>,router);</span><br></pre></td></tr></table></figure></p>
+<p>通过 /user/abc 可以访问，通过app.use方法加入到应用程序的路由链上。</p>
+<p>比如我们系统中有一些子系统，user 、book和 forum：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.use(<span class="string">"/user"</span>,<span class="built_in">require</span>(<span class="string">'./user'</span>));</span><br><span class="line">app.use(<span class="string">"/book"</span>,<span class="built_in">require</span>(<span class="string">'./user'</span>));</span><br><span class="line">app.use(<span class="string">"/forum"</span>,<span class="built_in">require</span>(<span class="string">'./user'</span>));</span><br></pre></td></tr></table></figure></p>
+<p>模块化很方便，便于管理和维护。既然它是mini app，它自身的use方法也可以应用其他router。例如：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sub = express.Router();</span><br><span class="line">sub.get(<span class="string">"/sub"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">"sub is me"</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> router = express.Router();</span><br><span class="line">router.use(<span class="string">"/abc"</span>,sub);</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">"/user"</span>,router);</span><br></pre></td></tr></table></figure></p>
+<p>通过 /user/abc/sub 可以访问到，实际开发不会这么写，这里只是举个例子。</p>
+<p>另外， 无论app还是mini app的Router对象，都支持下面的糖衣写法：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 也可以用于 app.route</span></span><br><span class="line">router.route(<span class="string">'/users/:user_id'</span>)</span><br><span class="line">.all(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">.get(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line"> &#125;,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;&#125;)</span><br><span class="line"></span><br><span class="line">.put(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line"> &#125;)</span><br><span class="line">.post(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line">.delete(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h2 id="泛式路由">泛式路由</h2><ul>
+<li><code>/user/id0001</code> 这是明确路由，泛式路由在“web框架开发实战”部分已经介绍过了，这里不做说明。</li>
+<li><code>/user/:id</code> 和  <code>/user/*</code> 都属于泛式路由<br>这个部分我们要探讨express泛式路由的写法。</li>
+<li><code>/user/:id</code> 这个路由通过，user/id 都可访问到。</li>
+<li><code>/user/:id?</code> 这个路由通过，/user 和 user/id 都可访问到。</li>
+<li><code>/user/*</code> 这个路由通过，/user 和 user/id 都可访问到。</li>
+<li><code>/user/*/id?</code>  这个路由通过，/user 和 user/id001 和 user/xxx/id001都可访问到。</li>
+<li><code>/user/*/:id</code>  这个路由通过， user/id001 和 user/xxx/id001都可访问到。</li>
+</ul>
+<p>这两个写法的差异在于，定义了:id 就可通过 req.params.id 得到改参数。<br>通过正则可以写复杂些的路由器。例如：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">router.get(<span class="regexp">/^\/commits\/(\w+)(?:\.\.(\w+))?$/</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> from = req.params[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">var</span> to = req.params[<span class="number">1</span>] || <span class="string">'HEAD'</span>;</span><br><span class="line">  res.send(<span class="string">'commit range '</span> + from + <span class="string">'..'</span> + to);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>通过 /commits/71dbb9c..4c084f9 可以访问到，params[0] 对应的是 71dbb9c ， params[1] 对应的是 4c084f9</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/12/16/nodejs-express-02/" itemprop="url">
+                配置应用程序
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-12-16T14:23:16+08:00" content="2015-12-16">
+            2015-12-16
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/web/" itemprop="url" rel="index">
+                  <span itemprop="name">web</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/12/16/nodejs-express-02/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/16/nodejs-express-02/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h1 id="配置">配置</h1><p>通过 <code>app.set(key,value)</code> 设置，可以配置web应用程序，通过<code>app.get(key)</code> 可以得到值。</p>
+<p>选项如下：</p>
+<ul>
+<li><code>env</code> 运行时环境，默认为 process.env.NODE_ENV 或者 “development”</li>
+<li><code>trust proxy</code> 激活反向代理，默认未激活状态</li>
+<li><code>jsonp callback name</code> 修改默认?callback=的jsonp回调的名字</li>
+<li><code>json replacer JSON replacer</code> 替换时的回调, 默认为null</li>
+<li><code>json spaces JSON</code> 响应的空格数量，开发环境下是2 , 生产环境是0</li>
+<li><code>case sensitive routing</code> 路由的大小写敏感, 默认是关闭状态， “/Foo” 和”/foo” 是一样的</li>
+<li><code>strict routing</code> 路由的严格格式, 默认情况下 “/foo” 和 “/foo/“ 是被同样对待的</li>
+<li><code>view cache</code> 模板缓存，在生产环境中是默认开启的</li>
+<li><code>view engine</code> 模板引擎</li>
+<li><code>views</code> 模板的目录, 默认是”process.cwd() + ./views”</li>
+</ul>
+<p>这些配置项，常用的是 <code>view engine</code> 和 <code>views</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置动态页目录</span></span><br><span class="line">app.set(<span class="string">'views'</span>, path.join(__dirname, <span class="string">'views'</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置动态模版引擎，这里用的是ejs引擎。</span></span><br><span class="line">app.set(<span class="string">'view engine'</span>, <span class="string">'ejs'</span>);</span><br></pre></td></tr></table></figure>
+<h1 id="加载中间件">加载中间件</h1><p>通过 <code>app.user</code> 方法可以加入中间件，扩展web应用程序的功能，自己也可方便的开发中间件。<br>以下是express默认生成的代码<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">app.use(favicon());</span><br><span class="line">app.use(logger(<span class="string">'dev'</span>));</span><br><span class="line">app.use(bodyParser.json());</span><br><span class="line">app.use(bodyParser.urlencoded());</span><br><span class="line">app.use(cookieParser());</span><br><span class="line">app.use(express.static(path.join(__dirname, <span class="string">'public'</span>)));</span><br></pre></td></tr></table></figure></p>
+<p>你可以配置多个静态目录，比如：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">app.use(express.static(path.join(__dirname, <span class="string">'public'</span>)));</span><br><span class="line">app.use(express.static(path.join(__dirname, book)));</span><br></pre></td></tr></table></figure></p>
+<p>会先从public目录找，如果没有会查找book目录。<br>模版引擎的配置说明<br>通过调用 app.engine(‘haml’, engines.haml); 可以让特定引擎，对特定扩展名的动态模版文件进行解析。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> engines = <span class="built_in">require</span>(<span class="string">'consolidate'</span>);</span><br><span class="line">app.engine(<span class="string">'haml'</span>, engines.haml);</span><br><span class="line">app.engine(<span class="string">'html'</span>, engines.hogan);</span><br></pre></td></tr></table></figure></p>
+<p>‘consolidate’  是一个库，可以铺平各个引擎集成到express差异性，因为并不是每个第三方引擎都遵守约定，所以’consolidate’起到了中间翻译的作用。</p>
+<blockquote>
+<p>注意！<br>app.engine 和 app.set(“view engine”,”…”) 到底什么关系呢？可以这么理解，你想改变对不同扩展名的动态模版进行解析，就要用到 app.engine，如下代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> engines = <span class="built_in">require</span>(<span class="string">'consolidate'</span>);</span><br><span class="line">app.set(<span class="string">'view engine'</span>, “html”);</span><br><span class="line">app.engine(<span class="string">'html'</span>, engines.jade);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>这段代码说明，模版引擎采用了html引擎，这个很奇怪，其实是由于 app.engine(‘html’, engines.jade); 这段代码注册了 html 引擎，而实际的解析是采用 jade 解析，就形成了可以对html扩展名文件进行解析，采用的解析方式是 jade。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/12/16/nodejs-express-01/" itemprop="url">
+                编写第一个Express应用
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-12-16T13:53:16+08:00" content="2015-12-16">
+            2015-12-16
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/web/" itemprop="url" rel="index">
+                  <span itemprop="name">web</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/12/16/nodejs-express-01/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/16/nodejs-express-01/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h1 id="编写第一个Express应用">编写第一个Express应用</h1><h2 id="程序目录介绍">程序目录介绍</h2><ul>
+<li><code>app.js</code>  主程序</li>
+<li><code>node_modules</code>   依赖模块包</li>
+<li><code>public</code>   静态网目录</li>
+<li><code>views</code>   动态页目录</li>
+<li><code>bin</code>   启动程序</li>
+<li><code>package.json</code>   npm命令需要的描述信息</li>
+<li><code>routes</code>    路由器处理器目录</li>
+</ul>
+<h2 id="启动">启动</h2><p>运行 <code>npm start</code> 启动程序，为什么能启动呢？你可以打开package.<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"scripts": &#123;</span><br><span class="line">    "start": "node ./bin/www"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其实是运行的 <code>node ./bin/www this</code></p>
+<p>那么我们就知道了，启动程序是 bin/www，下面是对这个程序的注释说明。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> debug = <span class="built_in">require</span>(<span class="string">'debug'</span>)(<span class="string">'myapp'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 加载主程序</span></span><br><span class="line"><span class="keyword">var</span> app = <span class="built_in">require</span>(<span class="string">'../app'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果不指定服务器监听端口号默认就是 3000</span></span><br><span class="line">app.set(<span class="string">'port'</span>, process.env.PORT || <span class="number">3000</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//  启动程序，开始监听客户端请求。</span></span><br><span class="line"><span class="keyword">var</span> server = app.listen(app.get(<span class="string">'port'</span>), <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  debug(<span class="string">'Express server listening on port '</span> + server.address().port);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>那么我们可以通过下面的命令指定一个端口号<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ PORT=<span class="number">8080</span> <span class="built_in">npm</span> start</span><br></pre></td></tr></table></figure></p>
+<p>这时候，浏览器通过 localhost:8080 能访问到页面。</p>
+<h2 id="app-js_主程序">app.js 主程序</h2><p>下面对主程序关键代码进行注释说明。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建应用程序</span></span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置动态页目录</span></span><br><span class="line">app.set(<span class="string">'views'</span>, path.join(__dirname, <span class="string">'views'</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置动态页模版引擎</span></span><br><span class="line">app.set(<span class="string">'view engine'</span>, <span class="string">'ejs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 中间件加载，这里不多说，之后章节会详细介绍</span></span><br><span class="line">app.use(favicon());</span><br><span class="line">app.use(logger(<span class="string">'dev'</span>));</span><br><span class="line">app.use(bodyParser.json());</span><br><span class="line">app.use(bodyParser.urlencoded());</span><br><span class="line">app.use(cookieParser());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 指定静态页目录</span></span><br><span class="line">app.use(express.static(path.join(__dirname, <span class="string">'public'</span>)));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 加载路由处理器</span></span><br><span class="line">app.use(<span class="string">'/'</span>, routes);</span><br><span class="line">app.use(<span class="string">'/users'</span>, users);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果有任何错误都会设置成 404错误</span></span><br><span class="line">app.use(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> err = <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Not Found'</span>);</span><br><span class="line">    err.status = <span class="number">404</span>;</span><br><span class="line">    next(err);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果环境设置成 开发模式，那么会打印出详细的错误信息</span></span><br><span class="line"><span class="keyword">if</span> (app.get(<span class="string">'env'</span>) === <span class="string">'development'</span>) &#123;</span><br><span class="line">    app.use(<span class="function"><span class="keyword">function</span>(<span class="params">err, req, res, next</span>) </span>&#123;</span><br><span class="line">        res.status(err.status || <span class="number">500</span>);</span><br><span class="line">        res.render(<span class="string">'error'</span>, &#123;</span><br><span class="line">            message: err.message,</span><br><span class="line">            error: err</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生产模式下，不会泄漏error</span></span><br><span class="line">app.use(<span class="function"><span class="keyword">function</span>(<span class="params">err, req, res, next</span>) </span>&#123;</span><br><span class="line">    res.status(err.status || <span class="number">500</span>);</span><br><span class="line">    res.render(<span class="string">'error'</span>, &#123;</span><br><span class="line">        message: err.message,</span><br><span class="line">        error: &#123;&#125;  <span class="comment">// 不会泄漏error</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>我们可以在public 目录下创建一个 test.html 文件，内容任意，然后通过 localhost:3000/test.html 即可访问到。</p>
+<h2 id="路由">路由</h2><p><code>routes</code> 目录下是路由处理器。</p>
+<p>下面对  <code>routes/index.js</code>  做注释说明。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个路由器</span></span><br><span class="line"><span class="keyword">var</span> router = express.Router();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 为路由器添加路由处理器，也就是为 `/` 请求路由加入处理器</span></span><br><span class="line"><span class="comment">// 当有人访问时会执行这个函数。</span></span><br><span class="line"><span class="comment">// req 是请求对象，res是响应对象。</span></span><br><span class="line">router.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 调用响应对象的render返回给客户端一个响应结果</span></span><br><span class="line">  <span class="comment">// 这个响应结果是由动态页面 views/index.jade 生成的。</span></span><br><span class="line">  res.render(<span class="string">'index'</span>, &#123; title: <span class="string">'Express'</span> &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = router;</span><br></pre></td></tr></table></figure></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/12/10/web_tec/" itemprop="url">
                 涉及的技术和概念
               </a>
@@ -928,496 +1487,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/11/02/java-web-learning-2/" itemprop="url">
-                Java WEB 开发 （二） - Java 语言基础
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於
-          <time itemprop="dateCreated" datetime="2015-11-02T16:01:16+08:00" content="2015-11-02">
-            2015-11-02
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分類於
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/java/" itemprop="url" rel="index">
-                  <span itemprop="name">java</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/11/02/java-web-learning-2/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/02/java-web-learning-2/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>Java是面向对象语言。这门语言其实相当年轻，于1995年才出现，由Sun公司出品。James Gosling领导了Java的项目小组。该项目的最初只想为家电设计一门容易移植的语言。然而，在获得了Netscape浏览器支持后，Java快速推广，应用广泛。</p>
-<p>Java受到C和C++的强烈影响。Java与C++相近，都是静态类型，但移除了C++中容易出错的一些特征，比如指针和多重继承。Java的垃圾回收可以自动的管理和清理内存。清理内存工作转交给编译器后，程序员的负担大大减小。Java产出效率高，又有良好的运行效率，在PC端、服务器端和移动端都有不俗的表现。Android更是为Java注入新鲜血液。Java又是一门完全的面向对象语言，所以是了解其他面向对象语言的一个好范本。</p>
-</blockquote>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/11/02/java-web-learning-2/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/10/29/java-web-learning-1/" itemprop="url">
-                Java WEB 开发 （一） - WEB 开发总览 - 学习路线，概念介绍等
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於
-          <time itemprop="dateCreated" datetime="2015-10-29T09:27:16+08:00" content="2015-10-29">
-            2015-10-29
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分類於
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/java/" itemprop="url" rel="index">
-                  <span itemprop="name">java</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/10/29/java-web-learning-1/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/29/java-web-learning-1/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h1 id="JAVA_WEB_开发学习路线">JAVA WEB 开发学习路线</h1><h2 id="路线图">路线图</h2><h3 id="一、Java核心">一、Java核心</h3><h4 id="1、初级的有语法基础、面向对象思想。">1、初级的有语法基础、面向对象思想。</h4><blockquote>
-<p>学习任何一门语言语法都是必须的，因为Java的接近自然语言，也是一种相对比较容易学的语言。同时面向对象编程更是其核心思想，要理解其实只要记住一句话就行了，那就是：一切皆是对象。</p>
-</blockquote>
-<h4 id="2、中级的IO流、多线程、反射及注解等。">2、中级的IO流、多线程、反射及注解等。</h4><blockquote>
-<p> IO流程、多线程等是相对比较高级一点的了，通过学习我们会发现这些都很有用而且很有趣。<br>例如我们可以读取一个Excel文件、将一个文件分离，做一个时钟、使用多个线程发送邮件等等很多有意思的事。<br>另外反射及注解更是后面流行框架SSH等的基础，在使用中你便会慢慢感受到它的无穷魅力。</p>
-</blockquote>
-<h4 id="3、高级一点的就是设计模式和框架之类了。">3、高级一点的就是设计模式和框架之类了。</h4><blockquote>
-<p>要学习好一门语言，仅仅会使用还是不够的，我们不仅要深入研究其原理，而且还要找到其一些共性的东西，从而减少反复的劳动，让代码可重用、更可靠且更容易被别人理解。</p>
-</blockquote>
-<h3 id="二、前端Web">二、前端Web</h3><blockquote>
-<p>现在来说Java最流行的应用还是Web开发。那么作为Web开发，对于前台的知识的学习也是必须的，当然并不是一定要按照前端工程师的标准去要求。<br>但是一些基础的知识也是必须要掌握的，毕竟Web应用是前台和后台的一个交互的过程。<br>像HTML、CSS、Javascript等都是基础的知识，另外作为开发人员对目前最流行的Javascript框架Jquery更是必学不可的。</p>
-</blockquote>
-<h3 id="三、数据库">三、数据库</h3><blockquote>
-<p>有人说，所有的应用无非就是数据的输入、处理到输出的过程。期间同时可能还会涉及到数据的存储问题。<br>对于结构化的数据，我们常用的还是像Oracle、Mysql和PostgreSQL之类的关系型数据库，mongodb 这类的非关系型数据库。同时针对数据库编程还是PL/SQL需要学习。<br>使用Java访问数据库的话还有JDBC。<br>那么对于非结构化的数据以及大数据该如何处理呢？其实这里也已经有了非常成熟的解决方案了，那便是Hadoop。就Hadoop而言他并不是一种思想，更多是一个实现了Mapreduce模式的框架。</p>
-</blockquote>
-<h3 id="四、J2EE">四、J2EE</h3><blockquote>
-<p>作为Java开发，CoreJava是核心，而作为JavaWeb开发，我认为Servlet才是核心。<br>Servlet是服务器端的Java应用程序，但是与普通的Java应用程序不同的是，它是由web服务器来加载启动，即我们常说的Servlet，如Tomcat便是servlet容器。<br>另外谈到J2EE开发，这里有一个重要的模型不得不提一下，很多人其实已经想到了，那便是MVC（模型-视图-控制器）模型。在传统的web开发中，往往是JavaBean充当模型、JSP做视图而Servlet作为控制器。</p>
-</blockquote>
-<h3 id="五、框架">五、框架</h3><blockquote>
-<p>说到框架，其实已经提到了著名的MVC模型，SSH（Spring mvc+Spring+Hibernate）就是一个非常好的实现。<br>另外还有工作流开发的JBPM，搜索引擎Lucence及使系统对外提供接口的webservice应用组件等都是应该要掌握的。</p>
-</blockquote>
-<h3 id="六、服务器">六、服务器</h3><blockquote>
-<p>java web服务器 像tomcat、jboss、resin、jetty、weblogic及websphere,<br>常用的反向代理服务器  nginx、apache</p>
-</blockquote>
-<h3 id="七、工具">七、工具</h3><blockquote>
-<p>这里主要介绍几个开发辅助工具。如日志工具Log4j、测试工具Junit、版本管理工具SVN, GIT, 项目管理maven，自动化构建/项目持续集成Jenkins等。</p>
-</blockquote>
-<h3 id="八、开发DEMO项目">八、开发DEMO项目</h3>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/10/29/java-web-learning-1/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/10/28/java-web-learning/" itemprop="url">
-                Java WEB 开发
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於
-          <time itemprop="dateCreated" datetime="2015-10-28T16:51:16+08:00" content="2015-10-28">
-            2015-10-28
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分類於
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/java/" itemprop="url" rel="index">
-                  <span itemprop="name">java</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/10/28/java-web-learning/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/28/java-web-learning/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p>本文针对 对 web 开发有兴趣的同学进行 一些教学</p>
-<h1 id="课程目录">课程目录</h1><ul>
-<li><p>WEB 开发总览 - 学习路线，概念介绍等 （<code>一课时</code>）    </p>
-</li>
-<li><p>Java 语言基础 （<code>一课时</code>）</p>
-</li>
-<li>（SQL）Mysql以及市面上常用数据基础，介绍 Java JDBC 操作MYSQL（<code>一课时</code>）</li>
-<li><p>Java Web基础 - servlet, JSP（<code>一至二课时</code>）</p>
-</li>
-<li><p>Web前端技术基础 HTML, CSS, JavaScript（<code>一课时</code>）    </p>
-</li>
-<li>Web前端开发基础 使用jquery进行前端脚本快速开发（<code>一课时</code>）    </li>
-</ul>
-<ul>
-<li>Java Web - Spring 系列（<code>一至二课时</code>）</li>
-</ul>
-<ul>
-<li>Java Web - Spring MVC 实战 简单的备课系统 前端（<code>一至二课时</code>）</li>
-<li>Java Web - Spring MVC 实战 简单的备课系统 后端（<code>一至二课时</code>）</li>
-</ul>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/10/28/php-word-filter/" itemprop="url">
-                PHP实现敏感词过滤系统
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於
-          <time itemprop="dateCreated" datetime="2015-10-28T16:14:20+08:00" content="2015-10-28">
-            2015-10-28
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分類於
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/php/" itemprop="url" rel="index">
-                  <span itemprop="name">php</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/10/28/php-word-filter/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/28/php-word-filter/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h1 id="安装说明">安装说明</h1><h2 id="1、安装PHP扩展_trie_filter">1、安装PHP扩展 trie_filter</h2><blockquote>
-<p>下面的$LIB_PATH为依赖库安装目录，$INSTALL_PHP_PATH为PHP5安装目录。</p>
-</blockquote>
-<p>安装libdatrie依赖库<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ tar zxvf libdatrie-<span class="number">0.2</span>.<span class="number">4</span>.tar.gz</span><br><span class="line">$ <span class="built_in">cd</span> libdatrie-<span class="number">0.2</span>.<span class="number">4</span></span><br><span class="line">$ make clean</span><br><span class="line">$ ./configure --prefix=<span class="variable">$LIB_PATH</span></span><br><span class="line">$ make</span><br><span class="line">$ make install</span><br></pre></td></tr></table></figure></p>
-<p>安装trie_filter扩展 （<a href="https://github.com/wulijun/php-ext-trie-filter）">https://github.com/wulijun/php-ext-trie-filter）</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="variable">$INSTALL_PHP_PATH</span>/bin/phpize</span><br><span class="line">$ ./configure --with-php-config=<span class="variable">$INSTALL_PHP_PATH</span>/bin/php-config --with-trie_filter=<span class="variable">$LIB_PATH</span></span><br><span class="line">$ make</span><br><span class="line">$ make install</span><br></pre></td></tr></table></figure></p>
-<p>然后修改php.ini，增加一行：extension=trie_filter.so，然后重启PHP。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/10/28/php-word-filter/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/10/27/android-app-1/" itemprop="url">
-                动手开发一个安卓APP - 第三节 ：结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端 (一)
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於
-          <time itemprop="dateCreated" datetime="2015-10-27T11:53:16+08:00" content="2015-10-27">
-            2015-10-27
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分類於
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/android/" itemprop="url" rel="index">
-                  <span itemprop="name">android</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/10/27/android-app-1/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/27/android-app-1/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h1 id="一、简介">一、简介</h1><p>实现一款具备cool属性的产品是众多独立开发者都渴望的。<br>然而，很多独立开发者之所以迟迟无法下手，并非热情不够，而是对于整个开发流程的未知与畏惧。而本文就是介绍本人耗时一周左右完成的一款Android产品的开发流程,从idea，到产品原型及设计，再到code架构与编写。<br>希望读者看完后能对独立开发有不同的认识，然后挥舞起手中的键盘，开发出很cool的个人产品。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/10/27/android-app-1/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1456,7 +1525,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">35</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -1470,7 +1539,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">39</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
