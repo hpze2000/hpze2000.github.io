@@ -192,6 +192,1082 @@
           
           
             
+              <a class="post-title-link" href="/2015/12/16/nodejs-express-03/" itemprop="url">
+                路由详解
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-12-16T14:53:16+08:00" content="2015-12-16">
+            2015-12-16
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/web/" itemprop="url" rel="index">
+                  <span itemprop="name">web</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/12/16/nodejs-express-03/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/16/nodejs-express-03/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h2 id="路由处理器执行顺序">路由处理器执行顺序</h2><p>编码的顺序决定了路由处理器执行顺序。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">"/test"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"router A"</span>);</span><br><span class="line">    next();</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">"/test"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"router B"</span>);</span><br><span class="line">    next();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这个顺序编码，浏览器访问/test 时，终端会打印出:</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">router <span class="literal">A</span></span><br><span class="line">router B</span><br></pre></td></tr></table></figure>
+<p>无论调用 <code>app.use</code> 、<code>app.all</code>、<code>app.get</code>、<code>app.post</code> 都是一样的，按编码顺序执行。还需强调一点，这个顺序执行的前提是，一致的路由；这个路由的一致，体现在相同的方法和相同的路径。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/test'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'router A'</span>);</span><br><span class="line">    next();</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/test'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'router B'</span>);</span><br><span class="line">    next();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这样就没有顺序可言，因为顺序的前提必须要是一致的路由。next 这个方法调用之前，不会调用之后的路由处理器。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/test'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'router A'</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/test'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'router B'</span>);</span><br><span class="line">    next();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>这个只会打印出 router A ，因为第一个路由处理器没有调用next() 方法。</p>
+<p>始终我们在浏览器都没看到响应，是因为从来没调用过响应方法，比如  res.send 或 res.render 方法。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/test'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'router A'</span>);</span><br><span class="line">    next()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/test'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'router B'</span>);</span><br><span class="line">    res.send(<span class="string">'router B'</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>这样浏览器会显示出 router B 字符串，我们发现第二个路由处理器没有调用next ，因为调用next() 的目的是执行之后的路由处理器，如果后面没有就无需调用。另外要注意一点，调用了任何响应方法，都表示响应的任务完成。比如下面代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/test'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'router A'</span>);</span><br><span class="line">  	res.send(<span class="string">'router A'</span>)</span><br><span class="line">    next();</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/test'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'router B'</span>);</span><br><span class="line">    res.send(<span class="string">'router B'</span>);</span><br><span class="line">    next();</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/test'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'router C'</span>);</span><br><span class="line">    res.send(<span class="string">'router C'</span>);</span><br><span class="line">    next();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>调用后浏览器只会显示出router A，因为 ‘ 调用了任何响应方法，都表示响应的任务完成。 ‘ ，当然第二个路由响应器还是会执行，只不过所有的响应方法都不再起作用。</p>
+<p>而其他代码还会起作用，终端会打印出：<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">router</span> A</span><br><span class="line"><span class="label">router</span> <span class="keyword">B</span><br><span class="line"></span><span class="label">router</span> C</span><br></pre></td></tr></table></figure></p>
+<h2 id="app-all">app.all</h2><p><code>app.all</code> 表示响应所有http方法。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">app.all(<span class="string">'/test'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'app.all method'</span>);</span><br><span class="line">    next();</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">"/test"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">"app.get method"</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">"/test"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">"app.post method"</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>无论我们通过 get 或 post http方法访问，终端都会打印app.all method。 用 app.use 代替 app.all 效果也一样，但use不支持多路由处理器，比如下面代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">app.all(<span class="string">"/test"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"app.all method"</span>);</span><br><span class="line">    next();</span><br><span class="line">&#125;,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"app 2"</span>);</span><br><span class="line">    next();</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">"/test"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">"app.get method"</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">"/test"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">"app.post method"</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>终端会打印出<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">app.all <span class="keyword">method</span></span><br><span class="line">app <span class="number">2</span></span><br></pre></td></tr></table></figure></p>
+<p>但用use代替all方法，只打印出<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.all <span class="keyword">method</span></span><br></pre></td></tr></table></figure></p>
+<p><code>app.all</code> / <code>app.get</code> / <code>app.post</code> 方法支持多路由处理器链, <code>app.use</code> 方法不支持，但它支持express.Router的实例，下面就来探讨 express.Router 类。</p>
+<h2 id="express-Router">express.Router</h2><blockquote>
+<p>一个express.Router 对象，可以理解为是一个独立的 mini app，它也可以调用use方法加入中间件，但只作用于自身。<br>通过 var router  = express.Router([可选参数]) 创建一个路由器对象。<br>可选参数对象有两个可选值，caseSensitive 区分大小写，例如/Foo 和 /foo ，默认false关闭。strict 严格路由，例如 /foo 和 /foo/ ，默认false关闭。</p>
+</blockquote>
+<p>它是个mini app，所以它的行为方式和app一致，下面是个例子：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> router = express.Router();</span><br><span class="line">router.get(<span class="string">"/abc"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">"abc abc"</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">"/user"</span>,router);</span><br></pre></td></tr></table></figure></p>
+<p>通过 /user/abc 可以访问，通过app.use方法加入到应用程序的路由链上。</p>
+<p>比如我们系统中有一些子系统，user 、book和 forum：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.use(<span class="string">"/user"</span>,<span class="built_in">require</span>(<span class="string">'./user'</span>));</span><br><span class="line">app.use(<span class="string">"/book"</span>,<span class="built_in">require</span>(<span class="string">'./user'</span>));</span><br><span class="line">app.use(<span class="string">"/forum"</span>,<span class="built_in">require</span>(<span class="string">'./user'</span>));</span><br></pre></td></tr></table></figure></p>
+<p>模块化很方便，便于管理和维护。既然它是mini app，它自身的use方法也可以应用其他router。例如：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sub = express.Router();</span><br><span class="line">sub.get(<span class="string">"/sub"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">"sub is me"</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> router = express.Router();</span><br><span class="line">router.use(<span class="string">"/abc"</span>,sub);</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">"/user"</span>,router);</span><br></pre></td></tr></table></figure></p>
+<p>通过 /user/abc/sub 可以访问到，实际开发不会这么写，这里只是举个例子。</p>
+<p>另外， 无论app还是mini app的Router对象，都支持下面的糖衣写法：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 也可以用于 app.route</span></span><br><span class="line">router.route(<span class="string">'/users/:user_id'</span>)</span><br><span class="line">.all(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">.get(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line"> &#125;,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;&#125;)</span><br><span class="line"></span><br><span class="line">.put(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line"> &#125;)</span><br><span class="line">.post(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line">.delete(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h2 id="泛式路由">泛式路由</h2><ul>
+<li><code>/user/id0001</code> 这是明确路由，泛式路由在“web框架开发实战”部分已经介绍过了，这里不做说明。</li>
+<li><code>/user/:id</code> 和  <code>/user/*</code> 都属于泛式路由<br>这个部分我们要探讨express泛式路由的写法。</li>
+<li><code>/user/:id</code> 这个路由通过，user/id 都可访问到。</li>
+<li><code>/user/:id?</code> 这个路由通过，/user 和 user/id 都可访问到。</li>
+<li><code>/user/*</code> 这个路由通过，/user 和 user/id 都可访问到。</li>
+<li><code>/user/*/id?</code>  这个路由通过，/user 和 user/id001 和 user/xxx/id001都可访问到。</li>
+<li><code>/user/*/:id</code>  这个路由通过， user/id001 和 user/xxx/id001都可访问到。</li>
+</ul>
+<p>这两个写法的差异在于，定义了:id 就可通过 req.params.id 得到改参数。<br>通过正则可以写复杂些的路由器。例如：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">router.get(<span class="regexp">/^\/commits\/(\w+)(?:\.\.(\w+))?$/</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> from = req.params[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">var</span> to = req.params[<span class="number">1</span>] || <span class="string">'HEAD'</span>;</span><br><span class="line">  res.send(<span class="string">'commit range '</span> + from + <span class="string">'..'</span> + to);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>通过 /commits/71dbb9c..4c084f9 可以访问到，params[0] 对应的是 71dbb9c ， params[1] 对应的是 4c084f9</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/12/16/nodejs-express-02/" itemprop="url">
+                配置应用程序
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-12-16T14:23:16+08:00" content="2015-12-16">
+            2015-12-16
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/web/" itemprop="url" rel="index">
+                  <span itemprop="name">web</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/12/16/nodejs-express-02/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/16/nodejs-express-02/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h1 id="配置">配置</h1><p>通过 <code>app.set(key,value)</code> 设置，可以配置web应用程序，通过<code>app.get(key)</code> 可以得到值。</p>
+<p>选项如下：</p>
+<ul>
+<li><code>env</code> 运行时环境，默认为 process.env.NODE_ENV 或者 “development”</li>
+<li><code>trust proxy</code> 激活反向代理，默认未激活状态</li>
+<li><code>jsonp callback name</code> 修改默认?callback=的jsonp回调的名字</li>
+<li><code>json replacer JSON replacer</code> 替换时的回调, 默认为null</li>
+<li><code>json spaces JSON</code> 响应的空格数量，开发环境下是2 , 生产环境是0</li>
+<li><code>case sensitive routing</code> 路由的大小写敏感, 默认是关闭状态， “/Foo” 和”/foo” 是一样的</li>
+<li><code>strict routing</code> 路由的严格格式, 默认情况下 “/foo” 和 “/foo/“ 是被同样对待的</li>
+<li><code>view cache</code> 模板缓存，在生产环境中是默认开启的</li>
+<li><code>view engine</code> 模板引擎</li>
+<li><code>views</code> 模板的目录, 默认是”process.cwd() + ./views”</li>
+</ul>
+<p>这些配置项，常用的是 <code>view engine</code> 和 <code>views</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置动态页目录</span></span><br><span class="line">app.set(<span class="string">'views'</span>, path.join(__dirname, <span class="string">'views'</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置动态模版引擎，这里用的是ejs引擎。</span></span><br><span class="line">app.set(<span class="string">'view engine'</span>, <span class="string">'ejs'</span>);</span><br></pre></td></tr></table></figure>
+<h1 id="加载中间件">加载中间件</h1><p>通过 <code>app.user</code> 方法可以加入中间件，扩展web应用程序的功能，自己也可方便的开发中间件。<br>以下是express默认生成的代码<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">app.use(favicon());</span><br><span class="line">app.use(logger(<span class="string">'dev'</span>));</span><br><span class="line">app.use(bodyParser.json());</span><br><span class="line">app.use(bodyParser.urlencoded());</span><br><span class="line">app.use(cookieParser());</span><br><span class="line">app.use(express.static(path.join(__dirname, <span class="string">'public'</span>)));</span><br></pre></td></tr></table></figure></p>
+<p>你可以配置多个静态目录，比如：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">app.use(express.static(path.join(__dirname, <span class="string">'public'</span>)));</span><br><span class="line">app.use(express.static(path.join(__dirname, book)));</span><br></pre></td></tr></table></figure></p>
+<p>会先从public目录找，如果没有会查找book目录。<br>模版引擎的配置说明<br>通过调用 app.engine(‘haml’, engines.haml); 可以让特定引擎，对特定扩展名的动态模版文件进行解析。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> engines = <span class="built_in">require</span>(<span class="string">'consolidate'</span>);</span><br><span class="line">app.engine(<span class="string">'haml'</span>, engines.haml);</span><br><span class="line">app.engine(<span class="string">'html'</span>, engines.hogan);</span><br></pre></td></tr></table></figure></p>
+<p>‘consolidate’  是一个库，可以铺平各个引擎集成到express差异性，因为并不是每个第三方引擎都遵守约定，所以’consolidate’起到了中间翻译的作用。</p>
+<blockquote>
+<p>注意！<br>app.engine 和 app.set(“view engine”,”…”) 到底什么关系呢？可以这么理解，你想改变对不同扩展名的动态模版进行解析，就要用到 app.engine，如下代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> engines = <span class="built_in">require</span>(<span class="string">'consolidate'</span>);</span><br><span class="line">app.set(<span class="string">'view engine'</span>, “html”);</span><br><span class="line">app.engine(<span class="string">'html'</span>, engines.jade);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>这段代码说明，模版引擎采用了html引擎，这个很奇怪，其实是由于 app.engine(‘html’, engines.jade); 这段代码注册了 html 引擎，而实际的解析是采用 jade 解析，就形成了可以对html扩展名文件进行解析，采用的解析方式是 jade。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/12/16/nodejs-express-01/" itemprop="url">
+                编写第一个Express应用
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-12-16T13:53:16+08:00" content="2015-12-16">
+            2015-12-16
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/web/" itemprop="url" rel="index">
+                  <span itemprop="name">web</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/12/16/nodejs-express-01/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/16/nodejs-express-01/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h1 id="编写第一个Express应用">编写第一个Express应用</h1><h2 id="程序目录介绍">程序目录介绍</h2><ul>
+<li><code>app.js</code>  主程序</li>
+<li><code>node_modules</code>   依赖模块包</li>
+<li><code>public</code>   静态网目录</li>
+<li><code>views</code>   动态页目录</li>
+<li><code>bin</code>   启动程序</li>
+<li><code>package.json</code>   npm命令需要的描述信息</li>
+<li><code>routes</code>    路由器处理器目录</li>
+</ul>
+<h2 id="启动">启动</h2><p>运行 <code>npm start</code> 启动程序，为什么能启动呢？你可以打开package.<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"scripts": &#123;</span><br><span class="line">    "start": "node ./bin/www"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其实是运行的 <code>node ./bin/www this</code></p>
+<p>那么我们就知道了，启动程序是 bin/www，下面是对这个程序的注释说明。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> debug = <span class="built_in">require</span>(<span class="string">'debug'</span>)(<span class="string">'myapp'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 加载主程序</span></span><br><span class="line"><span class="keyword">var</span> app = <span class="built_in">require</span>(<span class="string">'../app'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果不指定服务器监听端口号默认就是 3000</span></span><br><span class="line">app.set(<span class="string">'port'</span>, process.env.PORT || <span class="number">3000</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//  启动程序，开始监听客户端请求。</span></span><br><span class="line"><span class="keyword">var</span> server = app.listen(app.get(<span class="string">'port'</span>), <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  debug(<span class="string">'Express server listening on port '</span> + server.address().port);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>那么我们可以通过下面的命令指定一个端口号<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ PORT=<span class="number">8080</span> <span class="built_in">npm</span> start</span><br></pre></td></tr></table></figure></p>
+<p>这时候，浏览器通过 localhost:8080 能访问到页面。</p>
+<h2 id="app-js_主程序">app.js 主程序</h2><p>下面对主程序关键代码进行注释说明。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建应用程序</span></span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置动态页目录</span></span><br><span class="line">app.set(<span class="string">'views'</span>, path.join(__dirname, <span class="string">'views'</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置动态页模版引擎</span></span><br><span class="line">app.set(<span class="string">'view engine'</span>, <span class="string">'ejs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 中间件加载，这里不多说，之后章节会详细介绍</span></span><br><span class="line">app.use(favicon());</span><br><span class="line">app.use(logger(<span class="string">'dev'</span>));</span><br><span class="line">app.use(bodyParser.json());</span><br><span class="line">app.use(bodyParser.urlencoded());</span><br><span class="line">app.use(cookieParser());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 指定静态页目录</span></span><br><span class="line">app.use(express.static(path.join(__dirname, <span class="string">'public'</span>)));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 加载路由处理器</span></span><br><span class="line">app.use(<span class="string">'/'</span>, routes);</span><br><span class="line">app.use(<span class="string">'/users'</span>, users);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果有任何错误都会设置成 404错误</span></span><br><span class="line">app.use(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> err = <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Not Found'</span>);</span><br><span class="line">    err.status = <span class="number">404</span>;</span><br><span class="line">    next(err);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果环境设置成 开发模式，那么会打印出详细的错误信息</span></span><br><span class="line"><span class="keyword">if</span> (app.get(<span class="string">'env'</span>) === <span class="string">'development'</span>) &#123;</span><br><span class="line">    app.use(<span class="function"><span class="keyword">function</span>(<span class="params">err, req, res, next</span>) </span>&#123;</span><br><span class="line">        res.status(err.status || <span class="number">500</span>);</span><br><span class="line">        res.render(<span class="string">'error'</span>, &#123;</span><br><span class="line">            message: err.message,</span><br><span class="line">            error: err</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生产模式下，不会泄漏error</span></span><br><span class="line">app.use(<span class="function"><span class="keyword">function</span>(<span class="params">err, req, res, next</span>) </span>&#123;</span><br><span class="line">    res.status(err.status || <span class="number">500</span>);</span><br><span class="line">    res.render(<span class="string">'error'</span>, &#123;</span><br><span class="line">        message: err.message,</span><br><span class="line">        error: &#123;&#125;  <span class="comment">// 不会泄漏error</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>我们可以在public 目录下创建一个 test.html 文件，内容任意，然后通过 localhost:3000/test.html 即可访问到。</p>
+<h2 id="路由">路由</h2><p><code>routes</code> 目录下是路由处理器。</p>
+<p>下面对  <code>routes/index.js</code>  做注释说明。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个路由器</span></span><br><span class="line"><span class="keyword">var</span> router = express.Router();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 为路由器添加路由处理器，也就是为 `/` 请求路由加入处理器</span></span><br><span class="line"><span class="comment">// 当有人访问时会执行这个函数。</span></span><br><span class="line"><span class="comment">// req 是请求对象，res是响应对象。</span></span><br><span class="line">router.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 调用响应对象的render返回给客户端一个响应结果</span></span><br><span class="line">  <span class="comment">// 这个响应结果是由动态页面 views/index.jade 生成的。</span></span><br><span class="line">  res.render(<span class="string">'index'</span>, &#123; title: <span class="string">'Express'</span> &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = router;</span><br></pre></td></tr></table></figure></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/12/10/web_tec/" itemprop="url">
+                涉及的技术和概念
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-12-10T10:53:16+08:00" content="2015-12-10">
+            2015-12-10
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/web/" itemprop="url" rel="index">
+                  <span itemprop="name">web</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/12/10/web_tec/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/10/web_tec/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h1 id="后端">后端</h1><h2 id="nodejs">nodejs</h2><h3 id="简介（只捡了我觉得重要的）">简介（只捡了我觉得重要的）</h3><blockquote>
+<p>Node.js是让Javascript脱离浏览器运行在服务器的一个平台，不是语言；<br>Node.js采用的Javascript引擎是来自Google Chrome的V8；运行在浏览器外不用考虑头疼的Javascript兼容性问题<br>采用单线程、异步IO与事件驱动的设计来实现高并发（异步事件也在一定程度上增加了开发和调试的难度）；<br>Node.js内建一个HTTP服务器，所以对于网站开发来说是一个好消息；</p>
+</blockquote>
+<h3 id="安装Node-Js">安装Node.Js</h3><p>操作系统环境：WiN 7 64位<br>在Windows环境下安装相对简单<br><a href="http://nodejs.org/download/">http://nodejs.org/download/</a><br>链接中下载对应操作系统安装文件（安装最新版本就行）<br>按照提示，一路下一步直到安装成功后，在默认安装路径下可以看到（C:\Program Files\nodejs），默认路径在安装的时候可以修改。<br>安装成功后，在“命令提示符中”输入：node -v 查看安装版本,输出版本即安装成功</p>
+<p><img src="/uploads/o_1.png" alt="nodejs win" title="nodejs win"></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/12/10/web_tec/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/12/10/web_methodology/" itemprop="url">
+                前端入门方法论
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-12-10T09:53:16+08:00" content="2015-12-10">
+            2015-12-10
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/web/" itemprop="url" rel="index">
+                  <span itemprop="name">web</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/12/10/web_methodology/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/10/web_methodology/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h2 id="必备基础技能">必备基础技能</h2><p><a href="https://github.com/JacksonTian/fks" target="_blank" rel="external">前端技能汇总</a>这个项目详细记录<br>了前端工程师牵涉到的各方面知识。在具备基本技能之后可以在里面找到学习<br>的方向，完善技能和知识面。</p>
+<p><a href="https://github.com/dypsilon/frontend-dev-bookmarks" target="_blank" rel="external">frontend-dev-bookmarks</a>是老外总结的前端开发资源。覆盖面非常广。包括各种知识点、工具、技术，非常全面。</p>
+<p>以下是个人觉得入门阶段应该熟练掌握的基础技能：</p>
+<ul>
+<li><a href="http://www.w3.org/TR/html401/cover.html#minitoc" target="_blank" rel="external">HTML4</a>，<a href="http://www.w3.org/TR/html5/#contents" target="_blank" rel="external">HTML5</a>语法、标签、语义</li>
+<li><a href="http://www.w3.org/TR/CSS2/#minitoc" target="_blank" rel="external">CSS2.1</a>，<a href="http://www.w3.org/TR/2001/WD-css3-roadmap-20010523/#table" target="_blank" rel="external">CSS3</a>规范，与HTML结合实现各种布局、效果</li>
+<li><a href="http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf" target="_blank" rel="external">Ecma-262</a>定义的javascript的语言核心，原生<a href="https://developer.mozilla.org/en-US/docs/Web/API" target="_blank" rel="external">客户端javascript</a>，<a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model" target="_blank" rel="external">DOM操作</a>，<a href="https://developer.mozilla.org/en/docs/web/Guide/HTML/HTML5" target="_blank" rel="external">HTML5新增功能</a></li>
+<li>一个成熟的客户端javascript库，推荐<a href="http://jquery.com/" target="_blank" rel="external">jquery</a></li>
+<li>一门服务器端语言：如果有服务器端开发经验，使用已经会的语言即可，如果没有服务器端开发经验，熟悉Java可以选择Servlet，不熟悉的可以选PHP，能实现简单登陆注册功能就足够支持前端开发了，后续可能需要继续学习，最基本要求是实现简单的功能模拟，</li>
+<li><a href="http://www.w3.org/Protocols/rfc2616/rfc2616.html" target="_blank" rel="external">HTTP</a></li>
+</ul>
+<p>在掌握以上基础技能之后，工作中遇到需要的技术也能快速学习。</p>
+<h2 id="基本开发工具">基本开发工具</h2><p>恰当的工具能有效提高学习效率，将重点放在知识本身，在出现问题时能快速定位并<br>解决问题，以下是个人觉得必备的前端开发工具：</p>
+<ul>
+<li><strong>文本编辑器</strong>：推荐<a href="http://www.sublimetext.com/" target="_blank" rel="external">Sublime Text</a>，支持各种插件、主题、设置，使用方便</li>
+<li><strong>浏览器</strong>：推荐<a href="http://www.google.cn/chrome/?hl=zh-CN&amp;standalone=1" target="_blank" rel="external">Google Chrome</a>，更新快，对前端各种标准提供了非常好的支持</li>
+<li><strong>调试工具</strong>：推荐Chrome自带的<a href="https://developer.chrome.com/devtools" target="_blank" rel="external">Chrome develop tools</a>，可以轻松查看DOM结构、样式，通过控制台输出调试信息，调试javascript，查看网络等</li>
+<li><strong>辅助工具</strong>：PhotoShop编辑图片、取色，fireworks量尺寸，AlloyDesigner对比尺寸，以及前面的到的Chrome develop tools，</li>
+</ul>
+<h2 id="学习方法和学习目标">学习方法和学习目标</h2><p>方法：</p>
+<ol>
+<li>入门阶段反复阅读<strong>经典书籍的中文版</strong>，书籍中的每一个例子都动手实现并在浏览器中查看效果</li>
+<li>在具备一定基础之后可以上网搜各种教程、demo，了解各种功能的实际用法和常见功能的实现方法</li>
+<li>阅读HTML，CSS，Javascript标准全面完善知识点</li>
+<li>阅读前端牛人的博客、文章提升对知识的理解</li>
+<li>善用搜索引擎</li>
+</ol>
+<p>目标：</p>
+<ol>
+<li>熟记前面知识点部分的重要概念，结合学习经历得到自己的理解</li>
+<li>熟悉常见功能的实现方法，如常见CSS布局，Tab控件等。</li>
+</ol>
+<h2 id="入门之路">入门之路</h2><p>以下是入门阶段不错的书籍和资料</p>
+<ol>
+<li>HTML先看[《HTML &amp; CSS: Design and Build Websites》][]1-9章，然后[《HTML5: The Missing Manual》][]1-4章。</li>
+<li>CSS先看[《CSS: The Missing Manual》][]，然后[《CSS权威指南》][]</li>
+<li>javascript先看[《javascript高级程序设计》][]，然后[《javascript权威指南》][]</li>
+<li>HTTP看[HTTP权威指南][]</li>
+<li>在整个学习过程中HTML CSS JavaScript会有很多地方需要互相结合，实际工作中也是这样，一个简单的功能模块都需要三者结合才能实现。</li>
+<li>动手是学习的重要组成部分，书籍重点讲解知识点，例子可能不是很充足，这就需要利用搜索引擎寻找一些简单教程，照着教程实现功能。以下是一些比较好的教程网址<ul>
+<li><a href="http://code.tutsplus.com" target="_blank" rel="external">http://code.tutsplus.com</a>有各种各样的教程</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web" target="_blank" rel="external">MDN</a>也有很多教程，更重要的是里面有详细的文档，需要查找某个功能时在Google搜索：<code>xxx site:https://developer.mozilla.org</code></li>
+<li><a href="http://www.html5rocks.com/zh/" target="_blank" rel="external">http://www.html5rocks.com/zh/</a>也有很多优质教程</li>
+<li><a href="http://www.sitepoint.com/" target="_blank" rel="external">http://www.sitepoint.com/</a></li>
+<li><a href="http://alistapart.com/" target="_blank" rel="external">http://alistapart.com/</a></li>
+</ul>
+</li>
+<li>原生javascript是需要重点掌握的技能，在掌握原生javascript的基础上推荐熟练掌握jQuery，在实际工作中用处很大，这方面的书籍有[《Learning jQuery》][]或者去<a href="http://learn.jquery.com/" target="_blank" rel="external">jQuery官网</a></li>
+<li>建一个<a href="https://github.com/" target="_blank" rel="external">https://github.com/</a>账号，保存平时学习中的各种代码和项目。</li>
+<li>有了一定基础之后可以搭建一个个人博客，记录学习过程中遇到的问题和解决方法，方便自己查阅也为其他人提供了帮助。也可以去<a href="http://www.cnblogs.com/" target="_blank" rel="external">http://www.cnblogs.com/</a>或者<a href="http://www.csdn.net/" target="_blank" rel="external">http://www.csdn.net/</a>这样的网站注册账号，方便实用</li>
+<li>经常实用Google搜索英文资料应该经常找到来自<a href="http://stackoverflow.com/" target="_blank" rel="external">http://stackoverflow.com/</a>的高质量答案，与到问题可以直接在这里搜索，如果有精力，注册一个账号为别人解答问题也能极大提高个人能力。</li>
+<li>经典书籍熟读之后，可以打开前面必备基础技能部分的链接。认真读对应标准，全面掌握知识</li>
+</ol>
+<p><a href="http://www.amazon.cn/gp/product/B00BMK4GKW/ref=s9_simh_gw_p14_d0_i2?pf_rd_m=A1AJ19PSB66TGU&amp;pf_rd_s=center-2&amp;pf_rd_r=1AH2NF64STS19GY8GR54&amp;pf_rd_t=101&amp;pf_rd_p=108773272&amp;pf_rd_i=899254051" target="_blank" rel="external">《HTML &amp; CSS: Design and Build Websites》</a><br><a href="http://www.amazon.cn/HTML5%E7%A7%98%E7%B1%8D-Matthew-MacDonald/dp/B009DFCZAQ/ref=sr_1_1?ie=UTF8&amp;qid=1414740812&amp;sr=8-1&amp;keywords=html5+the+missing+manual" target="_blank" rel="external">《HTML5: The Missing Manual》</a><br><a href="http://www.amazon.cn/CSS-The-Missing-Manual-Mcfarland-David-Sawyer/dp/0596802447/ref=sr_1_1?ie=UTF8&amp;qid=1414742710&amp;sr=8-1&amp;keywords=css+the+missing+manual+2" target="_blank" rel="external">《CSS: The Missing Manual》</a><br><a href="http://www.amazon.cn/CSS%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97-%E8%BF%88%E8%80%B6/dp/B0011F5SIC/ref=sr_1_1?ie=UTF8&amp;qid=1414744248&amp;sr=8-1&amp;keywords=css+%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97" target="_blank" rel="external">《CSS权威指南》</a><br><a href="http://www.amazon.cn/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1-%E6%B3%BD%E5%8D%A1%E6%96%AF/dp/B007OQQVMY/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1414744358&amp;sr=1-1&amp;keywords=javascript+%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1" target="_blank" rel="external">《javascript高级程序设计》</a><br><a href="http://www.amazon.cn/O-Reilly%E7%B2%BE%E5%93%81%E5%9B%BE%E4%B9%A6%E7%B3%BB%E5%88%97-JavaScript%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97-%E5%BC%97%E5%85%B0%E7%BA%B3%E6%A0%B9/dp/B007VISQ1Y/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1414744401&amp;sr=1-1&amp;keywords=javascript+%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97" target="_blank" rel="external">《javascript权威指南》</a><br><a href="http://www.amazon.cn/HTTP%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97-%E5%90%89%E5%B0%94%E5%88%A9/dp/B008XFDQ14/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1414744440&amp;sr=1-1&amp;keywords=HTTP+%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97" target="_blank" rel="external">HTTP权威指南</a><br><a href="https://github.com/darcyclarke/Front-end-Developer-Interview-Questions/tree/master/Translations/Chinese" target="_blank" rel="external">前端面试题</a><br><a href="http://www.amazon.com/Learning-jQuery-Fourth-Jonathan-Chaffer/dp/178216314X/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1410099243&amp;sr=1-1&amp;keywords=learning+jquery" target="_blank" rel="external">《Learning jQuery》</a></p>
+<h2 id="继续提高">继续提高</h2><p>有了前面的基础之后，前端基本算是入门了，这时候可能每个人心中都有了一些学习方向，如果还是没有。<br>可以参考前面必备技能部分提到的那两个项目，从里面选一些进行发展学习。以下是一些不错的方面：</p>
+<ul>
+<li><a href="http://gruntjs.com/" target="_blank" rel="external">Grunt</a>：前端自动化工具，提高工作效率</li>
+<li><a href="http://lesscss.org/" target="_blank" rel="external">less css</a>：优秀的CSS预处理器</li>
+<li><a href="http://getbootstrap.com/" target="_blank" rel="external">bootstrap</a>：优秀的CSS框架，对没有设计师的团队很不错，与less结合使用效果完美</li>
+<li><a href="http://requirejs.org/" target="_blank" rel="external">requirejs</a>：AMD规范的模块加载器，前端模块化趋势的必备工具</li>
+<li><a href="http://nodejs.org/" target="_blank" rel="external">Node.js</a>：JavaScript也可以做后台，前端工程师地位更上一步</li>
+<li><a href="https://angularjs.org/" target="_blank" rel="external">AngularJS</a>：做Single Page Application的好工具</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/Guide/Mobile" target="_blank" rel="external">移动端web开发</a>：智能手机的普及让移动端的流量正在逐步赶超PC端</li>
+<li><a href="https://developer.chrome.com/devtools/docs/javascript-memory-profiling?hl=figoogle" target="_blank" rel="external">Javascript内存管理</a>：SPA长期运行需要注意内存泄露的问题</li>
+<li><a href="http://www.amazon.com/Performance-JavaScript-Faster-Application-Interfaces/dp/059680279X/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=undefined&amp;sr=1-1&amp;keywords=high+performance+javascript" target="_blank" rel="external">High Performance JavaScript(Build Faster Web Application Interfaces)</a></li>
+<li><a href="https://developer.yahoo.com/performance/rules.html" target="_blank" rel="external">Best Practices for Speeding Up Your Web Site</a>：重要技能</li>
+</ul>
+<h2 id="工具">工具</h2><ul>
+<li>chrome dev tools：前端开发调试利器，着重注意几个功能：<ul>
+<li>console（废话）</li>
+<li>elements:元素样式调整，很常用</li>
+<li>sources：代码中添加断点，单步调试，以及单步调试过程中查看内存中的对象<ul>
+<li>watch expression：通过表达式查看当前内存中的值</li>
+<li>call stack：查看调用栈，开启async，可以看异步调用栈（这个非常有用，尤其是ajax调试的时候）</li>
+<li>scope variables：作用域链上的变量，非常有用</li>
+</ul>
+</li>
+<li>network：抓包查看每个请求，非常重要，前后端联调必备</li>
+<li>timeline：分析渲染、js执行等等各个阶段，性能优化利器</li>
+<li>emulation：模拟移动端环境，mobile页面开发必备</li>
+<li>一些插件:<ul>
+<li>liveload: 修改页面后自动刷新，不用按F5</li>
+<li>dimensions：直接在页面上测量的利器</li>
+<li>livestyle：css样式修改后自动起效果，不需要刷新，elements修改后也能同步到代码中</li>
+<li>image tool：测量，取色</li>
+<li>UC二维码：移动端调试扫码必备</li>
+<li>pagespeed，YSlow：页面性能分析和优化插件</li>
+<li>马克飞象：优秀的在线markdown编辑器，快速写周报，做记录</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>sublime text2：编码方便，插件多，速度快，性能好<ul>
+<li>emmet：提升html编码速度必备</li>
+<li>sublimelinter + 各种语言的lint和hint：代码纠错</li>
+<li>一些snippets：自动补全，提升开发效率</li>
+</ul>
+</li>
+<li>Intellij IDEA和WebStorm：集成开发环境，集成了各种功能，开发比sublime要方便，但会比较吃性能</li>
+<li>Mark Men：测量、取色、标注利器，拿到视觉稿之后第一个打开的软件</li>
+<li>GFW Fucker：我用红杏，可以的话买个虚拟服务器当梯子</li>
+<li>iHosts：非常优秀的hosts管理软件，轻松修改hosts，开发调试必备</li>
+<li>Charles：Mac 平台最好用的抓包分析工具</li>
+<li>Rythem：AlloyTeam出品的代理抓包软件，非常轻量，安装简单，移动端（真机）开发调试很好用</li>
+<li>Wunderlist：一个非常不错的Todo List，任务、需求多的时候管理起来很方便</li>
+</ul>
+<h2 id="技能">技能</h2><p>前端的技能其实除了JavaScript（包括NodeJS）、HTML、CSS以外，还有很多。其实前端的技能树很大，这里只能列一些我开发中见到的说一说</p>
+<p>#####语言基础<br>JavaScript：</p>
+<ul>
+<li>作用域链、闭包、运行时上下文、this</li>
+<li>原型链、继承</li>
+<li>NodeJS基础和常用API</li>
+</ul>
+<p>CSS：</p>
+<ul>
+<li>选择器</li>
+<li>浏览器兼容性及常见的hack处理</li>
+<li>CSS布局的方式和原理（盒子模型、BFC、IFC等等）</li>
+<li>CSS 3，如animation、gradient、等等</li>
+</ul>
+<p>HTML：</p>
+<ul>
+<li>语义化标签</li>
+</ul>
+<h2 id="进阶">进阶</h2><p>JavaScript:</p>
+<ul>
+<li>异步控制（Promise、ES6 generator、Async）</li>
+<li>模块化的开发方式（AMD、CMD、KMD等等）</li>
+<li>JavaScript解释器的一些相关知识<ul>
+<li>异步IO实现</li>
+<li>垃圾回收</li>
+<li>事件队列</li>
+</ul>
+</li>
+<li>常用框架使用及其原理<ul>
+<li>jQuery：基于选择器的框架，但个人认为不能叫框架，应该算工具库，因为不具备模块加载机制，其中源码很适合阅读钻研</li>
+<li>AngularJS/Avalon等MVVM框架：着重理解MVVM模式本身的理念和双向绑定的实现，如何解耦</li>
+<li>underscore：优秀的工具库，方便的理解常用工具代码片段的实现</li>
+<li>polymer/React: 组件化开发，面向未来，理解组件化开发的原理</li>
+</ul>
+</li>
+</ul>
+<p>CSS和HTML：主要是CSS3的特性和HTML5的特性，以及浏览器处理的流程和绘制原理</p>
+<ul>
+<li>DOM树、CSSOM树、渲染树的构建流程及页面渲染的过程</li>
+<li>解析HTML、CSS、JavaScript时造成的阻塞</li>
+<li>HTML5相关<ul>
+<li>SVG及矢量图原理</li>
+<li>Canvas开发及动画原理（帧动画）</li>
+<li>Video和Audio</li>
+</ul>
+</li>
+<li>flex box布局方式</li>
+<li>icon fonts的使用</li>
+</ul>
+<p>常用NodeJs的package：</p>
+<ul>
+<li>koa</li>
+<li>express</li>
+<li>underscore</li>
+<li>async</li>
+<li>gulp</li>
+<li>grunt</li>
+<li>connect</li>
+<li>request</li>
+</ul>
+<p>一些理念：</p>
+<ul>
+<li>响应式Web</li>
+<li>优雅降级、渐进增强</li>
+<li>don`t make me think</li>
+<li>网页可用性、可访问性、其中的意义</li>
+<li>SEO搜索引擎优化，了解搜索引擎的原理</li>
+<li>SPA的好处和问题</li>
+</ul>
+<p>性能优化：</p>
+<ul>
+<li>减少请求数量（sprite、combo）</li>
+<li>善用缓存（application cache、http缓存、CDN、localstorage、sessionstorage，备忘录模式）</li>
+<li>减少选择器消耗（从右到左），减少DOM操作（DOM和JavaScript解释器的分离）</li>
+<li>CSS的回流与重绘</li>
+</ul>
+<h2 id="项目">项目</h2><ul>
+<li>版本管理：首推Git，用过Git都不会想用SVN了<ul>
+<li>Git：本地版本管理的机制</li>
+<li>SVN：远程中心的版本管理机制</li>
+</ul>
+</li>
+<li>自动化构建：主要就是less、模板、coffee等的预处理以及对代码压缩和合并<ul>
+<li>Gulp：基于流构建，速度快、模块质量好</li>
+<li>Grunt：独立任务构建，速度慢，配置蛋疼，灵活性高</li>
+</ul>
+</li>
+<li>预处理和模板引擎<ul>
+<li>less：语法简单，但功能有限</li>
+<li>jade、ejs、velocity等模板引擎，各有各的长处</li>
+<li>coffee：python工程师最爱</li>
+</ul>
+</li>
+<li>环境搭建：主要是将线上代码映射到本地，并在本地启动一个demo服务器，至于模拟数据的mock，见仁见智了<ul>
+<li>本地代理：ihosts</li>
+</ul>
+</li>
+<li>自动化测试：在业务较为稳定的情况下，可以通过自动化测试来减少测试的事件，但需求较多的时候，维护测试用例的成本会很高，可能用自动化测试会起到反效果<ul>
+<li>jasmine</li>
+<li>mocha</li>
+</ul>
+</li>
+<li>生态系统<ul>
+<li>npm</li>
+<li>bower</li>
+<li>spm</li>
+</ul>
+</li>
+<li>搭建一个属于自己的博客<ul>
+<li>git pages</li>
+<li>hexo</li>
+<li>jekyll</li>
+</ul>
+</li>
+</ul>
+<h2 id="未来">未来</h2><ul>
+<li>Web Componets：面向未来的组件化开发方式<ul>
+<li>HTML模板</li>
+<li>Shadow DOM</li>
+<li>Custom Elements</li>
+<li>HTML Import</li>
+</ul>
+</li>
+<li>移动端Native开发：这也是需要了解的，以后前端工程师会经常地和webview打交道，也要了解native开发</li>
+</ul>
+<h2 id="其他">其他</h2><p>有些东西不是考敲码就能弄好的，我参与实习的时候感受到了很多，这些是我遇到的也是我感觉自己做的不好的地方</p>
+<ul>
+<li><strong>对于业务的思考</strong>：我个人这方面非常欠缺，所以放在最前面，在敲码前要多思考业务</li>
+<li>交流和沟通能力：这个非常重要，前端同时需要与项目经理、产品、交互、后台打交道，沟通不善会导致很多无用功，延缓项目</li>
+<li>知识管理、时间管理：input和output的平衡，output是最好的input。如何做好分享，参与社区，做好交流，作好记录</li>
+<li>对新技术的渴望，以及敢于尝试</li>
+</ul>
+<h2 id="入门书">入门书</h2><p>入门可以通过啃书，但书本上的东西很多都已经过时了，在啃书的同时，也要持续关注技术的新动态。这里推几本我觉着不错的书：</p>
+<ul>
+<li>《JavaScript高级编程》：可以作为入门书籍，但同时也是高级书籍，可以快速吸收基础，等到提升再回来重新看</li>
+<li>《JavaScript权威指南》：不太适合入门，但是必备，不理解的地方就去查阅一下，很有帮助</li>
+<li>《编写可维护的JavaScript》和：</li>
+<li>《Node.js开发指南》：不错的Nodejs入门书籍</li>
+<li>《深入浅出Node.js》：Nodejs进阶书籍，必备</li>
+<li>《JavaScript异步编程》：理解JS异步的编程理念</li>
+<li>《JavaScript模式》和《JavaScript设计模式》：JavaScript的代码模式和设计模式，将开发思维转变到JavaScript，非常好的书</li>
+<li>《JavaScript框架设计》：在用轮子同时，应当知道轮子是怎么转起来的，讲解很详细，从源码级别讲解框架的各个部分的实现，配合一个现有框架阅读，可以学到很多东西</li>
+<li>《Don`t make me think》：网页设计的理念，了解用户行为，非常不错</li>
+<li>《CSS禅意花园》：经久不衰的一部著作，同样传递了网页设计中的理念以及设计中需要注意的问题</li>
+<li>《高性能JavaScript》和《高性能HTML5》：强调性能的书，其中不只是性能优化，还有很多原理层面的东西值得学习</li>
+<li>《HTML5 Canvas核心技术》：我正在读的一本书，对于canvas的使用，动画的实现，以及动画框架的开发都非常有帮助</li>
+<li>《HTTP权威指南》：HTTP协议相关必备，前端开发调试的时候也会经常涉及到其中的知识</li>
+<li>《响应式Web设计》：技术本身不难，重要的是响应式网页的设计理念，以及移动先行的思想</li>
+<li>《JavaScript语言精粹》：老道的书，也是普及JavaScript的开发思维的一本好书，非常适合入门</li>
+</ul>
+<h2 id="一些不错的网站">一些不错的网站</h2><ul>
+<li><a href="https://github.com" target="_blank" rel="external">github</a>：没啥好说的，多阅读别人的源码，多上传自己的源码，向世界各地的大牛学习</li>
+<li><a href="http://codepen.io/" target="_blank" rel="external">codepen</a>：感受前端之美的必选之地，里面有很多酷炫的效果和优秀的插件</li>
+<li><a href="http://www.echojs.com/" target="_blank" rel="external">echojs</a>：快速了解js新资讯的网站</li>
+<li><a href="http://stackoverflow.com/" target="_blank" rel="external">stackoverflow</a>和<a href="segmentfault.com">segmentfault</a>：基本上各种问题都能在上面获得解答</li>
+<li><a href="https://developers.google.com/web/fundamentals/" target="_blank" rel="external">google web fundamentals</a>：每篇文章都适合仔细阅读</li>
+<li><a href="http://www.staticfile.org/" target="_blank" rel="external">static files</a>：开放的CDN，很好用</li>
+<li><a href="http://www.iconfont.cn/" target="_blank" rel="external">iconfont</a>：阿里的矢量图标库，非常不错，支持CDN而且支持项目</li>
+<li><a href="http://www.html5rocks.com/" target="_blank" rel="external">html5 rocks</a>: 一个不错的网站，很多浏览器的新特性以及前沿的技术，都能在这上面找到文章</li>
+<li><a href="http://css-tricks.com/" target="_blank" rel="external">css tricks</a>：如何活用CSS，以及了解CSS新特性，这里可以满足你</li>
+<li><a href="http://bonsaiden.github.io/JavaScript-Garden/zh/#object.general" target="_blank" rel="external">JavaScript 秘密花园</a> JavaScript初学必看，非常不错</li>
+<li><a href="http://www.w3cplus.com/" target="_blank" rel="external">w3cplus</a>：一个前端学习的网站，里面的文章质量都挺不错的</li>
+<li><a href="http://nodeschool.io/" target="_blank" rel="external">node school</a>：一个不错的node学习网站</li>
+<li><a href="http://pcottle.github.io/learnGitBranching/?demo" target="_blank" rel="external">learn git branch</a>：一个git学习网站，交互很棒</li>
+<li><a href="http://www.html-js.com/" target="_blank" rel="external">前端乱炖</a>：一个前端文章分享的社区，有很多优秀文章</li>
+<li><a href="http://deerchao.net/tutorials/regex/regex.htm" target="_blank" rel="external">正则表达式</a>：一个正则表达式入门教程，非常值得一看</li>
+<li><a href="http://www.ruanyifeng.com/blog/" target="_blank" rel="external">阮一峰的博客</a>和<a href="http://www.zhangxinxu.com/wordpress/" target="_blank" rel="external">张鑫旭的博客</a>：快速了解某些知识的捷径，但是如果需要深挖，还需要其他的资源</li>
+<li>各路大牛的博客：这个太多了，就不贴了，知乎上有很全的</li>
+<li>各种规范的官方网站，不懂得时候读规范</li>
+</ul>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/11/17/qt-about/" itemprop="url">
+                关于QT的系统总结
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-11-17T09:49:16+08:00" content="2015-11-17">
+            2015-11-17
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/QT/" itemprop="url" rel="index">
+                  <span itemprop="name">QT</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/11/17/qt-about/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/17/qt-about/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h1 id="编译环境与开发流程">编译环境与开发流程</h1><p>开发QT有两种IDE可以使用，一种是使用 VS + Qt 的插件，另一种就是使用QtCreator工具。前一种是微软的工具，用的都比较多容易上手，缺点是信号槽的支持不太好，需要手写，不能自动生成，另外可能有中文编码的问题。后一种是Qt的官方IDE，智能提示与调试功能不如VS强大，但是是跨平台的IDE，其QtDesigner设计UI界面操作比较方便，并且由于是QT官方的IDE，对编码等支持都比较好，里面集成了Qt的帮助文档。不得不说Qt的帮助文档做的是非常好的，集成进QtCreator环境之后更加方便。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/11/17/qt-about/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/11/12/http-fail2ban/" itemprop="url">
+                fail2ban防暴力破解介绍使用
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-11-12T14:39:16+08:00" content="2015-11-12">
+            2015-11-12
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/http/" itemprop="url" rel="index">
+                  <span itemprop="name">http</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/11/12/http-fail2ban/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/12/http-fail2ban/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h1 id="介绍">介绍</h1><p><code>fail2ban</code>可以监视你的系统日志，然后匹配日志的错误信息（正则式匹配）执行相应的屏蔽动作（一般情况下是调用防火墙iptables屏蔽），如:当有人在试探你的SSH、SMTP、FTP密码，只要达到你预设的次数，fail2ban就会调用防火墙屏蔽这个IP，而且可以发送e-mail通知系统管理员，是一款很实用、很强大的软件！</p>
+<p>fail2ban由python语言开发，基于logwatch、gamin、iptables、tcp-wrapper、shorewall等。如果想要发送邮件通知道，那还需要安装postfix或sendmail。</p>
+<h1 id="安装">安装</h1><ol>
+<li><p>apt-get 安装</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install fail2ban <span class="built_in">log</span> watch gamin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>yum安装</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install fail2ban logwatch gamin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>源代码安装<br> <code>http://www.fail2ban.org/wiki/index.php/Downloads</code></p>
+</li>
+</ol>
+<h1 id="配置">配置</h1><p>安装完成后配置文件在目录/etc/fail2ban/中：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/etc/fail2ban/fail2ban.conf  <span class="comment">#fail2ban的配置文件</span></span><br><span class="line">/etc/fail2ban/jail.conf <span class="comment">#阻挡设定文件</span></span><br><span class="line">/etc/fail2ban/filter.d/ <span class="comment">#具体过滤规则文件目录 </span></span><br><span class="line">/etc/fail2ban/action.d/ <span class="comment">#具体过滤规则检测到后采取相对应措施的目录</span></span><br></pre></td></tr></table></figure></p>
+<p>fail2ban默认有许多已经写好的规则，如ssh、ftp、proftpd等常见应用软件的支持，只需要设置enable属性为true即可启动，这里就不阐述了。</p>
+<h1 id="监控nginx日志">监控nginx日志</h1><p>假设nginx默认日志路径为/var/log/nginx/access_log，需要防止黑客暴力破解HTTP FORM登陆，此登陆检测链接为</p>
+<p><code>http://test.com/login_check.do</code></p>
+<p>根据分析正常登陆一般不超过三四次，并且登陆时间一般也不超过一分钟；因此，规定检测周期为1分钟，最大尝试登陆次数为10次；在规定时间内超过指定次数则被认为是黑客在尝试暴力破解。</p>
+<p>具体设置方法如下：</p>
+<ol>
+<li><p>首先在jail.conf文件下追加以下内容：</p>
+ <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">[nginx]</span>    <span class="comment">;规则名字</span></span><br><span class="line"><span class="setting">enabled = <span class="value"><span class="keyword">true</span> ;是否户用</span></span></span><br><span class="line"><span class="setting">port = <span class="value">http,https ;监控端口</span></span></span><br><span class="line"><span class="setting">filter = <span class="value">nginx    ;需要过滤匹配规则</span></span></span><br><span class="line"><span class="setting">logpath = <span class="value">/var/log/nginx/access_log; 日志路径</span></span></span><br><span class="line"><span class="setting">findtime =<span class="value"><span class="number">60</span>    ;检测周期 单位秒 以下一样</span></span></span><br><span class="line"><span class="setting">bantime =<span class="value"><span class="number">300</span>    ;iptable封禁IP时间</span></span></span><br><span class="line"><span class="setting">maxretry =<span class="value"><span class="number">10</span>    ;最大尝试次数</span></span></span><br><span class="line"><span class="setting">action = <span class="value">iptables[name=nginx, port=http, protocal=tcp] ;发现暴力破解采取iptalbes封禁IP的措施</span></span></span><br><span class="line"><span class="setting">sendmail[name=<span class="value">nginx, dest=my-email@xx.com]    ;发现暴力破解后采取sendmail发送邮件的措施，需要注意的是：iptables和sendmail必须对齐，要不然会发生错误；不要问我为什么会知道，我先哭会儿-_-!!!</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然后创建 /etc/fail2ban/filter.d/nginx.conf文件，并添加以下内容：</p>
+ <figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Definition]</span><br><span class="line">failregex =<span class="variable">&lt;HOST&gt;</span>.<span class="keyword">*</span>-.<span class="keyword">*</span>-.<span class="keyword">*</span>POST.<span class="keyword">*</span>/login_check.do.<span class="keyword">*</span> HTTP\/1.<span class="keyword">*</span>http://test.com.<span class="keyword">*</span>$ ;需要匹配日志发现攻击行为的正则,<span class="variable">&lt;HOST&gt;</span>为fail2ban内置变量匹配IP，不可修改</span><br><span class="line">ignoreregex =    ;需要忽略的正则</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>完成上述步骤就可以运行命令/etc/init.d/fail2ban restart重启了。查看iptables有fail2ban-nginx的规则和收到sendmail发送fail2ban已经启动的邮件就说明OK了。</p>
+<p>不过运维的同学可能知道，sendmail发送邮件延迟很多，并不好用，使用mutt代替sendmail是个不错的选择。安装mutt的过程就不在时阐述了，这里介绍我修改使用mutt发送action的配置文件。</p>
+<ol>
+<li><p>首先创建一个/etc/fail2ban/action.d/mutt.conf文件,然后添加以下内容:</p>
+ <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Fail2Ban configuration file</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Author: Cyril Jaquier</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="title">[Definition]</span></span><br><span class="line"><span class="comment"># Option: actionstart</span></span><br><span class="line"><span class="comment"># Notes.: command executed once at the start of Fail2Ban.</span></span><br><span class="line"><span class="comment"># Values: CMD</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="setting">actionstart = <span class="value">printf %%b <span class="string">"Hi,\n</span><br><span class="line">The jail &lt;name&gt; has been started successfully.\n</span><br><span class="line">Regards,\n</span><br><span class="line">Fail2Ban"</span>|mutt -s <span class="string">"[Fail2Ban] &lt;name&gt;: started on `uname -n`"</span>&lt;dest&gt;</span></span></span><br><span class="line"><span class="comment"># Option: actionstop</span></span><br><span class="line"><span class="comment"># Notes.: command executed once at the end of Fail2Ban</span></span><br><span class="line"><span class="comment"># Values: CMD</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="setting">actionstop = <span class="value">printf %%b <span class="string">"Hi,\n</span><br><span class="line">The jail &lt;name&gt; has been stopped.\n</span><br><span class="line">Regards,\n</span><br><span class="line">Fail2Ban"</span>|mutt -s <span class="string">"[Fail2Ban] &lt;name&gt;: stopped on `uname -n`"</span>&lt;dest&gt;</span></span></span><br><span class="line"><span class="comment"># Option: actioncheck</span></span><br><span class="line"><span class="comment"># Notes.: command executed once before each actionban command</span></span><br><span class="line"><span class="comment"># Values: CMD</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="setting">actioncheck =</span><br><span class="line"><span class="value"># Option: actionban</span></span></span><br><span class="line"><span class="comment"># Notes.: command executed when banning an IP. Take care that the</span></span><br><span class="line"><span class="comment"># command is executed with Fail2Ban user rights.</span></span><br><span class="line"><span class="comment"># Tags: See jail.conf(5) man page</span></span><br><span class="line"><span class="comment"># Values: CMD</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="setting">actionban = <span class="value">printf %%b <span class="string">"Hi,\n</span><br><span class="line">The IP &lt;ip&gt; has just been banned by Fail2Ban after</span><br><span class="line">&lt;failures&gt; attempts against &lt;name&gt;.\n</span><br><span class="line">Regards,\n</span><br><span class="line">Fail2Ban"</span>|mutt -s <span class="string">"[Fail2Ban] &lt;name&gt;: banned &lt;ip&gt; from `uname -n`"</span>&lt;dest&gt;</span></span></span><br><span class="line"><span class="comment"># Option: actionunban</span></span><br><span class="line"><span class="comment"># Notes.: command executed when unbanning an IP. Take care that the</span></span><br><span class="line"><span class="comment"># command is executed with Fail2Ban user rights.</span></span><br><span class="line"><span class="comment"># Tags: See jail.conf(5) man page</span></span><br><span class="line"><span class="comment"># Values: CMD</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="setting">actionunban =</span><br><span class="line"><span class="value">[Init]</span></span></span><br><span class="line"><span class="comment"># Default name of the chain</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="setting">name = <span class="value">default</span></span></span><br><span class="line"><span class="comment"># Destination/Addressee of the mutt</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="setting">dest = <span class="value">root</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然后在jail.conf文件下添加以下内容:</p>
+ <figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">action = mutt[<span class="property">name</span>=nginx, dest=<span class="keyword">my</span>-email@xx.com]</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>重启过后就可以使用mutt文件发送邮件了。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/11/12/android_gradle_apk_package/" itemprop="url">
+                动手开发一个安卓APP - Android gradle 打包
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-11-12T10:20:06+08:00" content="2015-11-12">
+            2015-11-12
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/android/" itemprop="url" rel="index">
+                  <span itemprop="name">android</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/11/12/android_gradle_apk_package/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/12/android_gradle_apk_package/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>使用gradle打包apk已经成为当前主流趋势，我也在这个过程中经历了各种需求，并不断结合gradle新的支持，一一改进。在此，把这些相关的东西记录，做一总结。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/11/12/android_gradle_apk_package/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/11/02/java-web-learning-2/" itemprop="url">
                 Java WEB 开发 （二） - Java 语言基础
               </a>
@@ -387,756 +1463,11 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/10/28/java-web-learning/" itemprop="url">
-                Java WEB 开发
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於
-          <time itemprop="dateCreated" datetime="2015-10-28T16:51:16+08:00" content="2015-10-28">
-            2015-10-28
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分類於
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/java/" itemprop="url" rel="index">
-                  <span itemprop="name">java</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/10/28/java-web-learning/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/28/java-web-learning/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p>本文针对 对 web 开发有兴趣的同学进行 一些教学</p>
-<h1 id="课程目录">课程目录</h1><ul>
-<li><p>WEB 开发总览 - 学习路线，概念介绍等 （<code>一课时</code>）    </p>
-</li>
-<li><p>Java 语言基础 （<code>一课时</code>）</p>
-</li>
-<li>（SQL）Mysql以及市面上常用数据基础，介绍 Java JDBC 操作MYSQL（<code>一课时</code>）</li>
-<li><p>Java Web基础 - servlet, JSP（<code>一至二课时</code>）</p>
-</li>
-<li><p>Web前端技术基础 HTML, CSS, JavaScript（<code>一课时</code>）    </p>
-</li>
-<li>Web前端开发基础 使用jquery进行前端脚本快速开发（<code>一课时</code>）    </li>
-</ul>
-<ul>
-<li>Java Web - Spring 系列（<code>一至二课时</code>）</li>
-</ul>
-<ul>
-<li>Java Web - Spring MVC 实战 简单的备课系统 前端（<code>一至二课时</code>）</li>
-<li>Java Web - Spring MVC 实战 简单的备课系统 后端（<code>一至二课时</code>）</li>
-</ul>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/10/28/php-word-filter/" itemprop="url">
-                PHP实现敏感词过滤系统
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於
-          <time itemprop="dateCreated" datetime="2015-10-28T16:14:20+08:00" content="2015-10-28">
-            2015-10-28
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分類於
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/php/" itemprop="url" rel="index">
-                  <span itemprop="name">php</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/10/28/php-word-filter/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/28/php-word-filter/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h1 id="安装说明">安装说明</h1><h2 id="1、安装PHP扩展_trie_filter">1、安装PHP扩展 trie_filter</h2><blockquote>
-<p>下面的$LIB_PATH为依赖库安装目录，$INSTALL_PHP_PATH为PHP5安装目录。</p>
-</blockquote>
-<p>安装libdatrie依赖库<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ tar zxvf libdatrie-<span class="number">0.2</span>.<span class="number">4</span>.tar.gz</span><br><span class="line">$ <span class="built_in">cd</span> libdatrie-<span class="number">0.2</span>.<span class="number">4</span></span><br><span class="line">$ make clean</span><br><span class="line">$ ./configure --prefix=<span class="variable">$LIB_PATH</span></span><br><span class="line">$ make</span><br><span class="line">$ make install</span><br></pre></td></tr></table></figure></p>
-<p>安装trie_filter扩展 （<a href="https://github.com/wulijun/php-ext-trie-filter）">https://github.com/wulijun/php-ext-trie-filter）</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="variable">$INSTALL_PHP_PATH</span>/bin/phpize</span><br><span class="line">$ ./configure --with-php-config=<span class="variable">$INSTALL_PHP_PATH</span>/bin/php-config --with-trie_filter=<span class="variable">$LIB_PATH</span></span><br><span class="line">$ make</span><br><span class="line">$ make install</span><br></pre></td></tr></table></figure></p>
-<p>然后修改php.ini，增加一行：extension=trie_filter.so，然后重启PHP。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/10/28/php-word-filter/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/10/27/android-app-1/" itemprop="url">
-                动手开发一个安卓APP - 第三节 ：结合实际（完整开发一个APP），从简单APP开始做一个完整的新闻类APP客户端 (一)
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於
-          <time itemprop="dateCreated" datetime="2015-10-27T11:53:16+08:00" content="2015-10-27">
-            2015-10-27
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分類於
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/android/" itemprop="url" rel="index">
-                  <span itemprop="name">android</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/10/27/android-app-1/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/27/android-app-1/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h1 id="一、简介">一、简介</h1><p>实现一款具备cool属性的产品是众多独立开发者都渴望的。<br>然而，很多独立开发者之所以迟迟无法下手，并非热情不够，而是对于整个开发流程的未知与畏惧。而本文就是介绍本人耗时一周左右完成的一款Android产品的开发流程,从idea，到产品原型及设计，再到code架构与编写。<br>希望读者看完后能对独立开发有不同的认识，然后挥舞起手中的键盘，开发出很cool的个人产品。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/10/27/android-app-1/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/10/16/android_recycler_view/" itemprop="url">
-                动手开发一个安卓APP - RecyclerView使用介绍
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於
-          <time itemprop="dateCreated" datetime="2015-10-16T15:20:02+08:00" content="2015-10-16">
-            2015-10-16
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分類於
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/android/" itemprop="url" rel="index">
-                  <span itemprop="name">android</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/10/16/android_recycler_view/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/16/android_recycler_view/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>RecyclerView 是Android L版本中新添加的一个用来取代ListView的SDK，它的灵活性与可替代性比listview更好。接下来通过一系列的文章讲解如何使用RecyclerView,彻底抛弃ListView.</p>
-<h1 id="介绍">介绍</h1><blockquote>
-<p>RecyclerView与ListView原理是类似的：都是仅仅维护少量的View并且可以展示大量的数据集。RecyclerView用以下两种方式简化了数据的展示和处理:</p>
-<p>使用LayoutManager来确定每一个item的排列方式。</p>
-<p>为增加和删除项目提供默认的动画效果。</p>
-</blockquote>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/10/16/android_recycler_view/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/10/16/android-custom-component/" itemprop="url">
-                动手开发一个安卓APP - Android  自定义View 实现下载进度的显示
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於
-          <time itemprop="dateCreated" datetime="2015-10-16T09:38:11+08:00" content="2015-10-16">
-            2015-10-16
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分類於
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/android/" itemprop="url" rel="index">
-                  <span itemprop="name">android</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/10/16/android-custom-component/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/16/android-custom-component/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>一般有下载功能的应用都会有这样一个场景，需要一个进度来标识不同的状态。</p>
-<p>一般下载都会有这么几种状态：未开始、等待、正在下载、下载结束，当然有时候会有下载出错的状态。等待状态是指用户点击开始下载，但是线程池中没有空闲的线程来处理该次下载，所以状态为等待。</p>
-</blockquote>
-<p><img src="/uploads/android_down.gif" alt="下载进度的显示" title="下载进度的显示"></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/10/16/android-custom-component/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/10/15/java_new_problem/" itemprop="url">
-                Java 新手问题集锦
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於
-          <time itemprop="dateCreated" datetime="2015-10-15T13:51:16+08:00" content="2015-10-15">
-            2015-10-15
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分類於
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/java/" itemprop="url" rel="index">
-                  <span itemprop="name">java</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/10/15/java_new_problem/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/15/java_new_problem/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>Java是目前最流行的编程语言之一——它可以用来编写Windows程序或者是Web应用，移动应用，网络程序，消费电子产品，机顶盒设备，它无处不在。</p>
-<p>有超过30亿的设备是运行在Java之上的。根据Oracle的统计数据，光是使用中的Java Card就有有50亿。</p>
-<p>超过900万程序员选择使用Java进行开发，它是最受开发人员欢迎的语言，同时也是最流行的开发平台。</p>
-</blockquote>
-<p>本文为那些准Java程序员们准备了一系列广为流传的Java最佳编程实践：</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/10/15/java_new_problem/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/10/13/android-gesture-detector/" itemprop="url">
-                动手开发一个安卓APP - Android 触摸手势检测GestureDetector使用详解
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於
-          <time itemprop="dateCreated" datetime="2015-10-13T11:40:32+08:00" content="2015-10-13">
-            2015-10-13
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分類於
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/android/" itemprop="url" rel="index">
-                  <span itemprop="name">android</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/10/13/android-gesture-detector/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/13/android-gesture-detector/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>在Android中，当用户触摸屏幕的时候，会产生许多手势，例如<code>down</code>，<code>up</code>，<code>scroll</code>，<code>filing</code>，<code>onSingleTapConfirmed(单击)</code>，<code>onDoubleTap(双击)</code>等等。<br>一般情况下，我们知道View类有个<code>View.OnTouchListener</code>内部接口，通过重写他的<code>onTouch(View v, MotionEvent event)</code>方法，我们可以处理一些在该控件中触发的touch事件，但是这个方法太过简单，如果需要处理一些复杂的手势，用这个接口就会很麻烦（因为我们要自己根据用户触摸的轨迹去判断是什么手势），所以我们常常需要在这个方法中用手势识别器中的<code>onTouchEvent(event)</code>方法去拦截到触摸事件至手势识别器中处理。</p>
-<h1 id="Android_sdk给我们提供了GestureDetector（Gesture：手势Detector：识别）类">Android sdk给我们提供了GestureDetector（Gesture：手势Detector：识别）类</h1><blockquote>
-<p>通过这个类我们可以识别很多的手势，主要是通过他自身的onTouchEvent(event)</p>
-</blockquote>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/10/13/android-gesture-detector/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/10/12/android_toolbar/" itemprop="url">
-                动手开发一个安卓APP - android ToolBar详解
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於
-          <time itemprop="dateCreated" datetime="2015-10-12T13:36:32+08:00" content="2015-10-12">
-            2015-10-12
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分類於
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/android/" itemprop="url" rel="index">
-                  <span itemprop="name">android</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/10/12/android_toolbar/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/12/android_toolbar/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>2014 的 google i/o 发表令多数人为之一亮的 material design，而 google 也从「google i/o 2014」 开始，大家也陆陆续续地看到其更新的 android app 皆套用了这个设计介面。当然，这个设计介面著实让大家感到惊艳外，更让 android 开发者开始担心未来 app 的界面处理了。</p>
-<p>不过，所幸有着之前 actionbar 的经验后，android 也很快地在 support library 里面提供了相对应的 api 给开发者使用，本篇就为各位介绍 – toolbar，这是用来取代过去 actionbar 的控件，而现在于 material design 中也对之有一个统一名称：app bar，在未来的 android app 中，就以 toolbar 这个元件来实作之。</p>
-</blockquote>
-<p><img src="/uploads/android_toolbar.png" alt="android toolbar" title="android toolbar"></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/10/12/android_toolbar/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">&raquo;</a>
   </nav>
 
  </div>
@@ -1170,7 +1501,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-count">48</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -1184,7 +1515,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-count">43</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -1224,7 +1555,7 @@
       <div class="footer-inner"> <div class="copyright" >
   
   &copy; &nbsp; 
-  <span itemprop="copyrightYear">2015</span>
+  <span itemprop="copyrightYear">2016</span>
   <span class="with-love">
     <i class="icon-next-heart"></i>
   </span>

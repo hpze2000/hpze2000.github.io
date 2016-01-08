@@ -1,0 +1,790 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="mongodb,nginx,nodejs,web," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="CentOS 7上安装 nodejs 的 3 种方法一、源码安装
+下载源码（官网查看最新版本链接）
+ 1wget http://npm.taobao.org/mirrors/node/v5.3.0/node-v5.3.0.tar.gz  # 使用淘宝的镜像
+
+解压源码
+ 1tar xzvf node-v* &amp;amp;&amp;amp; cd node-v*
+
+安装必要的编译软件 gcc c++
+ 1sud">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在CentOS 7上安装Node.js 、 mongodb 、nginx">
+<meta property="og:url" content="http://yoursite.com/2015/12/30/linux-centos7-nodejs-mongodb-nginx/index.html">
+<meta property="og:site_name" content="Johnson Zhang">
+<meta property="og:description" content="CentOS 7上安装 nodejs 的 3 种方法一、源码安装
+下载源码（官网查看最新版本链接）
+ 1wget http://npm.taobao.org/mirrors/node/v5.3.0/node-v5.3.0.tar.gz  # 使用淘宝的镜像
+
+解压源码
+ 1tar xzvf node-v* &amp;amp;&amp;amp; cd node-v*
+
+安装必要的编译软件 gcc c++
+ 1sud">
+<meta property="og:updated_time" content="2015-12-30T10:49:34.517Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在CentOS 7上安装Node.js 、 mongodb 、nginx">
+<meta name="twitter:description" content="CentOS 7上安装 nodejs 的 3 种方法一、源码安装
+下载源码（官网查看最新版本链接）
+ 1wget http://npm.taobao.org/mirrors/node/v5.3.0/node-v5.3.0.tar.gz  # 使用淘宝的镜像
+
+解压源码
+ 1tar xzvf node-v* &amp;amp;&amp;amp; cd node-v*
+
+安装必要的编译软件 gcc c++
+ 1sud">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 在CentOS 7上安装Node.js 、 mongodb 、nginx | Johnson Zhang </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?886f45b065a917294e24691553891b06";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Johnson Zhang</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon icon-next-commonweal"></i> <br />
+            公益404
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              在CentOS 7上安装Node.js 、 mongodb 、nginx
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-12-30T12:30:20+08:00" content="2015-12-30">
+            2015-12-30
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/web/" itemprop="url" rel="index">
+                  <span itemprop="name">web</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/12/30/linux-centos7-nodejs-mongodb-nginx/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/30/linux-centos7-nodejs-mongodb-nginx/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="CentOS_7上安装_nodejs_的_3_种方法">CentOS 7上安装 nodejs 的 3 种方法</h1><h2 id="一、源码安装">一、源码安装</h2><ol>
+<li><p>下载源码（官网查看最新版本链接）</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://npm.taobao.org/mirrors/node/v5.<span class="number">3.0</span>/node-v5.<span class="number">3.0</span>.tar.gz  <span class="comment"># 使用淘宝的镜像</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解压源码</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar xzvf node-v* &amp;&amp; <span class="built_in">cd</span> node-v*</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装必要的编译软件 gcc c++</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install gcc gcc-c++</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编译</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./configure</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编译&amp;安装</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看版本（测试安装是否成功）</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node -v	</span><br><span class="line"></span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="二、使用已编译版本安装">二、使用已编译版本安装</h2><ol>
+<li><p>下载已编译版本    </p>
+ <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># http:<span class="comment">//npm.taobao.org/mirrors/node/latest/   //淘宝镜像地址</span></span></span><br><span class="line"></span><br><span class="line">cd ~</span><br><span class="line">wget http:<span class="comment">//npm.taobao.org/mirrors/node/latest/node-v5.3.0-linux-x64.tar.gz</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解压</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo tar --strip-components <span class="number">1</span> -xzvf node-v* -C /usr/<span class="built_in">local</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看版本（测试安装是否成功）</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node -v	</span><br><span class="line"></span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="通过NVM安装">通过NVM安装</h2><blockquote>
+<p>NVM（Node version manager）顾名思义，就是Node.js的版本管理软件，可以轻松的在Node.js各个版本间切换，项目源码 GitHub <code>https://github.com/creationix/nvm</code></p>
+</blockquote>
+<ol>
+<li><p>下载并安装NVM脚本</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.<span class="number">30.1</span>/install.sh | bash</span><br></pre></td></tr></table></figure>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">. ~/.nvm/nvm.sh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>列出所需要的版本    </p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvm list-remote</span><br></pre></td></tr></table></figure>
+<p> 返回结果如下</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">. . .</span><br><span class="line">v0.<span class="number">10.29</span></span><br><span class="line">v0.<span class="number">10.30</span></span><br><span class="line"> v0.<span class="number">11.0</span></span><br><span class="line"> v0.<span class="number">11.1</span></span><br><span class="line"> v0.<span class="number">11.2</span></span><br><span class="line"> v0.<span class="number">11.3</span></span><br><span class="line"> v0.<span class="number">11.4</span></span><br><span class="line"> v0.<span class="number">11.5</span></span><br><span class="line"> v0.<span class="number">11.6</span></span><br><span class="line"> v0.<span class="number">11.7</span></span><br><span class="line"> v0.<span class="number">11.8</span></span><br><span class="line"> v0.<span class="number">11.9</span></span><br><span class="line">v0.<span class="number">11.10</span></span><br><span class="line">v0.<span class="number">11.11</span></span><br><span class="line">v0.<span class="number">11.12</span></span><br><span class="line">v0.<span class="number">11.13</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装相应的版本    </p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvm install v0.<span class="number">10.30</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看已安装的版本    </p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nvm list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 返回</span></span><br><span class="line">-&gt;  v0.<span class="number">10.30</span></span><br><span class="line">     system</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>切换版本    </p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvm use v0.<span class="number">10.30</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置默认版本    </p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvm <span class="built_in">alias</span> default v0.<span class="number">10.30</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="CentOS_7上安装_MongoDB">CentOS 7上安装 MongoDB</h1><h2 id="方法一_（不推荐）">方法一 （不推荐）</h2><blockquote>
+<p>MongoDB 提供了centos yum安装方式。<br>参考：<code>http://docs.mongodb.org/manual/tutorial/install-mongodb-on-red-hat/</code></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/yum.repos.d/mongodb-org-<span class="number">3.2</span>.repo</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">[mongodb-org-3.2]</span></span><br><span class="line"><span class="setting">name=<span class="value">MongoDB Repository</span></span></span><br><span class="line"><span class="setting">baseurl=<span class="value">https://repo.mongodb.org/yum/redhat/<span class="variable">$releasever</span>/mongodb-org/<span class="number">3.2</span>/x<span class="number">86_64</span>/</span></span></span><br><span class="line"><span class="setting">gpgcheck=<span class="value"><span class="number">0</span></span></span></span><br><span class="line"><span class="setting">enabled=<span class="value"><span class="number">1</span></span></span></span><br></pre></td></tr></table></figure>
+<p>安装mongodb<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y mongodb-org</span><br></pre></td></tr></table></figure></p>
+<p>等待安装完成后，配置文件在：<code>/etc/mongod.conf</code>  数据文件在：<code>/var/lib/mongo</code>  日志文件在：<code>/var/log/mongodb</code></p>
+<p>mongodb服务使用<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#启动</span></span><br><span class="line">service mongod <span class="built_in">start</span></span><br><span class="line"><span class="comment">#停止</span></span><br><span class="line">service mongod <span class="built_in">stop</span></span><br><span class="line"><span class="comment">#重启</span></span><br><span class="line">service mongod restart</span><br><span class="line"><span class="comment">#增加开机启动</span></span><br><span class="line">chkconfig mongod <span class="command"><span class="keyword">on</span></span></span><br></pre></td></tr></table></figure></p>
+<h2 id="方法二_安装MongoDB">方法二  安装MongoDB</h2><ol>
+<li>下载MongoDB（64位）<br><code>http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-2.6.3.tgz</code></li>
+<li><p>安装MongoDB（安装到/usr/local）（可以直接复制到/usr/local目录下）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">tar zxvf mongodb-linux-x86_64-<span class="number">2.6</span>.<span class="number">3</span>.tgz</span><br><span class="line">mv mongodb-linux-x86_64-<span class="number">2.6</span>.<span class="number">3</span> mongodb</span><br><span class="line"><span class="built_in">cd</span> mongodb</span><br><span class="line">mkdir data/db</span><br><span class="line">mkdir logs</span><br><span class="line"><span class="built_in">cd</span> bin</span><br><span class="line">vi mongodb.conf </span><br><span class="line">dbpath=/usr/<span class="built_in">local</span>/mongodb/data/db</span><br><span class="line">logpath=/usr/<span class="built_in">local</span>/mongodb/logs/mongodb.log</span><br><span class="line">port=<span class="number">27017</span> </span><br><span class="line">fork=<span class="literal">true</span> </span><br><span class="line">nohttpinterface=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重新绑定mongodb的配置文件地址和访问IP</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/usr/</span>local<span class="regexp">/mongodb/</span>bin<span class="regexp">/mongod --bind_ip localhost -f /u</span>sr<span class="regexp">/local/m</span>ongodb<span class="regexp">/bin/m</span>ongodb.conf</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>开机自动启动mongodb</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1</span></span><br><span class="line">vi /etc/rc.d/rc.local </span><br><span class="line"><span class="comment"># 2</span></span><br><span class="line">/usr/<span class="built_in">local</span>/mongodb/bin/mongod --config /usr/<span class="built_in">local</span>/mongodb/bin/mongodb.conf</span><br><span class="line"><span class="comment"># 3</span></span><br><span class="line">chmod +x /etc/rc.d/rc.local   <span class="comment"># 一定要执行这句不然无法开机启动</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重启一下系统测试下能不能自启</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#进入mongodb的shell模式 </span></span><br><span class="line">/usr/<span class="keyword">local</span>/mongodb/bin/mongo <span class="comment">--port 27017</span></span><br><span class="line"><span class="comment">#查看数据库列表</span></span><br><span class="line">show dbs</span><br><span class="line"><span class="comment">#当前db版本</span></span><br><span class="line">db.<span class="property">version</span>();</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="安装_nginx">安装 nginx</h1><h1 id="安装_PHP">安装 PHP</h1></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mongodb/" rel="tag">#mongodb</a>
+          
+            <a href="/tags/nginx/" rel="tag">#nginx</a>
+          
+            <a href="/tags/nodejs/" rel="tag">#nodejs</a>
+          
+            <a href="/tags/web/" rel="tag">#web</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/12/31/linux-command/" rel="prev">WEB后端开发必会的Linux命令</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/12/24/base64/" rel="next">关于base64编码的原理和实现</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/12/30/linux-centos7-nodejs-mongodb-nginx/"
+                   data-title="在CentOS 7上安装Node.js 、 mongodb 、nginx" data-url="http://yoursite.com/2015/12/30/linux-centos7-nodejs-mongodb-nginx/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar.jpg" alt="Johnson Zhang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Johnson Zhang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">48</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/hpze2000" target="_blank">github</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CentOS_7上安装_nodejs_的_3_种方法"><span class="nav-number">1.</span> <span class="nav-text">CentOS 7上安装 nodejs 的 3 种方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、源码安装"><span class="nav-number">1.1.</span> <span class="nav-text">一、源码安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、使用已编译版本安装"><span class="nav-number">1.2.</span> <span class="nav-text">二、使用已编译版本安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过NVM安装"><span class="nav-number">1.3.</span> <span class="nav-text">通过NVM安装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CentOS_7上安装_MongoDB"><span class="nav-number">2.</span> <span class="nav-text">CentOS 7上安装 MongoDB</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#方法一_（不推荐）"><span class="nav-number">2.1.</span> <span class="nav-text">方法一 （不推荐）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法二_安装MongoDB"><span class="nav-number">2.2.</span> <span class="nav-text">方法二  安装MongoDB</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装_nginx"><span class="nav-number">3.</span> <span class="nav-text">安装 nginx</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装_PHP"><span class="nav-number">4.</span> <span class="nav-text">安装 PHP</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Johnson Zhang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hpze2000"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

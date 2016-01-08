@@ -1,0 +1,763 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="js,nodejs,web," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="模块路径解析规则我们已经知道，require函数支持斜杠（/）或盘符（C:）开头的绝对路径，也支持./开头的相对路径。但这两种路径在模块之间建立了强耦合关系，一旦某个模块文件的存放位置需要变更，使用该模块的其它模块的代码也需要跟着调整，变得牵一发动全身。因此，require函数支持第三种形式的路径，写法类似于foo/bar，并依次按照以下规则解析路径，直到找到模块位置。
+
+内置模块 如果传递给re">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node.js 之 代码的组织和部署">
+<meta property="og:url" content="http://yoursite.com/2016/01/06/node-code/index.html">
+<meta property="og:site_name" content="Johnson Zhang">
+<meta property="og:description" content="模块路径解析规则我们已经知道，require函数支持斜杠（/）或盘符（C:）开头的绝对路径，也支持./开头的相对路径。但这两种路径在模块之间建立了强耦合关系，一旦某个模块文件的存放位置需要变更，使用该模块的其它模块的代码也需要跟着调整，变得牵一发动全身。因此，require函数支持第三种形式的路径，写法类似于foo/bar，并依次按照以下规则解析路径，直到找到模块位置。
+
+内置模块 如果传递给re">
+<meta property="og:updated_time" content="2016-01-08T04:39:31.766Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Node.js 之 代码的组织和部署">
+<meta name="twitter:description" content="模块路径解析规则我们已经知道，require函数支持斜杠（/）或盘符（C:）开头的绝对路径，也支持./开头的相对路径。但这两种路径在模块之间建立了强耦合关系，一旦某个模块文件的存放位置需要变更，使用该模块的其它模块的代码也需要跟着调整，变得牵一发动全身。因此，require函数支持第三种形式的路径，写法类似于foo/bar，并依次按照以下规则解析路径，直到找到模块位置。
+
+内置模块 如果传递给re">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> Node.js 之 代码的组织和部署 | Johnson Zhang </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?886f45b065a917294e24691553891b06";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Johnson Zhang</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon icon-next-commonweal"></i> <br />
+            公益404
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Node.js 之 代码的组织和部署
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2016-01-06T10:15:20+08:00" content="2016-01-06">
+            2016-01-06
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/javascript/" itemprop="url" rel="index">
+                  <span itemprop="name">javascript</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2016/01/06/node-code/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/06/node-code/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="模块路径解析规则">模块路径解析规则</h1><p>我们已经知道，<code>require</code>函数支持<code>斜杠（/）</code>或<code>盘符（C:）</code>开头的绝对路径，也支持<code>./</code>开头的相对路径。但这两种路径在模块之间建立了强耦合关系，一旦某个模块文件的存放位置需要变更，使用该模块的其它模块的代码也需要跟着调整，变得牵一发动全身。因此，require函数支持第三种形式的路径，写法类似于<code>foo/bar</code>，并依次按照以下规则解析路径，直到找到模块位置。</p>
+<ol>
+<li><p>内置模块<br> 如果传递给<code>require</code>函数的是NodeJS内置模块名称，不做路径解析，直接返回内部模块的导出对象，例如<code>require(&#39;fs&#39;)</code>。</p>
+</li>
+<li><p>node_modules目录<br> NodeJS定义了一个特殊的<code>node_modules</code>目录用于存放模块。例如某个模块的绝对路径是<code>/home/user/hello.js</code>，在该模块中使用<code>require(&#39;foo/bar&#39;)</code>方式加载模块时，则NodeJS依次尝试使用以下路径。    </p>
+ <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/home/</span>user<span class="regexp">/node_modules/</span>foo/bar</span><br><span class="line"><span class="regexp">/home/</span>node_modules<span class="regexp">/foo/</span>bar</span><br><span class="line"><span class="regexp">/node_modules/</span>foo/bar</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>NODE_PATH环境变量<br> 与PATH环境变量类似，NodeJS允许通过<code>NODE_PATH</code>环境变量来指定额外的模块搜索路径。<code>NODE_PATH</code>环境变量中包含一到多个目录路径，路径之间在Linux下使用:分隔，在Windows下使用;分隔。例如定义了以下<code>NODE_PATH</code>环境变量：    </p>
+ <figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="constant">NODE_PATH</span>=<span class="regexp">/home/user</span><span class="regexp">/lib:/home</span><span class="regexp">/lib</span></span><br></pre></td></tr></table></figure>
+<p> 当使用<code>require(&#39;foo/bar&#39;)</code>的方式加载模块时，则NodeJS依次尝试以下路径。</p>
+ <figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/home/user/<span class="class"><span class="keyword">lib</span>/<span class="title">foo</span>/<span class="title">bar</span></span></span><br><span class="line">	/home/<span class="class"><span class="keyword">lib</span>/<span class="title">foo</span>/<span class="title">bar</span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="包（package）">包（package）</h1><blockquote>
+<p>我们已经知道了JS模块的基本单位是单个JS文件，但复杂些的模块往往由多个子模块组成。为了便于管理和使用，我们可以把由多个子模块组成的大模块称做<code>包</code>，并把所有子模块放在同一个目录里。</p>
+</blockquote>
+<p>在组成一个包的所有子模块中，需要有一个入口模块，入口模块的导出对象被作为包的导出对象。例如有以下目录结构：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- /home/user/lib/</span><br><span class="line">    - cat/</span><br><span class="line">        head<span class="class">.js</span></span><br><span class="line">        <span class="tag">body</span><span class="class">.js</span></span><br><span class="line">        main.js</span><br></pre></td></tr></table></figure></p>
+<p>其中<code>cat</code>目录定义了一个<code>包</code>，其中包含了3个子模块。<code>main.js</code>作为入口模块，其内容如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> head = <span class="built_in">require</span>(<span class="string">'./head'</span>);</span><br><span class="line"><span class="keyword">var</span> body = <span class="built_in">require</span>(<span class="string">'./body'</span>);</span><br><span class="line"></span><br><span class="line">exports.create = <span class="function"><span class="keyword">function</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        name: name,</span><br><span class="line">        head: head.create(),</span><br><span class="line">        body: body.create()</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>在其它模块里使用包的时候，需要加载包的入口模块。接着上例，使用<code>require(&#39;/home/user/lib/cat/main&#39;)</code>能达到目的，但是入口模块名称出现在路径里看上去不是个好主意。因此我们需要做点额外的工作，让包使用起来更像是单个模块。</p>
+<h2 id="index-js">index.js</h2><p>当模块的文件名是<code>index.js</code>，加载模块时可以使用模块所在目录的路径代替模块文件路径，因此接着上例，以下两条语句等价。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cat = <span class="built_in">require</span>(<span class="string">'/home/user/lib/cat'</span>);</span><br><span class="line"><span class="keyword">var</span> cat = <span class="built_in">require</span>(<span class="string">'/home/user/lib/cat/index'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>这样处理后，就只需要把包目录路径传递给<code>require</code>函数，感觉上整个目录被当作单个模块使用，更有整体感。</p>
+<h2 id="package-json">package.json</h2><p>如果想自定义入口模块的文件名和存放位置，就需要在包目录下包含一个<code>package.json</code>文件，并在其中指定入口模块的路径。上例中的cat模块可以重构如下。<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- <span class="regexp">/home/user</span><span class="regexp">/lib/</span></span><br><span class="line">    - cat/</span><br><span class="line">        + doc/</span><br><span class="line">        - <span class="class"><span class="keyword">lib</span>/</span></span><br><span class="line">            head.js</span><br><span class="line">            body.js</span><br><span class="line">            main.js</span><br><span class="line">        + tests/</span><br><span class="line">        package.json</span><br></pre></td></tr></table></figure></p>
+<p>其中<code>package.json</code>内容如下。<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    "<span class="attribute">name</span>": <span class="value"><span class="string">"cat"</span></span>,</span><br><span class="line">    "<span class="attribute">main</span>": <span class="value"><span class="string">"./lib/main.js"</span></span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如此一来，就同样可以使用<code>require(&#39;/home/user/lib/cat&#39;)</code>的方式加载模块。NodeJS会根据包目录下的<code>package.json</code>找到入口模块所在位置。</p>
+<h1 id="命令行程序">命令行程序</h1><p>使用NodeJS编写的东西，要么是一个<code>包</code>，要么是一个<code>命令行程序</code>，而前者最终也会用于开发后者。因此我们在部署代码时需要一些技巧，让用户觉得自己是在使用一个命令行程序。</p>
+<p>例如我们用NodeJS写了个程序，可以把命令行参数原样打印出来。该程序很简单，在主模块内实现了所有功能。并且写好后，我们把该程序部署在<code>/home/user/bin/node-echo.js</code>这个位置。为了在任何目录下都能运行该程序，我们需要使用以下终端命令。<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ node <span class="regexp">/home/u</span>ser<span class="regexp">/bin/</span>node-echo.js Hello World</span><br><span class="line">Hello World</span><br></pre></td></tr></table></figure></p>
+<p>这种使用方式看起来不怎么像是一个命令行程序，下边的才是我们期望的方式：<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>node-echo <span class="constant">Hello</span> <span class="constant">World</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Linux">Linux</h2><p>在Linux系统下，我们可以把JS文件当作shell脚本来运行，从而达到上述目的，具体步骤如下：</p>
+<ol>
+<li><p>在shell脚本中，可以通过<code>#!</code>注释来指定当前脚本使用的解析器。所以我们首先在<code>node-echo.js</code>文件顶部增加以下一行注释，表明当前脚本使用NodeJS解析。</p>
+ <figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#! /usr/bin/env node</span></span><br></pre></td></tr></table></figure>
+<p> NodeJS会忽略掉位于JS模块首行的<code>#!</code>注释，不必担心这行注释是非法语句。</p>
+</li>
+<li><p>然后，我们使用以下命令赋予<code>node-echo.js</code>文件执行权限。</p>
+ <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ chmod +x <span class="regexp">/home/u</span>ser<span class="regexp">/bin/</span>node-echo.js</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>最后，我们在<code>PATH</code>环境变量中指定的某个目录下，例如在<code>/usr/local/bin</code>下边创建一个<code>软链文件</code>，文件名与我们希望使用的终端命令同名，命令如下：</p>
+ <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ln -s <span class="regexp">/home/u</span>ser<span class="regexp">/bin/</span>node-echo.js <span class="regexp">/usr/</span>local<span class="regexp">/bin/</span>node-echo</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这样处理后，我们就可以在任何目录下使用<code>node-echo</code>命令了。</p>
+<h2 id="Windows">Windows</h2><p>在Windows系统下的做法完全不同，我们得靠.cmd文件来解决问题。假设<code>node-echo.js</code>存放在<code>C:\Users\user\bin</code>目录，并且该目录已经添加到<code>PATH</code>环境变量里了。接下来需要在该目录下新建一个名为<code>node-echo.cmd</code>的文件，文件内容如下：<br><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@node "C:<span class="command">\User</span><span class="command">\user</span><span class="command">\bin</span><span class="command">\node</span>-echo.js" <span class="comment">%*</span></span><br></pre></td></tr></table></figure></p>
+<p>这样处理后，我们就可以在任何目录下使用<code>node-echo</code>命令了。</p>
+<h1 id="工程目录">工程目录</h1><p>了解了以上知识后，现在我们可以来完整地规划一个工程目录了。以编写一个命令行程序为例，一般我们会同时提供命令行模式和API模式两种使用方式，并且我们会借助三方包来编写代码。除了代码外，一个完整的程序也应该有自己的文档和测试用例。因此，一个标准的工程目录都看起来像下边这样。<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- <span class="regexp">/home/user</span><span class="regexp">/workspace/node</span>-echo/   <span class="comment"># 工程目录</span></span><br><span class="line">    - bin/                          <span class="comment"># 存放命令行相关代码</span></span><br><span class="line">        node-echo</span><br><span class="line">    + doc/                          <span class="comment"># 存放文档</span></span><br><span class="line">    - <span class="class"><span class="keyword">lib</span>/                          <span class="comment"># 存放API相关代码</span></span></span><br><span class="line">        echo.js</span><br><span class="line">    - node_modules/                 <span class="comment"># 存放三方包</span></span><br><span class="line">        + argv/</span><br><span class="line">    + tests/                        <span class="comment"># 存放测试用例</span></span><br><span class="line">    package.json                    <span class="comment"># 元数据文件</span></span><br><span class="line">    <span class="constant">README</span>.md                       <span class="comment"># 说明文件</span></span><br></pre></td></tr></table></figure></p>
+<p>其中部分文件内容如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* bin/node-echo */</span></span><br><span class="line"><span class="keyword">var</span> argv = <span class="built_in">require</span>(<span class="string">'argv'</span>),</span><br><span class="line">    echo = <span class="built_in">require</span>(<span class="string">'../lib/echo'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(echo(argv.join(<span class="string">' '</span>)));</span><br><span class="line"></span><br><span class="line"><span class="comment">/* lib/echo.js */</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">message</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> message;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* package.json */</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"name"</span>: <span class="string">"node-echo"</span>,</span><br><span class="line">    <span class="string">"main"</span>: <span class="string">"./lib/echo.js"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以上例子中分类存放了不同类型的文件，并通过<code>node_moudles</code>目录直接使用三方包名加载模块。此外，定义了<code>package.json</code>之后，<code>node-echo</code>目录也可被当作一个包来使用。</p>
+<h1 id="NPM">NPM</h1><p>NPM是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署上的很多问题，常见的使用场景有以下几种：</p>
+<ul>
+<li>允许用户从NPM服务器下载别人编写的三方包到本地使用。</li>
+<li>允许用户从NPM服务器下载并安装别人编写的命令行程序到本地使用。</li>
+<li>允许用户将自己编写的包或命令行程序上传到NPM服务器供别人使用。</li>
+</ul>
+<h2 id="下载三方包">下载三方包</h2><p>需要使用三方包时，首先得知道有哪些包可用。虽然<code>npmjs.org</code>提供了个搜索框可以根据包名来搜索，但如果连想使用的三方包的名字都不确定的话，就请百度一下吧。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ npm install argv</span><br><span class="line">...</span><br><span class="line">argv@<span class="number">0.0</span><span class="number">.2</span> node_modules\argv</span><br></pre></td></tr></table></figure></p>
+<p>下载好之后，<code>argv</code>包就放在了工程目录下的<code>node_modules</code>目录中，因此在代码中只需要通过<code>require(&#39;argv&#39;)</code>的方式就好，无需指定三方包路径。</p>
+<p>以上命令默认下载最新版三方包，如果想要下载指定版本的话，可以在包名后边加上<code>@&lt;version&gt;</code>，例如通过以下命令可下载0.0.1版的argv：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ npm install argv@<span class="number">0.0</span><span class="number">.1</span></span><br><span class="line">...</span><br><span class="line">argv@<span class="number">0.0</span><span class="number">.1</span> node_modules\argv</span><br></pre></td></tr></table></figure></p>
+<p>如果使用到的三方包比较多，在终端下一个包一条命令地安装未免太人肉了。因此NPM对<code>package.json</code>的字段做了扩展，允许在其中申明三方包依赖。因此，上边例子中的<code>package.json</code>可以改写如下：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    "<span class="attribute">name</span>": <span class="value"><span class="string">"node-echo"</span></span>,</span><br><span class="line">    "<span class="attribute">main</span>": <span class="value"><span class="string">"./lib/echo.js"</span></span>,</span><br><span class="line">    "<span class="attribute">dependencies</span>": <span class="value">&#123;</span><br><span class="line">        "<span class="attribute">argv</span>": <span class="value"><span class="string">"0.0.2"</span></span><br><span class="line">    </span>&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样处理后，在工程目录下就可以使用<code>npm install</code>命令批量安装三方包了。更重要的是，当以后<code>node-echo</code>也上传到了NPM服务器，别人下载这个包时，NPM会根据包中申明的三方包依赖自动下载进一步依赖的三方包。例如，使用<code>npm install node-echo</code>命令时，NPM会自动创建以下目录结构。<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby"> project/</span><br><span class="line"></span>    -<span class="ruby"> node_modules/</span><br><span class="line"></span>        -<span class="ruby"> node-echo/</span><br><span class="line"></span>            -<span class="ruby"> node_modules/</span><br><span class="line"></span>                + argv/</span><br><span class="line">            ...</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure></p>
+<p>如此一来，用户只需关心自己直接使用的三方包，不需要自己去解决所有包的依赖关系。</p>
+<h2 id="发布代码">发布代码</h2><p>第一次使用NPM发布代码前需要注册一个账号。终端下运行<code>npm adduser</code>，之后按照提示做即可。账号搞定后，接着我们需要编辑<code>package.json</code>文件，加入NPM必需的字段。<code>package.json</code>里必要的字段如下：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    "name": "node-echo",           # 包名，在NPM服务器上须要保持唯一</span><br><span class="line">    "version": "1.0.0",            # 当前版本号</span><br><span class="line">    "dependencies": &#123;              # 三方包依赖，需要指定包名和版本号</span><br><span class="line">        "argv": "0.0.2"</span><br><span class="line">      &#125;,</span><br><span class="line">    "main": "./lib/echo.js",       # 入口模块位置</span><br><span class="line">    "bin" : &#123;</span><br><span class="line">        "node-echo": "./bin/node-echo"      # 命令行程序名和主模块位置</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>之后，我们就可以在<code>package.json</code>所在目录下运行<code>npm publish</code>发布代码了。</p>
+<h2 id="版本号">版本号</h2><p>使用NPM下载和发布代码时都会接触到版本号。NPM使用语义版本号来管理代码，这里简单介绍一下。</p>
+<p>语义版本号分为<code>X.Y.Z</code>三位，分别代表主版本号、次版本号和补丁版本号。当代码变更时，版本号按以下原则更新：<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">+ </span>如果只是修复bug，需要更新Z位。</span><br><span class="line"></span><br><span class="line"><span class="bullet">+ </span>如果是新增了功能，但是向下兼容，需要更新Y位。</span><br><span class="line"></span><br><span class="line"><span class="bullet">+ </span>如果有大变动，向下不兼容，需要更新X位。</span><br></pre></td></tr></table></figure></p>
+<p>版本号有了这个保证后，在申明三方包依赖时，除了可依赖于一个固定版本号外，还可依赖于某个范围的版本号。例如”argv”: “0.0.x”表示依赖于0.0.x系列的最新版argv。NPM支持的所有版本号范围指定方式可以查看官方文档 <code>https://npmjs.org/doc/files/package.json.html#dependencies</code>。</p>
+<p>这里再介绍一些NPM常用命令。</p>
+<ul>
+<li>NPM提供了很多命令，例如<code>install</code>和<code>publish</code>，使用<code>npm help</code>可查看所有命令。</li>
+<li>使用<code>npm help &lt;command&gt;</code>可查看某条命令的详细帮助，例如<code>npm help install</code>。</li>
+<li>在<code>package.json</code>所在目录下使用<code>npm install . -g</code>可先在本地安装当前命令行程序，可用于发布前的本地测试。</li>
+<li>使用<code>npm update &lt;package&gt;</code>可以把当前目录下node_modules子目录里边的对应模块更新至最新版本。</li>
+<li>使用<code>npm update &lt;package&gt; -g</code>可以把全局安装的对应命令行程序更新至最新版。</li>
+<li>使用<code>npm cache clear</code>可以清空NPM本地缓存，用于对付使用相同版本号发布新版本代码的人。</li>
+<li>使用<code>npm unpublish &lt;package&gt;@&lt;version&gt;</code>可以撤销发布自己发布过的某个版本代码。</li>
+</ul>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag">#js</a>
+          
+            <a href="/tags/nodejs/" rel="tag">#nodejs</a>
+          
+            <a href="/tags/web/" rel="tag">#web</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/01/07/nodejs-fs/" rel="prev">Node.js 之 文件操作</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/05/nodejs-modular/" rel="next">Node.js 之 模块</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2016/01/06/node-code/"
+                   data-title="Node.js 之 代码的组织和部署" data-url="http://yoursite.com/2016/01/06/node-code/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar.jpg" alt="Johnson Zhang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Johnson Zhang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">48</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/hpze2000" target="_blank">github</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#模块路径解析规则"><span class="nav-number">1.</span> <span class="nav-text">模块路径解析规则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#包（package）"><span class="nav-number">2.</span> <span class="nav-text">包（package）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#index-js"><span class="nav-number">2.1.</span> <span class="nav-text">index.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#package-json"><span class="nav-number">2.2.</span> <span class="nav-text">package.json</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#命令行程序"><span class="nav-number">3.</span> <span class="nav-text">命令行程序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux"><span class="nav-number">3.1.</span> <span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows"><span class="nav-number">3.2.</span> <span class="nav-text">Windows</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#工程目录"><span class="nav-number">4.</span> <span class="nav-text">工程目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NPM"><span class="nav-number">5.</span> <span class="nav-text">NPM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载三方包"><span class="nav-number">5.1.</span> <span class="nav-text">下载三方包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发布代码"><span class="nav-number">5.2.</span> <span class="nav-text">发布代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#版本号"><span class="nav-number">5.3.</span> <span class="nav-text">版本号</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Johnson Zhang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hpze2000"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
